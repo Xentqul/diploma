@@ -1,18 +1,102 @@
 footer {
     margin-top: 150px;
     width: 100%;
-    height: 550px;
+    height: 400px;
     background-color: var(--bs-black);
 }
 
-.wrapper {
-    max-width: 1685px;
-    width: 89%;
-    margin: 0 auto;
+footer a {
+    text-decoration: none;
+}
+
+footer ul {
+    list-style-type: none;
 }
 
 
+.wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    max-width: 1685px;
+    width: 89%;
+    margin: 0 auto;
+    padding-top: 80px;
+}
+
+.leftFooterPart {
+    width: 45%;
+    max-width: 50%;
+}
+
+.leftFooterPart p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--bs-white);
+    padding-top: 15px;
+}
+
+.leftFooterPart span {
+    font-size: 30px;
+    font-family: "Libre Baskerville";
+    color: var(--bs-white);
+    letter-spacing: 5.04px;
+    font-weight: 400;
+}
+
+.socialMedia {
+    display: flex;
+    width: 300px;
+    padding-left: 0 !important;
+    padding-top: 20px;
+    justify-content: space-between;
+}
 
 .socialMedia li a img {
+    width: 28px;
+    height: auto;
     filter: brightness(0) invert(1);
+    transition: transform 0.3s ease;
+}
+
+.socialMedia li a img:hover {
+    transform: scale(1.05);
+}
+
+.navigationBlock {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.navigationBlock nav ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px 60px;
+    align-content: start;
+    /* ! important ! */
+}
+
+.navigationBlock nav ul li a {
+    font-size: 16px;
+    color: var(--bs-white);
+}
+
+.navigationBlock nav ul li a:hover {
+    text-decoration: underline 1px;
+}
+
+.footerUtils {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.footerUtils a {
+    font-size: 16px;
+    color: var(--bs-white);
+}
+
+.footerUtils a:hover {
+    text-decoration: underline 1px;
 }

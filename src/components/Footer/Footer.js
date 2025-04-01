@@ -50,7 +50,7 @@ function Footer() {
             Мы можем получать комиссионные за ссылки на этой странице, но мы
             рекомендуем только те продукты, на которые сами ссылаемся.
           </p>
-          <p className={styles.rights}>©2024 DRESSERY. All Rights Reserved.</p>
+          <p className={styles.rights}>©2025 DRESSERY. All Rights Reserved.</p>
         </div>
         <div className={styles.navigationBlock}>
           <nav aria-label="Разделы журнала">
@@ -59,22 +59,22 @@ function Footer() {
                 <a href="#">Главная</a>
               </li>
               <li>
-                <a href="#">Мода и стиль</a>
+                <a href="#">Арт&фотографии</a>
               </li>
               <li>
-                <a href="#">Красота</a>
+                <a href="#">Мода и стиль</a>
               </li>
               <li>
                 <a href="#">Культура</a>
               </li>
               <li>
-                <a href="#">Арт&фотографии</a>
-              </li>
-              <li>
-                <a href="#">Музыка</a>
+                <a href="#">Красота</a>
               </li>
               <li>
                 <a href="#">Новости</a>
+              </li>
+              <li>
+                <a href="#">Музыка</a>
               </li>
             </ul>
           </nav>

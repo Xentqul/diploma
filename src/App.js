@@ -1,13 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
+import logo from "./logo.svg";
+import "./App.css";
+import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer";
+import Main from "./pages/Main/Main.js";
 
 function App() {
   return (
     <div>
       <Header />
-      <p>ОСНОВНАЯ СЕКЦИЯ</p>
+      
+      <div className="content">
+        <Main />
+      </div>
+
       <Footer />
     </div>
   );
