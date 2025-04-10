@@ -1,0 +1,12 @@
+.wrapper {
+    max-width: 1685px;
+    width: 89%;
+    margin: 0 auto;
+}
+
+.heading{
+    margin-top: 100px;
+    margin-bottom: 45px;
+    text-align: center;
+    font-size: 35px;
+}

@@ -83,6 +83,7 @@ footer ul {
 }
 
 .navigationBlock nav ul li a:hover {
+    text-underline-offset: 0.2em;
     text-decoration: underline 1px;
 }
 
@@ -98,5 +99,6 @@ footer ul {
 }
 
 .footerUtils a:hover {
+    text-underline-offset: 0.2em;
     text-decoration: underline 1px;
 }

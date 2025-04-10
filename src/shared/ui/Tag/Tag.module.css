@@ -1,0 +1,41 @@
+.tag {
+    transition: color 0.2s ease;
+}
+
+.tag:hover {
+    color: var(--hover-tag) !important;
+}
+
+.red {
+    color: var(--color-tag);
+}
+
+.underlined_black {
+    color: black;
+    text-decoration: underline;
+}
+
+.noUnderline {
+    text-decoration: none;
+}
+
+/* Размеры */
+.small {
+    font-size: 16px;
+}
+
+.medium {
+    font-size: 18px;
+}
+
+.big {
+    font-size: 20px;
+}
+
+.large {
+    font-size: 24px;
+}
+
+.huge {
+    font-size: 28px;
+}

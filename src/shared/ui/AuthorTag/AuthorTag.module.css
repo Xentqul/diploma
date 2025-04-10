@@ -1,0 +1,58 @@
+/* Размеры */
+.s {
+    font-size: 16px;
+}
+
+.m {
+    font-size: 18px;
+}
+
+.l {
+    font-size: 20px;
+}
+
+.xl {
+    font-size: 22px;
+}
+
+.xxl {
+    font-size: 24px;
+}
+
+/* Цвета */
+.black {
+    color: var(--bs-black);
+}
+
+.white {
+    color: var(--bs-white);
+}
+
+.gray {
+    color: var(--bs-gray-600);
+}
+
+/* Варианты font-weight */
+.weightRegular {
+    font-weight: 400;
+}
+
+.weightBold {
+    font-weight: 700;
+}
+
+.weightLight {
+    font-weight: 300;
+}
+
+/* Подчёркивание */
+.underline {
+    text-decoration: underline 1px;
+    text-underline-offset: 0.2em;
+    text-decoration-color: currentColor;
+}
+
+/* Состояния */
+.tag:hover {
+    opacity: 0.8;
+}

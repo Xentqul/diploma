@@ -1,9 +1,12 @@
 .link {
-    padding: 20px 40px;
+    width: auto !important;
+    align-self: flex-start;
+    padding: 15px 100px;
     font-size: 16px;
     text-align: center;
-    /* vertical-align: middle; */
     color: var(--bs-black);
     border: solid var(--bs-black) 1px;
+    border-radius: 5px;
     background-color: var(--bs-white);
+    text-decoration: none;
 }

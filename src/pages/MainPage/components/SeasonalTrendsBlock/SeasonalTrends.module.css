@@ -1,0 +1,29 @@
+.thirdSection {
+    width: 100%;
+    height: auto;
+    background-color: var(--bs-black);
+    margin-top: 95px;
+    padding-bottom: 80px;
+}
+
+.thirdSection .wrapper {
+    max-width: 1685px;
+    width: 89%;
+    margin: 0 auto;
+}
+
+.thirdSection h2 {
+    padding-top: 70px;
+    text-align: center;
+    color: var(--bs-white);
+    font-weight: 600;
+    font-size: 35px;
+    letter-spacing: 3px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(270px, 100%), 1fr));
+    gap: clamp(50px, 3vw, 80px); 
+    margin-top: 50px;
+}

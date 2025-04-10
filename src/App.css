@@ -1,3 +1,8 @@
+:root {
+  --color-tag: #CB1212;
+  --hover-tag: #a10202;
+}
+
 .App {
   text-align: center;
 }
@@ -8,7 +13,7 @@
 }
 
 .content {
-  margin-top: 160px;
+  margin-top: 150px;
 }
 
 @media (prefers-reduced-motion: no-preference) {

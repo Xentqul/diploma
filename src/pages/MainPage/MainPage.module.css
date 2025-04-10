@@ -1,0 +1,9 @@
+.hrMainPage {
+    width: 60%;
+    max-width: 1150px;
+    margin-top: 90px;
+    margin-left: auto;
+    margin-right: auto;
+    color: var(--bs-black);
+    opacity: 100;
+}

@@ -1,14 +1,14 @@
 import React from "react";
 import styles from "./Header.module.css";
 import { useState, useEffect } from "react";
-import changeLangIcon from "../../assets/icons/change-lang-icon.png";
-import instIcon from "../../assets/icons/inst-icon.png";
-import tgIcon from "../../assets/icons/telegram-icon.png";
-import cmIcon from "../../assets/icons/classmates-icon.png";
-import twIcon from "../../assets/icons/twitter-icon.png";
-import vkIcon from "../../assets/icons/vk-icon.png";
-import ttIcon from "../../assets/icons/tiktok-icon.png";
-import accountIcon from "../../assets/icons/account-icon.png";
+import changeLangIcon from "@assets/icons/change-lang-icon.png";
+import instIcon from "@assets/icons/inst-icon.png";
+import tgIcon from "@assets/icons/telegram-icon.png";
+import cmIcon from "@assets/icons/classmates-icon.png";
+import twIcon from "@assets/icons/twitter-icon.png";
+import vkIcon from "@assets/icons/vk-icon.png";
+import ttIcon from "@assets/icons/tiktok-icon.png";
+import accountIcon from "@assets/icons/account-icon.png";
 
 function Header() {
   const [isDarkTheme, setIsDarkTheme] = useState(false); // Состояние для темы

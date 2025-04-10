@@ -1,0 +1,63 @@
+.firstSection .wrapper {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1685px;
+    width: 89%;
+    margin: 0 auto;
+}
+
+.textBlock {
+    display: flex;
+    flex-direction: column;
+    width: clamp(30%, 35vw, 40%); 
+}
+
+.textBlock a span {
+    font-size: 20px;
+    color: var(--bs-black);
+    text-decoration: none;
+}
+
+.textBlock a {
+    width: auto !important;
+    align-self: flex-start;
+    color: var(--bs-black);
+}
+
+.textBlock h1 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.h1 {
+    text-decoration: none;
+}
+
+.h1:hover {
+    text-underline-offset: 0.2em;
+    text-decoration: 2px underline;
+}
+
+.textBlock p {
+    width: 80%;
+    padding-top: 15px;
+    font-size: 22px;
+}
+
+.paddingA {
+    padding-top: 50px;
+}
+
+.paddingA:hover {
+    text-decoration: 1.5px underline;
+}
+
+.linkButtonMargin {
+    margin-top: 90px;
+}
+
+.mainPic {
+    width: 640px;
+    height: auto;
+}
+

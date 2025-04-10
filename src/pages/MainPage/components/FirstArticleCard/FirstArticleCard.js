@@ -1,16 +1,17 @@
 import styles from "./FirstArticleCard.module.css";
-import firstMainPic from "../../assets/main_pics/first-main-pic.webp";
+import firstMainPic from "@/assets/main-pics/first-main-pic.webp";
+import { LinkButton } from "@/shared/ui/LinkButton/LinkButton";
+import { Tag } from "@/shared/ui/Tag/Tag";
+import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag";
 
 function FirstArticleCard() {
   return (
     <section className={styles.firstSection}>
       <div className={styles.wrapper}>
         <div className={styles.textBlock}>
-          <span>
-            <a href="#">#мода</a>
-          </span>
+          <Tag variant="unnderline_black" size="big">#мода</Tag>
 
-          <a href="#!">
+          <a className={styles.h1} href="#!">
             <h1>
               Показ Dior Cruise 2025 в Тартане и Твиде стал данью уважения
               Шотландии
@@ -21,10 +22,8 @@ function FirstArticleCard() {
             Мария Грация Кьюри отдала дань уважения прошлому и настоящему
             страны.
           </p>
-          <a href="#!">
-            <span>автор: алексис вулф</span>
-          </a>
-          <a href="#">К коллекции</a>
+            <AuthorTag href="#!" className={styles.paddingA}>автор: алексис вулф</AuthorTag>
+          <LinkButton className={styles.linkButtonMargin}>к коллекции</LinkButton>
         </div>
         <img className={styles.mainPic} src={firstMainPic} alt="main pic" />
       </div>

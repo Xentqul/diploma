@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./Footer.module.css";
-import instIcon from "../../assets/icons/inst-icon.png";
-import tgIcon from "../../assets/icons/telegram-icon.png";
-import cmIcon from "../../assets/icons/classmates-icon.png";
-import twIcon from "../../assets/icons/twitter-icon.png";
-import vkIcon from "../../assets/icons/vk-icon.png";
-import ttIcon from "../../assets/icons/tiktok-icon.png";
+import instIcon from "@assets/icons/inst-icon.png";
+import tgIcon from "@assets/icons/telegram-icon.png";
+import cmIcon from "@assets/icons/classmates-icon.png";
+import twIcon from "@assets/icons/twitter-icon.png";
+import vkIcon from "@assets/icons/vk-icon.png";
+import ttIcon from "@assets/icons/tiktok-icon.png";
 
 function Footer() {
   return (
