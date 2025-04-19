@@ -3,25 +3,20 @@ import styles from "./Tag.module.css";
 export function Tag({
   href,
   children,
-  variant = "default",
   size = "medium",
-  underline,
-  hoverColor = "--hover-tag",
-  color,
+  underline = "noUnderline",
+  noHover = false, // true - отключает hover
   ...props
 }) {
-  const tagClasses = `
-    ${styles.tag}
-    ${styles[variant]}
-    ${styles[size]}
-    ${styles[color]}
-    ${underline ? styles.underlined : styles.noUnderline}
-  `;
-
   return (
     <a
       href={href}
-      className={tagClasses.trim()}
+      className={`
+        ${styles.tag} 
+        ${styles[size]} 
+        ${styles[underline]}
+        ${noHover ? styles.noHover : ''}
+      `}
       {...props}
     >
       {children}

@@ -1,0 +1,31 @@
+.card {
+    display: flex;
+}
+.image {
+    width: 800px;
+    height: 550px;
+}
+
+.content {
+    width: clamp(490px, 30vw, 700px);
+    padding-left: 60px;
+    display: flex;
+    flex-direction: column;
+}
+
+.titleLink {
+    color: var(--bs-black);
+    text-decoration: none;
+}
+
+.title {
+    margin-top: 15px;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.description {
+    flex-grow: 1;
+    margin-top: 15px;
+    font-size: 21px;
+}

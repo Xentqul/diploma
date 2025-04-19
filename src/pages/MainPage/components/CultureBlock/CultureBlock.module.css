@@ -1,0 +1,48 @@
+.wrapper {
+  max-width: 1685px;
+  width: 89%;
+  margin: 0 auto;
+}
+
+.fifthSection .wrapper {
+  margin-top: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fifthSection h2 {
+  font-size: 40px;
+  font-weight: 500;
+  letter-spacing: 5px;
+}
+
+.fifthSection {
+  padding: 40px 0;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 30px;
+  margin-top: 70px;
+}
+
+.leftColumn,
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* @media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+} */

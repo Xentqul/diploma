@@ -1,0 +1,45 @@
+.wrapper {
+    max-width: 1685px;
+    width: 89%;
+    margin: 0 auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-evenly;
+    gap: 60px;
+}
+
+.beautyItem {
+    display: flex;
+}
+
+.beautyImage {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 30px;
+}
+
+.titleLink {
+    text-decoration: none;
+    color: var(--bs-black);
+}
+
+.titleLink :hover {
+    text-decoration: 1px underline;
+    color: var(--bs-black);
+    text-underline-offset: 0.1em;
+}
+
+.content h3 {
+    font-size: 24px;
+    font-weight: 400;
+}

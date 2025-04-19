@@ -1,0 +1,31 @@
+.fourthSection {
+    margin-bottom: 110px;
+}
+
+.wrapper {
+    max-width: 1685px;
+    width: 89%;
+    margin: 0 auto;
+}
+
+.fourthSection .wrapper {
+    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.fourthSection .wrapper h2{
+    text-align: center;
+}
+
+.container {
+    margin-top: 80px;
+    display: flex;
+    gap: 50px;
+}
+
+.containerAside {
+    display: flex;
+    flex-direction: column;
+}

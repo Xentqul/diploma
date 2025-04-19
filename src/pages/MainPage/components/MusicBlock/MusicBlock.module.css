@@ -1,0 +1,44 @@
+.seventhSection {
+    width: 100%;
+    height: auto;
+}
+
+.seventhSection h2 {
+    margin-top: 130px;
+    text-align: center;
+    letter-spacing: 3px;
+    font-weight: 500;
+}
+
+.wrapper {
+    max-width: 1685px;
+    width: 89%;
+    margin: 50px auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftSide {
+    width: 70%;
+    height: 750px !important;
+    background-color: var(--pale-accent);
+}
+
+.leftSide > :first-child {
+    padding-top: 50px;
+}
+
+.rightSide {
+    width: 28%;
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--pale-accent);
+}
+
+.titleOfAlbumsBlock {
+    font-size: 24px;
+    font-weight: 500;
+    margin: 20px 0;
+}

@@ -1,0 +1,44 @@
+.asideContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.asideItem {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.asideImage {
+  width: 360px;
+  height: 180px;
+  object-fit: cover;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--bs-black);
+}
+
+.linkForTitle {
+  text-decoration: none;
+}
+
+.linkForTitle:hover {
+  text-decoration: 0.5px underline;
+  color: var(--bs-black);
+  text-underline-offset: 0.2em;
+}
+
+.title a:hover {
+  text-decoration: underline;
+}

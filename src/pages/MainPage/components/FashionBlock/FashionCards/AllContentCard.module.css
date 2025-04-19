@@ -1,0 +1,97 @@
+.wrapperAsideArticle {
+    display: flex;
+}
+
+.wrapperAsideArticle:nth-child(2),
+.wrapperAsideArticle:nth-child(3) {
+    margin-top: 70px;
+}
+
+.asideContent {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 25px;
+}
+
+.asideImage {
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+}
+
+.asideTitle {
+    color: var(--bs-black);
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.linkUnderline {
+    text-decoration: none;
+}
+
+.linkUnderline:hover {
+    text-decoration: 0.5px underline var(--bs-black);
+    text-underline-offset: 0.1em;
+}
+
+.asideDescription {
+    font-size: 16px;
+}
+
+
+/*------------------------- ВЕРТИКАЛЬНАЯ ВЕРСИЯ --------------------------------*/
+
+.flexAlign {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.verticalVariant {
+    width: 350px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+}
+
+.verticalVariant:nth-child(2),
+.verticalVariant:nth-child(3) {
+    margin-top: 0;
+}
+
+.verticalImage {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin-bottom: 5px;
+}
+
+.verticalContent {
+    width: 350px;
+    padding: 0;
+    display: flex;
+    gap: 5px 0;
+}
+
+.verticalContent h3 {
+    font-size: 24px;
+}
+
+.verticalContent p {
+    font-size: 20px;
+}
+
+.verticalVariant .tag {
+    font-size: 22px;
+    padding-top: 5px;
+}
+
+.verticalContent > :first-child {
+    font-size: 19px;
+}
+
+.verticalContent > :last-child {
+    font-size: 19px;
+}

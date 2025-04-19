@@ -28,7 +28,7 @@ let slides = [
     title: "Кьюри наконец сделала это",
     description: "Мария Кьюри возвращается с триумфальной осенью-зимой 2025.",
     author: "автор: мария говорунова",
-    authorId: "mariya_govorunova",
+    authorId: "maria_govorunova",
     link: "#",
   },
   {
@@ -48,7 +48,7 @@ let slides = [
     description:
       "Уход Донателлы знаменует дому новый творческий этап под руководством Дарио Виталле",
     author: "автор: мария говорунова",
-    authorId: "mariya_govorunova",
+    authorId: "maria_govorunova",
     link: "#",
   },
 ];

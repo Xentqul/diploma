@@ -1,0 +1,55 @@
+.featuredImage {
+    width: 850px;
+    height: 420px;
+    object-fit: cover;
+}
+
+.mainFashionArticle .wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.textContent {
+    width: 650px;
+    padding-top: 20px;
+    align-self: center;
+}
+
+.mainName {
+    color: var(--bs-black);
+    text-underline-offset: 0.2em;
+    text-decoration: 1.5px underline;
+}
+
+.mainName:hover {
+    text-decoration: 2px underline;
+}
+
+.mainName h3 {
+    padding-top: 10px;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+.descr {
+    padding-top: 24px;
+    font-size: 22px;
+}
+
+.authorWrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 24px;
+    gap: 5px;
+}
+
+.authorWrapper span{
+    font-size: 18px;
+    font-style: italic;
+}
+
+
+.italic {
+    font-style: italic;
+}

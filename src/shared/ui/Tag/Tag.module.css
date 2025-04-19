@@ -1,25 +1,30 @@
 .tag {
     transition: color 0.2s ease;
+    color: var(--color-tag)
 }
 
 .tag:hover {
-    color: var(--hover-tag) !important;
+    color: var(--hover-tag);
 }
 
-.red {
-    color: var(--color-tag);
+.noHover:hover {
+    color: var(--bs-black) !important;
+  }
+
+.black {
+    color: var(--bs-black);
 }
 
 .underlined_black {
     color: black;
     text-decoration: underline;
+    text-underline-offset: 0.1em;
 }
 
 .noUnderline {
     text-decoration: none;
 }
 
-/* Размеры */
 .small {
     font-size: 16px;
 }

@@ -21,7 +21,7 @@ export default function SeasonalCard({ card }) {
             {card.author}
           </AuthorTag>
 
-          <Tag href={`/tags/${card.tag.replace("#", "")}`} color="red">
+          <Tag href={`/tags/${card.tag.replace("#", "")}`}>
             {card.tag}
           </Tag>
         </div>

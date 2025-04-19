@@ -10,3 +10,8 @@
     background-color: var(--bs-white);
     text-decoration: none;
 }
+
+.link:hover {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}

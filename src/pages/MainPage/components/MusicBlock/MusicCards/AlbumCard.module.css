@@ -1,0 +1,42 @@
+.list {
+    height: 630px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.item {
+    display: flex;
+    align-content: center;
+}
+
+.albumCover {
+    width: 100px;
+    height: 100px;
+}
+
+.contentBlock {
+    width: 190px;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.albumTitle {
+    color: var(--bs-block);
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.artistName {
+    padding-top: 3px;
+    flex-grow: 1;
+    font-weight: 500;
+    color: var(--color-tag);
+    text-decoration: none;
+}
+
+.category {
+    color: var(--bs-gray-600);
+}

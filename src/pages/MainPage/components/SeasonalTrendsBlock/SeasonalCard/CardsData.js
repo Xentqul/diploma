@@ -3,7 +3,7 @@ import seasonal2 from '@/assets/main-pics/seasonal-trends/seasonal-2.webp';
 import seasonal3 from '@/assets/main-pics/seasonal-trends/seasonal-3.webp';
 import seasonal4 from '@/assets/main-pics/seasonal-trends/seasonal-4.webp';
 
-export const cardsData = [
+export let cardsData = [
   {
     id: 1,
     title: "Классический стиль - синяя полоска",
