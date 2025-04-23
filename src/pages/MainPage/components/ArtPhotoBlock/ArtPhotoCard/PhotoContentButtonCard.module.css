@@ -1,9 +1,14 @@
 .card {
     display: flex;
 }
+
 .image {
     width: 800px;
     height: 550px;
+}
+
+.mobileImage {
+    display: none;
 }
 
 .content {
@@ -28,4 +33,47 @@
     flex-grow: 1;
     margin-top: 15px;
     font-size: 21px;
+}
+
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column;
+    }
+
+    .desktopImage {
+        display: none;
+    }
+
+    .mobileImage {
+        display: block;
+        width: 100vw;
+        height: 100vw;
+        object-fit: cover;
+        padding: 10px 10px 0 10px;
+    }
+
+    .content {
+        max-width: 100vw;
+        width: 100vw;
+        padding: 10px 10px 0 10px;
+        text-align: center;
+    }
+
+    .content> :first-child {
+        font-size: 16px;
+    }
+
+    .title {
+        margin: 10px 0;
+        font-size: 20px;
+    }
+
+    .description {
+        margin: 0 0 10px 0;
+        font-size: 18px;
+    }
+
+    .content> :last-child {
+        align-self: center;
+    }
 }

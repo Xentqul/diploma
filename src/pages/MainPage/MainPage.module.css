@@ -22,3 +22,17 @@
     color: var(--bs-black);
     opacity: 100;
 }
+
+@media (max-width: 768px) {
+
+    .mainWrapperForAll {
+        max-width: 100vw;
+        width: 100vw;
+    }    
+
+    .hrMainPage,
+    .hrMainPage2 {
+        width: 100%;
+        margin: 25px 0;
+    }
+}

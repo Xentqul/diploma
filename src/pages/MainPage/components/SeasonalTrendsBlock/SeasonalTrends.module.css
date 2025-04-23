@@ -27,3 +27,16 @@
     gap: clamp(50px, 3vw, 80px); 
     margin-top: 50px;
 }
+
+@media (max-width: 768px) {
+
+    .thirdSection {
+        margin-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    .thirdSection h2 {
+        padding-top: 50px;
+        font-size: 25px;
+    }
+}

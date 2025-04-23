@@ -12,6 +12,9 @@
   width: 100%;
   height: 430px;
   object-fit: cover;
+  /* Картинка масштабируется, сохраняя пропорции */
+  object-position: top;
+  /* Контролирует, какая часть изображения видна */
 }
 
 .content {
@@ -40,8 +43,4 @@
   margin-top: auto;
   display: flex;
   justify-content: space-between;
-}
-
-Tag:hover {
-  color: var(--hover-tag);
 }

@@ -36,3 +36,22 @@
 .adWraper p a:hover {
     text-decoration: 1.5px underline;
 }
+
+@media (max-width: 768px) {
+    .adWraper {
+        height: 80px;
+    }
+
+    .container span {
+        display: none;
+    }
+
+    .adWraper p {
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .adWraper p a {
+        display: block;
+    }
+}

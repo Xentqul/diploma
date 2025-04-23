@@ -8,10 +8,17 @@ function PhotoContentButtonCard() {
     <div className={styles.cardContainer}>
       {ArtPhotoCardData.map((article) => (
         <article key={article.id} className={styles.card}>
+          {/*------ фото для десктопа ---------*/}
           <img
-            src={article.image}
+            src={article.desktopImage}
             alt={article.title}
-            className={styles.image}
+            className={styles.desktopImage}
+          />
+          {/*------- фото для мобильной версии --------*/}
+          <img
+            src={article.mobileImage}
+            alt={article.title}
+            className={styles.mobileImage}
           />
           <div className={styles.content}>
             <Tag size="large" href={article.tag}>

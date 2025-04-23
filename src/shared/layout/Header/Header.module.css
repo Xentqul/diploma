@@ -333,6 +333,22 @@ input:checked+.slider:before {
 
 /*------------------------------------------- МЕДИА ЗАПРОСЫ ---------------------------------------- */
 @media (max-width: 768px) {
+  header {
+    height: 50px;
+  }
+
+  header .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Выравнивание элементов по центру */
+    height: 60px; /* Фиксированная высота */
+    box-sizing: border-box; /* Учитываем padding и border */
+  }
+
+  .burgerMenuIcon {
+    width: 30px;
+    height: 30px;
+  }
 
   .upperHeader,
   .lowerHeaderBlock {

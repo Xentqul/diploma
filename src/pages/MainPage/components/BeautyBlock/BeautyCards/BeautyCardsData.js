@@ -6,7 +6,7 @@ import beauty4 from '@/assets/main-pics/beauty/beauty-4.webp';
 export let BeautyCardsData = [
   {
     id: 1,
-    title: "Дженни снялась в рекламной кампании CHANNEL x HERA, продемонстрировав идеальную красную помаду",
+    title: "Дженни снялась в рекламной кампании CHANNEL x HERA, показав идеальную красную помаду",
     image: beauty1,
     author: "павел нестеров",
     authorId: "pavel_nesterov",

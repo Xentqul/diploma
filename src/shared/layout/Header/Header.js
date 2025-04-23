@@ -57,7 +57,7 @@ function Header() {
         }`}
         onClick={toggleBurgerMenu}
       >
-        <img src={burgerMenuIcon} alt="меню" />
+        <img src={burgerMenuIcon} alt="меню" className={styles.burgerMenuIcon} />
       </div>
 
       {/*---------------------------------------- ВЕРХНЯЯ ЧАСТЬ ШАПКИ / ДЕСКТОП -----------------------------*/}

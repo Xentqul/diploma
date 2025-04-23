@@ -6,33 +6,39 @@ import { BeautyCardsData } from "./BeautyCardsData.js";
 export function SimpleHorizontalCard() {
   return (
     <div className={styles.wrapper}>
-      <div className={styles.grid}>
-        {BeautyCardsData.map((article) => (
-          <article key={article.id} className={styles.beautyItem}>
-            <a href={article.articleTag} className={styles.imageLink}>
-              <img
-                src={article.image}
-                alt={article.title}
-                className={styles.beautyImage}
-              />
-            </a>
+  <div className={styles.grid}>
+    {BeautyCardsData.map((article) => (
+      <article key={article.id} className={styles.beautyItem}>
+        {/* Ссылка на статью */}
+        <a href={article.articleTag} className={styles.imageLink}>
+          {/* Изображение */}
+          <img
+            src={article.image}
+            alt={article.title}
+            className={styles.beautyImage}
+          />
+        </a>
 
-            <div className={styles.content}>
-              <Tag size="big" href={article.tag}>
-                {article.tag}
-              </Tag>
+        {/* Контент */}
+        <div className={styles.content}>
+          {/* Тег */}
+          <Tag size="big" href={article.tag}>
+            {article.tag}
+          </Tag>
 
-              <a href={article.articleTag} className={styles.titleLink}>
-                <h3>{article.title}</h3>
-              </a>
+          {/* Заголовок */}
+          <a href={article.articleTag} className={styles.titleLink}>
+            <h3>{article.title}</h3>
+          </a>
 
-              <AuthorTag color="gray" size="xl" href={`/authors/${article.authorId}`}>
-                {article.author}
-              </AuthorTag>
-            </div>
-          </article>
-        ))}
-      </div>
-    </div>
+          {/* Автор */}
+          <AuthorTag color="gray" size="xl" href={`/authors/${article.authorId}`}>
+            {article.author}
+          </AuthorTag>
+        </div>
+      </article>
+    ))}
+  </div>
+</div>
   );
 }
