@@ -1,21 +1,21 @@
-import styles from "./AllContentCard.module.css"
+import styles from "./AllContentCard.module.css";
 import { Tag } from "@/shared/ui/Tag/Tag.js";
 import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag.js";
 
-export function AllContentCard({ 
+export function AllContentCard({
   variant = "default", // 'default' | 'vertical'
   data = [],
-  excludeFeatured = true // опция исключает isFeatured статьи
+  excludeFeatured = true, // опция исключает isFeatured статьи
 }) {
-  // фильтр, чтоб главная не отображалсь сбоку
-  const filteredData = excludeFeatured 
+  // фильтр, чтобы главная статья блока не отображалась сбоку
+  const filteredData = excludeFeatured
     ? data.filter((item) => !item.isFeatured)
     : data;
 
   return (
     <div className={`${styles.asideArticle} ${variant === "vertical" ? styles.flexAlign : ""}`}>
       {filteredData.map((article) => (
-        <div 
+        <article
           key={article.id}
           className={`${styles.wrapperAsideArticle} ${variant === "vertical" ? styles.verticalVariant : ""}`}
         >
@@ -44,7 +44,7 @@ export function AllContentCard({
               {article.author}
             </AuthorTag>
           </div>
-        </div>
+        </article>
       ))}
     </div>
   );

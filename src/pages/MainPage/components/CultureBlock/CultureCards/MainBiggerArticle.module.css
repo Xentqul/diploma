@@ -43,3 +43,15 @@
 .combinate {
     color: var(--bs-gray-600);
 }
+
+@media (max-width: 768px) {
+    .wrapperForTitle h3 {
+        margin-top: 5px;
+        font-size: 24px;
+    }
+
+    .combinate> :last-child,
+    .combinate> :first-child {
+        font-size: 16px;
+    }
+}

@@ -1,25 +1,27 @@
 .list {
-    height: 630px;
+    height: auto;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    gap: 20px;
 }
 
 .item {
     display: flex;
-    align-content: center;
+    align-items: center;
 }
 
 .albumCover {
     width: 100px;
     height: 100px;
+    object-fit: cover;
 }
 
 .contentBlock {
-    width: 190px;
-    padding-left: 20px;
+    width: calc(100% - 100px); /* Ширина текстового блока зависит от ширины обложки */
+    padding-left: 10px;
     display: flex;
     flex-direction: column;
+    gap: 5px;
 }
 
 .albumTitle {
@@ -30,13 +32,12 @@
 }
 
 .artistName {
-    padding-top: 3px;
-    flex-grow: 1;
-    font-weight: 500;
+    font-size: 16px;
     color: var(--color-tag);
     text-decoration: none;
 }
 
 .category {
+    font-size: 14px;
     color: var(--bs-gray-600);
 }

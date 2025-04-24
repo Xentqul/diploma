@@ -1,0 +1,14 @@
+/* Базовый стиль кнопки */
+.button {
+  display: inline-block;
+  width: auto;
+  padding: 15px 110px; /* Размеры кнопки */
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  color: var(--bs-white);
+  background-color: var(--bs-black);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

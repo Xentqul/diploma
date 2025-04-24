@@ -1,22 +1,30 @@
 .wrapperAsideArticle {
     display: flex;
+    gap: 20px;
 }
 
-.wrapperAsideArticle:nth-child(2),
-.wrapperAsideArticle:nth-child(3) {
-    margin-top: 70px;
-}
-
-.asideContent {
-    width: 300px;
+.asideArticle {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding-left: 25px;
+    height: 640px;
+}
+
+.articleTag {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.asideContent {
+    flex: 1; /* Занимает оставшееся пространство */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .asideImage {
-    width: 170px;
+    width: 100%;
     height: 170px;
     object-fit: cover;
 }
@@ -40,32 +48,27 @@
     font-size: 16px;
 }
 
-
 /*------------------------- ВЕРТИКАЛЬНАЯ ВЕРСИЯ --------------------------------*/
 
 .flexAlign {
     display: flex;
+    flex-direction: row;
     justify-content: space-evenly;
 }
 
 .verticalVariant {
     width: 350px;
-    height: 350px;
+    height: auto;
     display: flex;
     flex-direction: column;
     margin-top: 0;
 }
 
-.verticalVariant:nth-child(2),
-.verticalVariant:nth-child(3) {
-    margin-top: 0;
-}
-
 .verticalImage {
+    max-width: 100%;
     width: 100%;
     height: auto;
     object-fit: cover;
-    margin-bottom: 5px;
 }
 
 .verticalContent {
@@ -83,15 +86,70 @@
     font-size: 20px;
 }
 
-.verticalVariant .tag {
-    font-size: 22px;
-    padding-top: 5px;
-}
-
-.verticalContent > :first-child {
+.verticalContent> :first-child,
+.verticalContent> :last-child {
     font-size: 19px;
 }
 
-.verticalContent > :last-child {
-    font-size: 19px;
+/*---------------------- АДАПТИВ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ ----------------------------*/
+
+@media (max-width: 768px) {
+
+    .wrapperAsideArticle {
+        padding: 10px;
+    }
+
+    .wrapperAsideArticle:nth-child(2),
+    .wrapperAsideArticle:nth-child(3) {
+        margin-top: 30px;
+    }
+
+    .asideArticle {
+        height: auto;
+    }
+
+    .asideImage {
+        width: 30vw;
+        height: 30vw;
+        object-position: center;
+    }
+
+    .asideContent {
+        flex: 1; /* Занимает оставшееся пространство */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .asideTitle {
+        font-size: 16px;
+    }
+
+    .asideDescription {
+        display: none;
+    }
+
+    /*-------------------------- АДАПТИВ ВЕРТИКАЛЬНАЯ ВЕРСИЯ --------------------------------*/
+
+    .verticalVariant {
+        padding: 15px 0;
+        display: flex;
+        align-self: center;
+    }
+
+    .flexAlign {
+        flex-direction: column;
+    }
+
+    .verticalVariant:nth-child(2) {
+        margin-top: 10px;
+    }
+
+    .verticalImage {
+        max-width: 100% !important;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        margin: 0;
+    }
 }

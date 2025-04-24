@@ -8,10 +8,10 @@ import MidAd from "./components/MidAd/MidAd";
 import CultureBlock from "./components/CultureBlock/CultureBlock";
 import BeautyBlock from "./components/BeautyBlock/BeautyBlock";
 import MusicBlock from "./components/MusicBlock/MusicBlock";
-import ArtPhotoBlock from "./components/ArtPhotoBlock/ArtPhotoBlock"
+import ArtPhotoBlock from "./components/ArtPhotoBlock/ArtPhotoBlock";
+import LoginPage from "@/pages/LogInPage/LogInPage.js";
 
-
-function Main() {
+function MainPage() {
   return (
     <div className={styles.mainWrapperForAll}>
       <FirstArticleCard />
@@ -29,4 +29,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default MainPage;

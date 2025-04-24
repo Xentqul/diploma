@@ -15,7 +15,7 @@
     align-items: center;
 }
 
-.fourthSection .wrapper h2{
+.fourthSection .wrapper h2 {
     text-align: center;
 }
 
@@ -25,7 +25,25 @@
     gap: 50px;
 }
 
-.containerAside {
-    display: flex;
-    flex-direction: column;
+@media (max-width: 768px) {
+
+    .fourthSection {
+        margin-bottom: 40px;
+    }
+
+    .wrapper {
+        max-width: 100vw;
+        width: 100vw;
+    }
+
+    .fourthSection .wrapper h2 {
+        font-size: 25px;
+        margin: 0;
+    }
+
+    .container {
+        margin-top: 30px;
+        display: flex;
+        flex-direction: column;
+    }
 }

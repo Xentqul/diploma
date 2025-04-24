@@ -35,14 +35,24 @@
   gap: 25px;
 }
 
-/* @media (max-width: 768px) {
-  .container {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+
+  .fifthSection .wrapper {
+    margin-top: 0px;
   }
 
-  .leftColumn,
-  .rightColumn {
-    flex-direction: row;
-    flex-wrap: wrap;
+  .wrapper {
+    max-width: 100vw;
+    width: 100vw;
   }
-} */
+  
+  .fifthSection h2 {
+    font-size: 27px;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+  }
+}

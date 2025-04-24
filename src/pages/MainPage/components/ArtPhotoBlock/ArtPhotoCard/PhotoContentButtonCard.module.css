@@ -2,7 +2,7 @@
     display: flex;
 }
 
-.image {
+.desktopImage {
     width: 800px;
     height: 550px;
 }
@@ -75,5 +75,6 @@
 
     .content> :last-child {
         align-self: center;
+        margin-top: 10px;
     }
 }

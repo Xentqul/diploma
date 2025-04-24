@@ -24,7 +24,7 @@ export function HorizontalWideArticle({ articles }) {
               <h3 className={styles.title}>{article.title}</h3>
             </a>
 
-            <AuthorTag 
+            <AuthorTag
               href={`/authors/${article.authorId}`}
               className={styles.author}
             >

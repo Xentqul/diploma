@@ -46,11 +46,15 @@ function Footer() {
             </li>
           </ul>
 
-          <p className={styles.commission}>
-            Мы можем получать комиссионные за ссылки на этой странице, но мы
-            рекомендуем только те продукты, на которые сами ссылаемся.
-          </p>
-          <p className={styles.rights}>©2025 DRESSERY. All Rights Reserved.</p>
+          <div className={styles.textFooterCombinate}>
+            <p className={styles.commission}>
+              Мы можем получать комиссионные за ссылки на этой странице, но мы
+              рекомендуем только те продукты, на которые сами ссылаемся.
+            </p>
+            <p className={styles.rights}>
+              ©2025 DRESSERY. All Rights Reserved.
+            </p>
+          </div>
         </div>
         <div className={styles.navigationBlock}>
           <nav aria-label="Разделы журнала">
@@ -79,7 +83,7 @@ function Footer() {
             </ul>
           </nav>
 
-          <div class={styles.footerUtils}>
+          <div className={styles.footerUtils}>
             <a href="#">Аккаунт</a>
             <a href="#">Вакансии</a>
             <a href="#">Контакты</a>

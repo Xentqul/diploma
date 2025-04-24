@@ -2,6 +2,7 @@ import album1 from "@/assets/main-pics/music/main_page-album-1.webp";
 import album2 from "@/assets/main-pics/music/main_page-album-2.webp";
 import album3 from "@/assets/main-pics/music/main_page-album-3.webp";
 import album4 from "@/assets/main-pics/music/main_page-album-4.webp";
+import album5 from "@/assets/main-pics/music/main_page-album-5.webp";
 
 export let AlbumCardsData = [
   {
@@ -38,6 +39,15 @@ export let AlbumCardsData = [
     albumLink: "#!",
     artistName: "Selena Gomez",
     artistLink: "/artists/selena_gomez",
+    category: "сингл",
+  },
+  {
+    id: 5,
+    albumCover: album5,
+    albumTitle: "Good Mourning",
+    albumLink: "#!",
+    artistName: "Betta Lemme",
+    artistLink: "/artists/betta_lemme",
     category: "сингл",
   },
 ];
