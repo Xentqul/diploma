@@ -45,6 +45,16 @@ function Header() {
 
   return (
     <header className={styles.header}>
+      {/*------------------------------------- КНОПКА АККАУНТА / МОБИЛЬНАЯ ВЕРСИЯ -------------------------------------*/}
+      <div className={styles.accountButtonMobile}>
+        <a href="/account">
+          <img
+            src={accountIcon}
+            alt="account"
+            className={styles.accountImgMobile}
+          />
+        </a>
+      </div>
       {/*----------- Логотип DR ------------*/}
       <div className={styles.logoMobileWrapper}>
         <span className={styles.logoMobile}>DR</span>
@@ -57,7 +67,11 @@ function Header() {
         }`}
         onClick={toggleBurgerMenu}
       >
-        <img src={burgerMenuIcon} alt="меню" className={styles.burgerMenuIcon} />
+        <img
+          src={burgerMenuIcon}
+          alt="меню"
+          className={styles.burgerMenuIcon}
+        />
       </div>
 
       {/*---------------------------------------- ВЕРХНЯЯ ЧАСТЬ ШАПКИ / ДЕСКТОП -----------------------------*/}

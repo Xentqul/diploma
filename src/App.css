@@ -17,6 +17,14 @@
   margin-top: 150px;
 }
 
+@media (max-width: 768px) {
+  .content {
+    margin-top: 70px;
+  }
+}
+
+/*----------------------------------------- добавлено системой --------------------------------------------*/
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

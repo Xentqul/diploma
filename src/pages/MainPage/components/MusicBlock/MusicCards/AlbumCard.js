@@ -1,6 +1,4 @@
 import styles from "./AlbumCard.module.css";
-// import { Tag } from "@/shared/ui/Tag/Tag.js";
-// import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag.js";
 
 function AlbumCard({ data }) {
   return (

@@ -9,17 +9,22 @@ function PhotoContentButtonCard() {
       {ArtPhotoCardData.map((article) => (
         <article key={article.id} className={styles.card}>
           {/*------ фото для десктопа ---------*/}
-          <img
-            src={article.desktopImage}
-            alt={article.title}
-            className={styles.desktopImage}
-          />
+          <a href={article.articleTag}>
+            <img
+              src={article.desktopImage}
+              alt={article.title}
+              className={styles.desktopImage}
+            />
+          </a>
           {/*------- фото для мобильной версии --------*/}
-          <img
-            src={article.mobileImage}
-            alt={article.title}
-            className={styles.mobileImage}
-          />
+          <a href={article.articleTag}>
+            <img
+              src={article.mobileImage}
+              alt={article.title}
+              className={styles.mobileImage}
+            />
+          </a>
+          {/*-------------- контент ---------------*/}
           <div className={styles.content}>
             <Tag size="large" href={article.tag}>
               {article.tag}

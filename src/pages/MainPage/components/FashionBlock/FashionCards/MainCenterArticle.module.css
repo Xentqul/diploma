@@ -49,7 +49,51 @@
     font-style: italic;
 }
 
-
 .italic {
     font-style: italic;
+}
+
+@media (max-width: 768px) {
+
+    .featuredImage {
+        width: 100vw;
+        height: 50vw;
+        object-position: center;
+    }
+
+    .mainFashionArticle .wrapper {
+        gap: 10px;
+    }
+
+    .textContent > *{
+        margin-bottom: 0;
+    }
+
+    .textContent {
+        max-width: 100vw;
+        width: 100vw;
+        padding: 10px 10px 0 10px;
+        align-self: center;
+    }
+
+    .mainName h3 {
+        font-size: 22px;
+    }
+
+    .descr {
+        padding-top: 10px;
+        font-size: 20px;
+    }
+
+    .authorWrapper {
+        padding-top: 15px;
+    }
+
+    .authorWrapper:first-child {
+        font-size: 16px;
+    }
+
+    .authorWrapper> :last-child {
+        font-size: 16px;
+    }
 }

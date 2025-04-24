@@ -105,6 +105,12 @@ header ul {
   list-style-type: none;
 }
 
+/*------------- СКРЫТЬ КНОПКУ АККАУНТА В МОБИЛЬНОЙ ВЕРСИИ -----------------*/
+
+.accountButtonMobile {
+  display: none;
+}
+
 /*------------------------------ НИЖНЯЯ ЧАСТЬ ШАПКИ / ДЕСКТОП -------------------------------*/
 .lowerHeaderBlock {
   position: relative;
@@ -228,11 +234,13 @@ input:checked+.slider:before {
   cursor: pointer;
 }
 
+/* настройка блока меню */
+
 .burgerMenuWrapper {
   position: fixed;
   top: 0;
   left: -100%;
-  width: 70%;
+  width: 100%;
   height: 100vh;
   background-color: var(--bs-white);
   z-index: 1000;
@@ -293,20 +301,21 @@ input:checked+.slider:before {
 }
 
 .socialMediaMobile {
-  padding-top: 15px;
+  padding-top: 35px;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
 .socialMediaMobile div {
+  width: 60%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
-.socialMedia img {
-  width: 24px;
-  height: 24px;
+.socialMediaMobile img {
+  width: 30px;
+  height: auto;
 }
 
 .burgerSpanSwitch {
@@ -335,32 +344,59 @@ input:checked+.slider:before {
 @media (max-width: 768px) {
   header {
     height: 50px;
-  }
-
-  header .wrapper {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center; /* Выравнивание элементов по центру */
-    height: 60px; /* Фиксированная высота */
-    box-sizing: border-box; /* Учитываем padding и border */
+    padding: 0 15px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    background-color: var(--bs-white);
+    z-index: 1000;
   }
 
-  .burgerMenuIcon {
-    width: 30px;
-    height: 30px;
-  }
-
+  header .wrapper,
   .upperHeader,
   .lowerHeaderBlock {
     display: none;
   }
 
-  .logoMobileWrapper {
-    display: block;
-  }
-
+  /* бургер-кнопка - слева */
   .burgerButton {
     display: block;
+    order: 1;
+    flex: 0 0 auto;
+    margin-right: auto;
+  }
+
+  /* логотип - абсолютно по центру */
+  .logoMobileWrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    order: 2;
+  }
+
+  .logoMobile {
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  /* кнопка аккаунта - справа */
+  .accountButtonMobile {
+    display: block;
+    order: 3;
+    flex: 0 0 auto;
+    margin-left: auto;
+  }
+
+  .accountImgMobile,
+  .burgerMenuIcon {
+    width: 26px;
+    height: 26px;
   }
 
   .burgerMenuWrapper {
