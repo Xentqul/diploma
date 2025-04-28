@@ -1,10 +1,11 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
-import logo from "./logo.svg";
 import Header from "./shared/layout/Header/Header";
 import Footer from "./shared/layout/Footer/Footer";
 import MainPage from "./pages/MainPage/MainPage.js";
 import LoginPage from "./pages/LogInPage/LogInPage.js";
+import SignUpPage from "./pages/SignUpPage/SignUpPage.js";
+import ApplicationPage from "./pages/ApplicationPage/ApplicationPage.js";
 
 function App() {
   return (
@@ -18,6 +19,10 @@ function App() {
           <Route path="/" element={<MainPage />} />
           {/* Страница входа */}
           <Route path="/login" element={<LoginPage />} />
+          {/* Страница регистрации */}
+          <Route path="/signup" element={<SignUpPage />} />
+          {/* Страница подачи заявки на работу */}
+          <Route path="/application" element={<ApplicationPage />} />
         </Routes>
       </div>
 

@@ -5,3 +5,8 @@
     color: var(--bs-black);
     text-decoration: none;
 }
+
+.backButton:hover {
+    text-decoration: 1px underline;
+    text-underline-offset: 0.15em;
+}

@@ -2,7 +2,7 @@
 .button {
   display: inline-block;
   width: auto;
-  padding: 15px 110px; /* Размеры кнопки */
+  padding: 12px 100px; /* Размеры кнопки */
   font-size: 18px;
   font-weight: 400;
   text-align: center;

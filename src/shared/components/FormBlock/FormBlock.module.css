@@ -1,0 +1,35 @@
+.formBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+.formTitle {
+    margin-top: 70px;
+    font-size: 23px;
+    font-weight: 700;
+    color: var(--bs-black);
+}
+
+.inputsContainer {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.alignButton {
+    margin-top: 15px;
+    align-self: center;
+}
+
+.formFooter {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.formLink {
+    display: block;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--bs-black);
+}

@@ -9,7 +9,6 @@ import CultureBlock from "./components/CultureBlock/CultureBlock";
 import BeautyBlock from "./components/BeautyBlock/BeautyBlock";
 import MusicBlock from "./components/MusicBlock/MusicBlock";
 import ArtPhotoBlock from "./components/ArtPhotoBlock/ArtPhotoBlock";
-import LoginPage from "@/pages/LogInPage/LogInPage.js";
 
 function MainPage() {
   return (

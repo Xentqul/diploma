@@ -1,25 +1,25 @@
 .wrapper {
-    height: 800px;
+    height: 950px;
     display: flex;
     margin-top: 70px;
 }
 
 .sidePic {
     width: 40%;
-    height: 950px;
+    height: 1100px;
     object-fit: cover;
 }
 
 .rightSide {
     width: 30%;
     max-width: 38%;
-    margin: 100px auto;
+    margin: 70px auto;
 }
 
 .topSection {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
 }
 
 .logo {

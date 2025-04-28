@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./Header.module.css";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom"; // Импортируем Link
+
 // ------------ ИКОНКИ ---------
 import changeLangIcon from "@assets/icons/change-lang-icon.png";
 import instIcon from "@assets/icons/inst-icon.png";
@@ -47,14 +49,15 @@ function Header() {
     <header className={styles.header}>
       {/*------------------------------------- КНОПКА АККАУНТА / МОБИЛЬНАЯ ВЕРСИЯ -------------------------------------*/}
       <div className={styles.accountButtonMobile}>
-        <a href="/account">
+        <Link to="/login">
           <img
             src={accountIcon}
             alt="account"
             className={styles.accountImgMobile}
           />
-        </a>
+        </Link>
       </div>
+
       {/*----------- Логотип DR ------------*/}
       <div className={styles.logoMobileWrapper}>
         <span className={styles.logoMobile}>DR</span>
@@ -78,9 +81,9 @@ function Header() {
       <div className={styles.upperHeader}>
         <div className={styles.wrapper}>
           <div className={styles.logoLanguage}>
-            <a href="index.html">
+            <Link to="/">
               <span className={styles.logo}>DRESSERY</span>
-            </a>
+            </Link>
             <hr className={styles.verticalHr} />
             <img
               src={changeLangIcon}
@@ -123,16 +126,16 @@ function Header() {
               </li>
             </ul>
             <hr className={styles.verticalHr} />
-            <a href="#" className={styles.accountButton}>
+            <Link to="/login" className={styles.accountButton}>
               Войти
-            </a>
-            <a href="#">
+            </Link>
+            <Link to="/login">
               <img
                 src={accountIcon}
                 alt="account"
                 className={styles.accountImg}
               />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -149,22 +152,22 @@ function Header() {
             <nav className={styles.navigation} aria-label="Основные разделы">
               <ul>
                 <li>
-                  <a href="#">мода и стиль</a>
+                  <Link to="/fashion">мода и стиль</Link>
                 </li>
                 <li>
-                  <a href="#">красота</a>
+                  <Link to="/beauty">красота</Link>
                 </li>
                 <li>
-                  <a href="#">культура</a>
+                  <Link to="/culture">культура</Link>
                 </li>
                 <li>
-                  <a href="#">арт&фотографии</a>
+                  <Link to="/art">арт&фотографии</Link>
                 </li>
                 <li>
-                  <a href="#">музыка</a>
+                  <Link to="/music">музыка</Link>
                 </li>
                 <li>
-                  <a href="#">новости</a>
+                  <Link to="/news">новости</Link>
                 </li>
 
                 {/*------------ ПЕРЕКЛЮЧАТЕЛЬ ТЕМ  ------------*/}
@@ -205,22 +208,22 @@ function Header() {
               <span className={styles.burgerLogoInside}>DR</span>
             </li>
             <li className={styles.paddingDownFromLogo}>
-              <a href="#">мода и стиль</a>
+              <Link to="/fashion">мода и стиль</Link>
             </li>
             <li>
-              <a href="#">красота</a>
+              <Link to="/beauty">красота</Link>
             </li>
             <li>
-              <a href="#">культура</a>
+              <Link to="/culture">культура</Link>
             </li>
             <li>
-              <a href="#">арт&фотографии</a>
+              <Link to="/art">арт&фотографии</Link>
             </li>
             <li>
-              <a href="#">музыка</a>
+              <Link to="/music">музыка</Link>
             </li>
             <li>
-              <a href="#">новости</a>
+              <Link to="/news">новости</Link>
             </li>
             <li>
               {/*------------ ПЕРЕКЛЮЧАТЕЛЬ ТЕМ / МОБИЛЬНАЯ ВЕРСИЯ ---------------*/}

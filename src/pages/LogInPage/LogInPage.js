@@ -1,15 +1,15 @@
 import styles from "./LogInPage.module.css";
-import { Link } from "react-router-dom";
 import loginPic from "@/assets/login-pic/login.webp";
-import InputAndLabel from "@/shared/ui/InputAndLabel/InputAndLabel";
-import SubmitButton from "@/shared/ui/SubmitButton/SubmitButton";
 import BackButton from "@/shared/ui/BackButton/BackButton";
+import FormBlock from "@/shared/components/FormBlock/FormBlock";
 
-function LoginPage() {
+function LogInPage() {
   return (
     <div className={styles.wrapper}>
-      <img src={loginPic} alt="Войти" className={styles.loginPic} />
+      {/* Левая часть: картинка */}
+      <img src={loginPic} alt="Войти" className={styles.sidePic} />
 
+      {/* Правая часть: контент */}
       <div className={styles.rightSide}>
         {/* Верхняя часть: кнопка на главную и логотип */}
         <div className={styles.topSection}>
@@ -17,39 +17,33 @@ function LoginPage() {
           <span className={styles.logo}>DRESSERY</span>
         </div>
 
-        <span className={styles.title}>ВХОД В АККАУНТ</span>
-
-        {/* Поля ввода через компонент InputAndLabel */}
-        <InputAndLabel
-          label="email"
-          placeholder="example@gmail.com"
-          type="email"
-          name="email"
-          value=""
-          onChange={() => {}}
+        {/* Форма входа */}
+        <FormBlock
+          title="ВХОД В АККАУНТ"
+          inputs={[
+            {
+              label: "эл. почта",
+              placeholder: "example@mail.ru",
+              type: "email",
+              name: "email",
+            },
+            {
+              label: "пароль",
+              placeholder: "Введите ваш пароль",
+              type: "password",
+              name: "password",
+            },
+          ]}
+          buttonLabel="войти"
+          footerLink={{
+            text: "eще нет аккаунта?",
+            label: "зарегистрироваться",
+            link: "/signup",
+          }}
         />
-        <InputAndLabel
-          label="password"
-          placeholder="Введите ваш пароль"
-          type="password"
-          name="password"
-          value=""
-          onChange={() => {}}
-        />
-
-        {/* Кнопка отправки данных */}
-        <SubmitButton>войти</SubmitButton>
-
-        {/* Ссылка на регистрацию */}
-        <p className={styles.registerLink}>
-          еще нет аккаунта?{" "}
-          <Link to="/register" className={styles.link}>
-            зарегистрироваться
-          </Link>
-        </p>
       </div>
     </div>
   );
 }
 
-export default LoginPage;
+export default LogInPage;
