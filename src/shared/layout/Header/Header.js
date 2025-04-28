@@ -75,11 +75,6 @@ function Header() {
           alt="меню"
           className={styles.burgerMenuIcon}
         />
-        <img
-          src={burgerMenuIcon}
-          alt="меню"
-          className={styles.burgerMenuIcon}
-        />
       </div>
 
       {/*---------------------------------------- ВЕРХНЯЯ ЧАСТЬ ШАПКИ / ДЕСКТОП -----------------------------*/}
