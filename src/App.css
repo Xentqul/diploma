@@ -4,3 +4,8 @@
   --pale-accent: #E1E5EE;
   --input-color: #484848;
 }
+
+/* Стили для всех Link из React Router */
+a {
+  width: fit-content;
+}

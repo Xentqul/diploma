@@ -20,3 +20,18 @@
     outline: none;
     transition: border-color 0.2s ease;
 }
+
+.input.error {
+    border: 2px solid var(--color-tag);
+  }
+  
+  .errorMessage {
+    color: var(--color-tag);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+  
+  .required {
+    color: var(--color-tag);
+    margin-left: 0.25rem;
+  }

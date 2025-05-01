@@ -29,6 +29,7 @@
 
 .formLink {
     display: block;
+    justify-self: center;
     font-size: 18px;
     font-weight: 500;
     color: var(--bs-black);
