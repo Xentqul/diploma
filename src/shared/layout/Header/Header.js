@@ -12,15 +12,25 @@ import twIcon from "@assets/icons/twitter-icon.png";
 import vkIcon from "@assets/icons/vk-icon.png";
 import ttIcon from "@assets/icons/tiktok-icon.png";
 import accountIcon from "@assets/icons/account-icon.png";
+import accountIconChecked from "@assets/icons/account-icon-checked.png";
 import burgerMenuIcon from "@assets/icons/burger_menu-mobile.png";
 import burgerMenuCloseIcon from "@assets/icons/burger_menu-close.png";
 // ------------ ИКОНКИ -----------
 
 function Header() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Состояние авторизации
   const [isDarkTheme, setIsDarkTheme] = useState(false); // Состояние для темы
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false); // Состояние бургер-меню
   const [isScrollingDown, setIsScrollingDown] = useState(false); // Состояние скролла
   const [prevScrollPos, setPrevScrollPos] = useState(0);
+
+    // Проверяем авторизацию при загрузке
+    useEffect(() => {
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        setIsLoggedIn(true);
+      }
+    }, []);
 
   //--------- ПЕРЕКЛЮЧЕНИЕ ТЕМЫ ---------
   const toggleTheme = () => {
@@ -48,10 +58,10 @@ function Header() {
   return (
     <header className={styles.header}>
       {/*------------------------------------- КНОПКА АККАУНТА / МОБИЛЬНАЯ ВЕРСИЯ -------------------------------------*/}
-      <div className={styles.accountButtonMobile}>
-        <Link to="/login">
+<div className={styles.accountButtonMobile}>
+        <Link to={isLoggedIn ? "/account" : "/login"}>
           <img
-            src={accountIcon}
+            src={isLoggedIn ? accountIconChecked : accountIcon}
             alt="account"
             className={styles.accountImgMobile}
           />
@@ -126,12 +136,16 @@ function Header() {
               </li>
             </ul>
             <hr className={styles.verticalHr} />
-            <Link to="/login" className={styles.accountButton}>
-              Войти
-            </Link>
-            <Link to="/login">
+            {!isLoggedIn && (
+              <Link to="/login" className={styles.accountButton}>
+                Войти
+              </Link>
+            )}
+            
+            {/* Иконка аккаунта */}
+            <Link to={isLoggedIn ? "/account" : "/login"}>
               <img
-                src={accountIcon}
+                src={isLoggedIn ? accountIconChecked : accountIcon}
                 alt="account"
                 className={styles.accountImg}
               />
