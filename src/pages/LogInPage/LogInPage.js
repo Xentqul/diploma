@@ -33,13 +33,22 @@ function LogInPage() {
       );
 
       if (response.data.success) {
-        // Сохраняем данные пользователя
-        localStorage.setItem('user', JSON.stringify(response.data.user));
+        // Сохраняем флаг авторизации
+        localStorage.setItem('isLoggedIn', 'true');
+
+        // Отправляем событие о смене статуса
+        window.dispatchEvent(new Event('authChange'));
+
         // Перенаправляем на главную
         navigate('/');
       }
     } catch (err) {
-      setError(err.response?.data?.error || 'Ошибка входа');
+      // Если сервер вернул ответ — используем его сообщение
+      if (err.response && err.response.data.message) {
+        setError(err.response.data.message); // Например: "Неверные данные"
+      } else {
+        setError('Ошибка входа. Попробуйте позже.');
+      }
     }
   };
 
@@ -75,12 +84,12 @@ function LogInPage() {
           ]}
           buttonLabel="войти"
           footerLink={{
-            text: "eще нет аккаунта?",
+            text: "ещё нет аккаунта?",
             label: "зарегистрироваться",
             link: "/signup",
           }}
           onSubmit={handleSubmit}
-          error={error}
+          error={error} // <-- передаем ошибку в FormBlock
         />
       </div>
     </div>

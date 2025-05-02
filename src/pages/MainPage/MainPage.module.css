@@ -1,6 +1,8 @@
 .mainWrapperForAll {
     max-width: 1685px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 150px;
     padding-top: 150px;
 }
 

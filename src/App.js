@@ -6,6 +6,7 @@ import MainPage from "./pages/MainPage/MainPage.js";
 import LoginPage from "./pages/LogInPage/LogInPage.js";
 import SignUpPage from "./pages/SignUpPage/SignUpPage.js";
 import ApplicationPage from "./pages/ApplicationPage/ApplicationPage.js";
+import AccountPage from "./pages/AccountPage/AccountPage.js";
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           {/* Страница подачи заявки на работу */}
           <Route path="/application" element={<ApplicationPage />} />
+          {/* Страница аккаунта */}
+          <Route path="/account" element={<AccountPage />} />
         </Routes>
       </div>
 

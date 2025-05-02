@@ -1,17 +1,27 @@
 .link {
-    width: auto !important;
+    display: inline-block; /* Изменяем на inline-block для лучшего контроля */
     align-self: flex-start;
-    padding: 15px 100px;
-    font-size: 16px;
     text-align: center;
     color: var(--bs-black);
     border: solid var(--bs-black) 1px;
     border-radius: 5px;
     background-color: var(--bs-white);
     text-decoration: none;
+    transition: all 0.3s ease;
 }
 
+/* Размеры */
+.link.medium {
+    padding: 15px 100px;
+    font-size: 16px;
+}
+
+.link.small {
+    padding: 10px 40px; /* Уменьшенные отступы */
+    font-size: 16px;
+}
+
+/* Состояние hover */
 .link:hover {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
 }

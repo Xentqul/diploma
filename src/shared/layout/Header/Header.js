@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "./Header.module.css";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom"; // Импортируем Link
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 // ------------ ИКОНКИ ---------
 import changeLangIcon from "@assets/icons/change-lang-icon.png";
@@ -18,19 +19,37 @@ import burgerMenuCloseIcon from "@assets/icons/burger_menu-close.png";
 // ------------ ИКОНКИ -----------
 
 function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Состояние авторизации
-  const [isDarkTheme, setIsDarkTheme] = useState(false); // Состояние для темы
-  const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false); // Состояние бургер-меню
-  const [isScrollingDown, setIsScrollingDown] = useState(false); // Состояние скролла
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-    // Проверяем авторизацию при загрузке
-    useEffect(() => {
-      const token = localStorage.getItem('authToken');
-      if (token) {
-        setIsLoggedIn(true);
-      }
-    }, []);
+  // Проверка авторизации при загрузке и подписка на изменения
+  useEffect(() => {
+    const checkAuthStatus = () => {
+      const token = localStorage.getItem('isLoggedIn'); // было 'authToken'
+      setIsLoggedIn(!!token);
+    };
+
+    checkAuthStatus();
+    window.addEventListener('authChange', checkAuthStatus);
+
+    return () => {
+      window.removeEventListener('authChange', checkAuthStatus);
+    };
+  }, []);
+
+  // Обработчик выхода
+  const handleLogout = async () => {
+    try {
+      await axios.post('/api/auth/logout');
+      localStorage.removeItem('authToken');
+      window.dispatchEvent(new Event('authChange'));
+    } catch (error) {
+      console.error('Ошибка при выходе:', error);
+    }
+  };
 
   //--------- ПЕРЕКЛЮЧЕНИЕ ТЕМЫ ---------
   const toggleTheme = () => {
@@ -58,7 +77,7 @@ function Header() {
   return (
     <header className={styles.header}>
       {/*------------------------------------- КНОПКА АККАУНТА / МОБИЛЬНАЯ ВЕРСИЯ -------------------------------------*/}
-<div className={styles.accountButtonMobile}>
+      <div className={styles.accountButtonMobile}>
         <Link to={isLoggedIn ? "/account" : "/login"}>
           <img
             src={isLoggedIn ? accountIconChecked : accountIcon}
@@ -70,7 +89,9 @@ function Header() {
 
       {/*----------- Логотип DR ------------*/}
       <div className={styles.logoMobileWrapper}>
+        <Link to={"/"}>
         <span className={styles.logoMobile}>DR</span>
+        </Link>
       </div>
 
       {/*------------------------------------- КНОПКА ОТКРЫТИЯ БУРГЕР МЕНЮ / МОБИЛЬНАЯ ВЕРСИЯ -------------------------------------*/}
@@ -141,8 +162,6 @@ function Header() {
                 Войти
               </Link>
             )}
-            
-            {/* Иконка аккаунта */}
             <Link to={isLoggedIn ? "/account" : "/login"}>
               <img
                 src={isLoggedIn ? accountIconChecked : accountIcon}
