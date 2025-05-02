@@ -25,27 +25,27 @@ function LogInPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
+  
     try {
       const response = await axios.post(
         'http://localhost:5000/api/auth/login',
         formData
       );
-
+  
       if (response.data.success) {
-        // Сохраняем флаг авторизации
-        localStorage.setItem('isLoggedIn', 'true');
-
-        // Отправляем событие о смене статуса
+        // ✅ Сохраняем токен (или просто true, если его нет)
+        const token = response.data.token || 'true';
+        localStorage.setItem('authToken', token);
+  
+        // ✅ Оповещаем шапку о смене статуса
         window.dispatchEvent(new Event('authChange'));
-
-        // Перенаправляем на главную
+  
+        // ✅ Перенаправляем на главную
         navigate('/');
       }
     } catch (err) {
-      // Если сервер вернул ответ — используем его сообщение
       if (err.response && err.response.data.message) {
-        setError(err.response.data.message); // Например: "Неверные данные"
+        setError(err.response.data.message);
       } else {
         setError('Ошибка входа. Попробуйте позже.');
       }

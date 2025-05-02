@@ -84,4 +84,22 @@ module.exports = {
       });
     }
   },
+
+  //---------------------------------------------------- МЕТОД ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
+
+  logout: async (req, res) => {
+    try {
+      res.clearCookie('token', {
+        httpOnly: true,
+        secure: false, // true в production (HTTPS)
+        sameSite: 'lax',
+        domain: 'localhost'
+      });
+      
+      res.json({ success: true, message: "Вы успешно вышли из системы" });
+    } catch (err) {
+      console.error('Ошибка выхода:', err);
+      res.status(500).json({ success: false, message: "Ошибка сервера" });
+    }
+  },
 };

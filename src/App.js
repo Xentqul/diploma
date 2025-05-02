@@ -1,4 +1,5 @@
 import "./App.css";
+import axios from 'axios';
 import { Routes, Route } from "react-router-dom";
 import Header from "./shared/layout/Header/Header";
 import Footer from "./shared/layout/Footer/Footer";

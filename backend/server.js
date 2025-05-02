@@ -1,25 +1,32 @@
 const express = require("express");
-const { Pool } = require("pg"); // Для работы с PostgreSQL
 const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs"); // Для хеширования паролей
 const cors = require("cors");
+const cookieParser = require("cookie-parser"); // Для работы с cookies
+const pool = require("./config/db"); // Подключаем пул соединений из конфига
 
 const app = express();
 const PORT = 5000;
 
-app.use(cors()); // Разрешаем запросы из React
-app.use(bodyParser.json());
+// Подключаем маршруты аутентификации
+const authRoutes = require('./routes/auth');
+app.use('/api/auth', authRoutes); // Теперь маршруты будут доступны как /api/auth/login и т.д.
 
-// Настройка подключения к PostgreSQL
-const pool = new Pool({
-  user: "postgres", // Имя пользователя
-  host: "localhost", // Адрес сервера
-  database: "dressery_db", // Название базы данных
-  password: "zxcasdqwe!1234567890", // Пароль от PostgreSQL
-  port: 5432, // Порт PostgreSQL
+app.listen(PORT, () => {
+  console.log(`Сервер запущен на http://localhost:${PORT}`);
 });
 
-// Роут для регистрации пользователя
+//---------------------------------------------------- НАСТРОЙКА CORS И ПАРСЕРОВ ------------------------------------------------------
+// Настройки CORS с явным указанием origin
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
+
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+//---------------------------------------------------- РОУТ ДЛЯ РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ --------------------------------------------------
 app.post("/api/register", async (req, res) => {
   const { firstName, lastName, email, phone, password } = req.body;
 
@@ -46,7 +53,7 @@ app.post("/api/register", async (req, res) => {
   }
 });
 
-// Роут для входа пользователя
+//-------------------------------------------------------- РОУТ ДЛЯ ВХОДА ПОЛЬЗОВАТЕЛЯ -----------------------------------------------------
 app.post("/api/auth/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -71,7 +78,13 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(401).json({ error: "Неверный email или пароль" });
     }
 
-    // 3. Если всё верно - возвращаем успешный ответ
+    // 3. Устанавливаем cookie для аутентификации
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000 // Срок действия - 1 день
+    });
+
+    // 4. Возвращаем успешный ответ
     res.json({ 
       success: true,
       user: {
@@ -88,17 +101,23 @@ app.post("/api/auth/login", async (req, res) => {
   }
 });
 
-//---------------------------------------------- ЛОГИРОВАНИЕ ПОДКЛЮЧЕНИЯ
-console.log("Проверяем подключение к PostgreSQL...");
-
-pool
-  .query("SELECT NOW() as time")
-  .then((res) =>
-    console.log("✅ PostgreSQL отвечает. Текущее время:", res.rows[0].time)
-  )
-  .catch((err) => console.error("❌ Ошибка PostgreSQL:", err.message));
-
-// Запуск сервера
+//---------------------------------------------------- РОУТ ДЛЯ ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
+app.post("/api/auth/logout", (req, res) => {
+  try {
+    // Упрощенная очистка cookie
+    res.cookie('auth', '', {
+      httpOnly: true,
+      expires: new Date(0), // Устанавливаем дату в прошлое
+      path: '/'
+    });
+    
+    res.json({ success: true, message: "Вы успешно вышли из системы" });
+  } catch (err) {
+    console.error('Ошибка выхода:', err);
+    res.status(500).json({ success: false, message: "Ошибка сервера" });
+  }
+});
+//---------------------------------------------------- ЗАПУСК СЕРВЕРА ------------------------------------------------------
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

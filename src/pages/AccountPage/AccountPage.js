@@ -1,19 +1,59 @@
 import styles from "./AccountPage.module.css";
+import axios from "axios";
 import { HorizontalWideArticle } from "@/pages/MainPage/components/CultureBlock/CultureCards/HorizontalWideArticle";
 import LabelAndInfo from "@/shared/ui/LabelAndInfo/LabelAndInfo";
 import InputAndLabel from "@/shared/ui/InputAndLabel/InputAndLabel";
 import SubmitButton from "@/shared/ui/SubmitButton/SubmitButton";
 import { LinkButton } from "@/shared/ui/LinkButton/LinkButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import user from "@/assets/main-pics/first-main-pic.webp";
 import { CultureCardsData } from "./CultureCardsData";
 
 function AccountPage() {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    console.log("Инициирован выход из системы");
+  
+    try {
+      // Отправляем запрос на сервер
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/logout",
+        {},
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      console.log("Ответ сервера:", response.data);
+  
+      // Очищаем данные авторизации
+      localStorage.removeItem('authToken');
+      sessionStorage.clear();
+  
+      // Оповещаем шапку об изменении статуса
+      window.dispatchEvent(new Event('authChange'));
+  
+      // Перенаправляем на главную без лишней перезагрузки
+      navigate('/');
+      
+    } catch (error) {
+      console.error("Ошибка выхода:", {
+        message: error.message,
+        response: error.response?.data,
+        stack: error.stack,
+      });
+      alert("Ошибка при выходе. Проверьте консоль.");
+    }
+  };
+
   return (
     <div className={styles.accountWrapper}>
       <div className={styles.justify}>
         <div className={styles.topPart}>
-
           <div className={styles.column}>
             <Link to="/news">Последние новости</Link>
             <HorizontalWideArticle articles={CultureCardsData.slice(1, 3)} />
@@ -33,7 +73,9 @@ function AccountPage() {
             <LabelAndInfo label="номер телефона" value="+7-(926)-666-66-66" />
 
             <div className={styles.buttonGroup}>
-              <LinkButton size="small">выйти</LinkButton>
+              <LinkButton size="small" onClick={handleLogout}>
+                выйти
+              </LinkButton>
               <LinkButton size="small">удалить аккаунт</LinkButton>
             </div>
           </div>
@@ -42,12 +84,10 @@ function AccountPage() {
             <Link to="/favorites">Избранное</Link>
             <HorizontalWideArticle articles={CultureCardsData.slice(1, 3)} />
           </div>
-
         </div>
       </div>
 
       <div className={styles.bottomPart}>
-        
         <div className={styles.subscriptionBlock}>
           <h3>Не пропустите тренды сезона</h3>
           <p>
