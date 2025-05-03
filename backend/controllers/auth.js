@@ -1,6 +1,9 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const pool = require("../config/db");
+
+// Импортируем пул подключения к БД
+// ❗ Важно: файл db.js находится в папке config, которая на уровень выше
+const pool = require("../config/db"); // ✅ Правильный путь
 
 module.exports = {
   //------------------------------------------------------------------ МЕТОД РЕГИСТРАЦИИ ----------------------------------------------------------------------
@@ -11,7 +14,7 @@ module.exports = {
       const hashedPassword = await bcrypt.hash(password, 10);
 
       const result = await pool.query(
-        "INSERT INTO dressery_schema.users (...) VALUES (...) RETURNING *",
+        "INSERT INTO dressery_schema.users (first_name, last_name, email, phone_number, password_hash, role) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
         [firstName, lastName, email, phone, hashedPassword, "user"]
       );
 
@@ -56,10 +59,6 @@ module.exports = {
         { expiresIn: "24h" }
       );
   
-      // Явно устанавливаем заголовки перед отправкой куки
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-      res.setHeader('Access-Control-Allow-Credentials', 'true');
-      
       res.cookie("token", token, {
         httpOnly: true,
         secure: false, // true в production (HTTPS)
@@ -86,7 +85,6 @@ module.exports = {
   },
 
   //---------------------------------------------------- МЕТОД ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
-
   logout: async (req, res) => {
     try {
       res.clearCookie('token', {
