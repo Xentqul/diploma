@@ -27,24 +27,25 @@ module.exports = {
       }
     }
   },
-
-  //------------------------------------------------------------------ МЕТОД ВХОДА -------------------------------------------------------------------
+//---------------------------------------------------- МЕТОД ВХОДА  ----------------------------------------------------
   login: async (req, res) => {
     const { email, password } = req.body;
-  
+
     try {
+      // Поиск пользователя
       const user = await pool.query(
         "SELECT * FROM dressery_schema.users WHERE email = $1",
         [email]
       );
-  
+
       if (!user.rows[0]) {
         return res.status(401).json({ 
           success: false, 
           message: "Неверные данные" 
         });
       }
-  
+
+      // Проверка пароля
       const isValidPass = await bcrypt.compare(password, user.rows[0].password_hash);
       if (!isValidPass) {
         return res.status(401).json({ 
@@ -52,21 +53,25 @@ module.exports = {
           message: "Неверные данные" 
         });
       }
-  
+
+      // Генерация токена
       const token = jwt.sign(
         { userId: user.rows[0].id },
         process.env.JWT_SECRET || 'secret_key',
         { expiresIn: "24h" }
       );
-  
+
+      // Установка куки
       res.cookie("token", token, {
         httpOnly: true,
         secure: false, // true в production (HTTPS)
         sameSite: 'lax',
-        maxAge: 24 * 60 * 60 * 1000,
+        maxAge: 24 * 60 * 60 * 1000, // 24 часа
+        path: '/',
         domain: 'localhost'
       });
-  
+
+      // Ответ клиенту
       res.json({ 
         success: true,
         user: {
@@ -74,7 +79,7 @@ module.exports = {
           email: user.rows[0].email
         }
       });
-  
+
     } catch (err) {
       console.error('Ошибка входа:', err);
       res.status(500).json({ 
@@ -84,20 +89,37 @@ module.exports = {
     }
   },
 
-  //---------------------------------------------------- МЕТОД ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
+  //---------------------------------------------------- ПРОВЕРКА АВТОРИЗАЦИИ ----------------------------------------------------
+  checkAuth: (req, res) => {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.json({ isAuthenticated: false });
+    }
+
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret_key');
+      res.json({ isAuthenticated: true, user: decoded });
+    } catch (e) {
+      res.json({ isAuthenticated: false });
+    }
+  },
+//---------------------------------------------------- МЕТОД ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
   logout: async (req, res) => {
     try {
-      res.clearCookie('token', {
+      res.cookie("token", "", {
         httpOnly: true,
-        secure: false, // true в production (HTTPS)
+        secure: false,
         sameSite: 'lax',
+        maxAge: 0,
+        path: '/',
         domain: 'localhost'
       });
-      
+  
       res.json({ success: true, message: "Вы успешно вышли из системы" });
     } catch (err) {
       console.error('Ошибка выхода:', err);
       res.status(500).json({ success: false, message: "Ошибка сервера" });
     }
-  },
+  }
 };

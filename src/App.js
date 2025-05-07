@@ -1,5 +1,4 @@
 import "./App.css";
-import axios from 'axios';
 import { Routes, Route } from "react-router-dom";
 import Header from "./shared/layout/Header/Header";
 import Footer from "./shared/layout/Footer/Footer";
@@ -8,6 +7,9 @@ import LoginPage from "./pages/LogInPage/LogInPage.js";
 import SignUpPage from "./pages/SignUpPage/SignUpPage.js";
 import ApplicationPage from "./pages/ApplicationPage/ApplicationPage.js";
 import AccountPage from "./pages/AccountPage/AccountPage.js";
+import axios from "axios";
+
+axios.defaults.withCredentials = true;
 
 function App() {
   return (

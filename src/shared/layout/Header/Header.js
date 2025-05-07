@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Header.module.css";
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useAuth } from "@/context/AuthContext"; // ✅ Используем контекст авторизации
 
 // ------------ ИКОНКИ ---------
 import changeLangIcon from "@assets/icons/change-lang-icon.png";
@@ -18,43 +17,18 @@ import burgerMenuIcon from "@assets/icons/burger_menu-mobile.png";
 import burgerMenuCloseIcon from "@assets/icons/burger_menu-close.png";
 
 function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isAuthenticated, logout } = useAuth(); // ✅ Получаем из контекста
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
   const [isScrollingDown, setIsScrollingDown] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  // Проверка авторизации при загрузке и подписка на изменения
-  useEffect(() => {
-    const checkAuthStatus = () => {
-      const token = localStorage.getItem('authToken');
-      setIsLoggedIn(!!token);
-    };
-    checkAuthStatus();
-    window.addEventListener('authChange', checkAuthStatus);
-    return () => {
-      window.removeEventListener('authChange', checkAuthStatus);
-    };
-  }, []);
-
-  // Обработчик выхода
-  const handleLogout = async () => {
-    try {
-      await axios.post('/api/auth/logout');
-      localStorage.removeItem('authToken');
-      window.dispatchEvent(new Event('authChange'));
-      window.location.href = 'http://localhost:3000'; // Перенаправление на главную
-    } catch (error) {
-      console.error('Ошибка при выходе:', error);
-    }
-  };
 
   //--------- ПЕРЕКЛЮЧЕНИЕ ТЕМЫ ---------
   const toggleTheme = () => {
     setIsDarkTheme((prev) => !prev);
   };
 
-  // ----------- ОТКРЫТИЕ/ЗАКРЫТИЕ БУРГЕР МЕНЮ --------------
+  //----------- ОТКРЫТИЕ/ЗАКРЫТИЕ БУРГЕР МЕНЮ --------------
   const toggleBurgerMenu = () => {
     setIsBurgerMenuOpen((prev) => !prev);
   };
@@ -76,9 +50,9 @@ function Header() {
     <header className={styles.header}>
       {/*------------------------------------- КНОПКА АККАУНТА / МОБИЛЬНАЯ ВЕРСИЯ -------------------------------------*/}
       <div className={styles.accountButtonMobile}>
-        <Link to={isLoggedIn ? "/account" : "/login"}>
+        <Link to={isAuthenticated ? "/account" : "/login"}>
           <img
-            src={isLoggedIn ? accountIconChecked : accountIcon}
+            src={isAuthenticated ? accountIconChecked : accountIcon}
             alt="account"
             className={styles.accountImgMobile}
           />
@@ -131,15 +105,15 @@ function Header() {
             </ul>
             <hr className={styles.verticalHr} />
 
-            {!isLoggedIn && (
+            {!isAuthenticated && (
               <Link to="/login" className={styles.accountButton}>
                 Войти
               </Link>
             )}
 
-            <Link to={isLoggedIn ? "/account" : "/login"}>
+            <Link to={isAuthenticated ? "/account" : "/login"}>
               <img
-                src={isLoggedIn ? accountIconChecked : accountIcon}
+                src={isAuthenticated ? accountIconChecked : accountIcon}
                 alt="account"
                 className={styles.accountImg}
               />

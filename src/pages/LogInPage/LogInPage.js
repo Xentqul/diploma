@@ -5,8 +5,10 @@ import styles from "./LogInPage.module.css";
 import loginPic from "@/assets/login-pic/login.webp";
 import BackButton from "@/shared/ui/BackButton/BackButton";
 import FormBlock from "@/shared/components/FormBlock/FormBlock";
+import { useAuth } from "@/context/AuthContext";
 
 function LogInPage() {
+  const { checkAuth } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -29,19 +31,14 @@ function LogInPage() {
     try {
       const response = await axios.post(
         'http://localhost:5000/api/auth/login',
-        formData
+        formData,
+        { withCredentials: true }
       );
   
       if (response.data.success) {
-        // ✅ Сохраняем токен (или просто true, если его нет)
-        const token = response.data.token || 'true';
-        localStorage.setItem('authToken', token);
-  
-        // ✅ Оповещаем шапку о смене статуса
-        window.dispatchEvent(new Event('authChange'));
-  
-        // ✅ Перенаправляем на главную
-        navigate('/');
+        await checkAuth(); // обновляем авторизацию
+        navigate('/');     // редирект
+        window.location.reload(); // 🚀 принудительно обновляем страницу
       }
     } catch (err) {
       if (err.response && err.response.data.message) {

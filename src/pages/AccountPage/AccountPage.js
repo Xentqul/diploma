@@ -30,16 +30,7 @@ function AccountPage() {
   
       console.log("Ответ сервера:", response.data);
   
-      // Очищаем данные авторизации
-      localStorage.removeItem('authToken');
-      sessionStorage.clear();
-  
-      // Оповещаем шапку об изменении статуса
-      window.dispatchEvent(new Event('authChange'));
-  
-      // Перенаправляем на главную без лишней перезагрузки
-      navigate('/');
-      
+      window.location.href = "/";      
     } catch (error) {
       console.error("Ошибка выхода:", {
         message: error.message,

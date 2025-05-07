@@ -1,12 +1,13 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const bcrypt = require("bcryptjs"); // Для хеширования паролей
-const cors = require("cors");
-const cookieParser = require("cookie-parser"); // Для работы с cookies
-const pool = require("./config/db"); // Подключаем пул соединений из конфига
+let express = require("express");
+let bodyParser = require("body-parser");
+let bcrypt = require("bcryptjs"); // Для хеширования паролей
+let cors = require("cors"); // для передачи данных между разными доменами
+let cookieParser = require("cookie-parser"); // Для работы с cookies
+let pool = require("./config/db"); // Подключаем пул соединений из конфига
+let jwt = require('jsonwebtoken');
 
-const app = express();
-const PORT = 5000;
+let app = express();
+let PORT = 5000;
 // ----------------------------- НАСТРОЙКА CORS -----------------------------------
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -23,19 +24,19 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 // ----------------------------- ПОДКЛЮЧАЕМ МАРШРУТЫ --------------------------------
-const authRoutes = require('./routes/auth');
+let authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
 //---------------------------------------------------- РОУТ ДЛЯ РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ --------------------------------------------------
 app.post("/api/register", async (req, res) => {
-  const { firstName, lastName, email, phone, password } = req.body;
+  let { firstName, lastName, email, phone, password } = req.body;
 
   try {
     // Хеширование пароля
-    const hashedPassword = await bcrypt.hash(password, 10);
+    let hashedPassword = await bcrypt.hash(password, 10);
 
     // Вставка данных в таблицу users
-    const result = await pool.query(
+    let result = await pool.query(
       "INSERT INTO dressery_schema.users (first_name, last_name, email, phone_number, password_hash, role) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
       [firstName, lastName, email, phone, hashedPassword, "user"]
     );
@@ -78,10 +79,21 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(401).json({ error: "Неверный email или пароль" });
     }
 
-    // 3. Устанавливаем cookie для аутентификации
+    // ✅ Генерируем JWT
+    const token = jwt.sign(
+      { userId: user.rows[0].id }, // payload
+      process.env.JWT_SECRET || 'secret_key', // секретный ключ
+      { expiresIn: '24h' }
+    );
+
+    // ✅ Теперь устанавливаем куку
     res.cookie("token", token, {
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000 // Срок действия - 1 день
+      secure: false, // true только на HTTPS
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000, // 1 день
+      path: '/',
+      domain: 'localhost'
     });
 
     // 4. Возвращаем успешный ответ
@@ -104,10 +116,10 @@ app.post("/api/auth/login", async (req, res) => {
 //---------------------------------------------------- РОУТ ДЛЯ ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
 app.post("/api/auth/logout", (req, res) => {
   try {
-    // Упрощенная очистка cookie
-    res.cookie('auth', '', {
+    // ✅ Удаляем правильную куку 'token'
+    res.cookie('token', '', {
       httpOnly: true,
-      expires: new Date(0), // Устанавливаем дату в прошлое
+      expires: new Date(0), // прошлое
       path: '/'
     });
     
