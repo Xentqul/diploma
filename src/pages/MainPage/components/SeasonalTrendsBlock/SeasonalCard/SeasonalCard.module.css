@@ -8,6 +8,10 @@
   background-color: var(--bs-white);
 }
 
+.imageWrapper {
+  width: 100%;
+}
+
 .card .image {
   width: 100%;
   height: 430px;

@@ -1,0 +1,944 @@
+[
+    {
+        "id": 1,
+        "title": {
+            "ru": "Показ Dior Cruise 2025 в Тартане и Твиде стал данью уважения Шотландии",
+            "en": "Dior Cruise 2025 Show in Tartan and Tweed Pays Tribute to Scotland"
+        },
+        "description": {
+            "ru": "Мария Грация Кьюри отдала дань уважения прошлому и настоящему страны.",
+            "en": "Maria Grazia Chiuri paid tribute to the past and present of the country."
+        },
+        "images": [
+            "/assets/main-pics/first-main-pic.webp"
+        ],
+        "author": {
+            "name": {
+                "ru": "Мария Говорунова",
+                "en": "Maria Govorunova"
+            },
+            "id": "maria_govorunova"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#мода",
+                    "en": "#fashion"
+                },
+                "id": "fashion"
+            }
+        ],
+        "link": "/article/dior-cruise-2025",
+        "category": {
+            "ru": "мода",
+            "en": "fashion"
+        },
+        "season": "summer",
+        "publishedAt": "2024-31-01T10:00:00Z",
+        "status": "published",
+        "slug": "dior-cruise-2025"
+    },
+    {
+        "id": 2,
+        "title": {
+            "ru": "Показ CHANEL Весна-Лето 2025",
+            "en": "CHANEL Spring-Summer 2025 Show"
+        },
+        "description": {
+            "ru": "Цветы, золото и струящиеся ткани: как легкость воплощается в жизнь с новой коллекцией",
+            "en": "Flowers, gold and flowing fabrics: how lightness comes to life with the new collection"
+        },
+        "images": [
+            "/assets/main-pics/main-slider/slide-1.webp"
+        ],
+        "author": {
+            "name": {
+                "ru": "Павел Нестеров",
+                "en": "Pavel Nesterov"
+            },
+            "id": "pavel_nesterov"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#мода",
+                    "en": "#fashion"
+                },
+                "id": "fashion"
+            }
+        ],
+        "link": "/article/chanel-spring-summer-2025",
+        "category": {
+            "ru": "мода",
+            "en": "fashion"
+        },
+        "season": "spring",
+        "publishedAt": "2024-06-01T10:00:00Z",
+        "status": "published",
+        "slug": "chanel-spring-summer-2025"
+    },
+    {
+        "id": 3,
+        "title": {
+            "ru": "Кьюри наконец сделала это",
+            "en": "Chiuri Finally Did It"
+        },
+        "description": {
+            "ru": "Мария Кьюри возвращается с триумфальной осенью-зимой 2025.",
+            "en": "Maria Chiuri returns with a triumphant Autumn-Winter 2025 collection."
+        },
+        "images": [
+            "/assets/main-pics/main-slider/slide-2.webp"
+        ],
+        "author": {
+            "name": {
+                "ru": "Мария Говорунова",
+                "en": "Maria Govorunova"
+            },
+            "id": "maria_govorunova"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#мода",
+                    "en": "#fashion"
+                },
+                "id": "fashion"
+            }
+        ],
+        "link": "/article/chiuri-autumn-winter-2025",
+        "category": {
+            "ru": "мода",
+            "en": "fashion"
+        },
+        "season": "winter",
+        "publishedAt": "2024-05-30T10:00:00Z",
+        "status": "published",
+        "slug": "chiuri-autumn-winter-2025"
+    },
+    {
+        "id": 4,
+        "title": {
+            "ru": "Из Balenciaga в Gucci",
+            "en": "From Balenciaga to Gucci"
+        },
+        "description": {
+            "ru": "Крупные перестановки в мире моды продолжаются и в этот раз настигли Gucci в лице Демны Гвасалии",
+            "en": "Major changes in the fashion world continue, this time reaching Gucci through Demna Gvasalia"
+        },
+        "images": [
+            "/assets/main-pics/main-slider/slide-3.webp"
+        ],
+        "author": {
+            "name": {
+                "ru": "Павел Нестеров",
+                "en": "Pavel Nesterov"
+            },
+            "id": "pavel_nesterov"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#дизайнер",
+                    "en": "#designer"
+                },
+                "id": "designer"
+            }
+        ],
+        "link": "/article/balenciaga-to-gucci",
+        "category": {
+            "ru": "дизайнер",
+            "en": "designer"
+        },
+        "season": "all",
+        "publishedAt": "2024-09-28T10:00:00Z",
+        "status": "published",
+        "slug": "balenciaga-to-gucci"
+    },
+    {
+        "id": 5,
+        "title": {
+            "ru": "Донателла Версаче покидает VERSACE",
+            "en": "Donatella Versace Leaves VERSACE"
+        },
+        "description": {
+            "ru": "Уход Донателлы знаменует дому новый творческий этап под руководством Дарио Виталле",
+            "en": "Donatella's departure marks a new creative chapter for the house under the direction of Dario Vitali"
+        },
+        "images": [
+            "/assets/main-pics/main-slider/slide-4.webp"
+        ],
+        "author": {
+            "name": {
+                "ru": "Мария Говорунова",
+                "en": "Maria Govorunova"
+            },
+            "id": "maria_govorunova"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#дизайнер",
+                    "en": "#designer"
+                },
+                "id": "designer"
+            }
+        ],
+        "link": "/article/donatella-versace-leaves",
+        "category": {
+            "ru": "дизайнер",
+            "en": "designer"
+        },
+        "season": "all",
+        "publishedAt": "2024-12-31T10:00:00Z",
+        "status": "published",
+        "slug": "donatella-versace-leaves"
+    },
+    {
+        "id": 6,
+        "title": {
+            "ru": "Классический стиль - синяя полоска",
+            "en": "Classic Style - Blue Stripe"
+        },
+        "description": {
+            "ru": "Лучшие идеи стиллизации прямо с подиума",
+            "en": "Best styling ideas straight from the runway"
+        },
+        "images": [
+            "/assets/main-pics/seasonal-trends/seasonal-1.webp"
+        ],
+        "author": {
+            "name": {
+                "ru": "Мария Говорунова",
+                "en": "Maria Govorunova"
+            },
+            "id": "maria_govorunova"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#стиль",
+                    "en": "#style"
+                },
+                "id": "style"
+            }
+        ],
+        "link": "/article/classic-blue-stripe",
+        "category": {
+            "ru": "стиль",
+            "en": "style"
+        },
+        "season": "spring",
+        "publishedAt": "2024-05-20T10:00:00Z",
+        "status": "published",
+        "slug": "classic-blue-stripe",
+        "isSeasonalTrend": true
+    },
+    {
+        "id": 7,
+        "title": {
+            "ru": "Эти цвета в тренде!",
+            "en": "These Colors Are Trending!"
+        },
+        "description": {
+            "ru": "Главные оттенки весны и лета по версии Pantone",
+            "en": "The key shades of spring and summer according to Pantone"
+        },
+        "images": [
+            "/assets/main-pics/seasonal-trends/seasonal-2.webp"
+        ],
+        "author": {
+            "name": {
+                "ru": "Анна Стиловна",
+                "en": "Anna Stylovna"
+            },
+            "id": "anna_stilovna"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#цвета",
+                    "en": "#colors"
+                },
+                "id": "colors"
+            }
+        ],
+        "link": "/article/pantone-trend-colors",
+        "category": {
+            "ru": "мода",
+            "en": "fashion"
+        },
+        "season": "spring",
+        "publishedAt": "2024-05-22T10:00:00Z",
+        "status": "published",
+        "slug": "pantone-trend-colors",
+        "isSeasonalTrend": true
+    },
+    {
+        "id": 8,
+        "title": {
+            "ru": "В Корее шифоновые платья бьют рекорды",
+            "en": "Chiffon Dresses Are Breaking Records in Korea"
+        },
+        "description": {
+            "ru": "Корейские красавицы в восторге от этих шифоновых моделей",
+            "en": "Korean beauties are in love with these chiffon models"
+        },
+        "images": [
+            "/assets/main-pics/seasonal-trends/seasonal-3.webp"
+        ],
+        "author": {
+            "name": {
+                "ru": "Павел Нестеров",
+                "en": "Pavel Nesterov"
+            },
+            "id": "pavel_nesterov"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#корея",
+                    "en": "#korea"
+                },
+                "id": "korea"
+            }
+        ],
+        "link": "/article/chiffon-dresses-korea",
+        "category": {
+            "ru": "мода",
+            "en": "fashion"
+        },
+        "season": "spring",
+        "publishedAt": "2024-04-18T10:00:00Z",
+        "status": "published",
+        "slug": "chiffon-dresses-korea",
+        "isSeasonalTrend": true
+    },
+    {
+        "id": 9,
+        "title": {
+            "ru": "Готовы к дождливому лету?",
+            "en": "Ready for a Rainy Summer?"
+        },
+        "description": {
+            "ru": "Дизайнеры активно используют плащи-дождевики в этом сезоне",
+            "en": "Designers are actively using raincoats this season"
+        },
+        "images": [
+            "/assets/main-pics/seasonal-trends/seasonal-4.webp"
+        ],
+        "author": {
+            "name": {
+                "ru": "Анна Стиловна",
+                "en": "Anna Stylovna"
+            },
+            "id": "anna_stilovna"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#лето",
+                    "en": "#summer"
+                },
+                "id": "summer"
+            }
+        ],
+        "link": "/article/rainy-season-coats",
+        "category": {
+            "ru": "мода",
+            "en": "fashion"
+        },
+        "season": "spring",
+        "publishedAt": "2024-05-15T10:00:00Z",
+        "status": "published",
+        "slug": "rainy-season-coats",
+        "isSeasonalTrend": true
+    },
+    {
+        "id": 10,
+        "title": {
+            "ru": "Тёмный романтизм McQueen: 5 культовых коллекций",
+            "en": "Dark Romanticism of McQueen: 5 Iconic Collections"
+        },
+        "description": {
+            "ru": "Как провокационные идеи британского гения изменили представление о высокой моде.",
+            "en": "How the provocative ideas of a British genius changed haute couture."
+        },
+        "images": [
+            "/assets/main-pics/fashion/main-fashion-article.webp"
+        ],
+        "author": {
+            "name": {
+                "ru": "Павел Нестеров",
+                "en": "Pavel Nesterov"
+            },
+            "id": "pavel_nesterov"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#дизайнер",
+                    "en": "#designer"
+                },
+                "id": "designer"
+            }
+        ],
+        "link": "/article/mcqueen-dark-romanticism",
+        "category": {
+            "ru": "мода",
+            "en": "fashion"
+        },
+        "season": "all",
+        "publishedAt": "2024-09-10T10:00:00Z",
+        "status": "published",
+        "slug": "mcqueen-dark-romanticism"
+    },
+    {
+        "id": 11,
+        "title": {
+            "ru": "Зумеры возвращаются в прошлое?",
+            "en": "Are Zoomers Going Back in Time?"
+        },
+        "description": {
+            "ru": "Силуэты из 50-х становятся все более популярны",
+            "en": "Silhouettes from the 1950s are becoming increasingly popular"
+        },
+        "images": [
+            "/assets/fashion/fashion2.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Анна Стиловна",
+                "en": "Anna Stylovna"
+            },
+            "id": "anna_stilovna"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#общество",
+                    "en": "#society"
+                },
+                "id": "society"
+            }
+        ],
+        "link": "/article/zoomers-retro-trend",
+        "category": {
+            "ru": "мода",
+            "en": "fashion"
+        },
+        "season": "all",
+        "publishedAt": "2024-05-08T10:00:00Z",
+        "status": "published",
+        "slug": "zoomers-retro-trend"
+    },
+    {
+        "id": 12,
+        "title": {
+            "ru": "Неделя моды в Милане",
+            "en": "Milan Fashion Week"
+        },
+        "description": {
+            "ru": "Скиапарелли празднует материнство в своей новой коллекции",
+            "en": "Schiaparelli celebrates motherhood in its new collection"
+        },
+        "images": [
+            "/assets/fashion/fashion3.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Мария Говорунова",
+                "en": "Maria Govorunova"
+            },
+            "id": "maria_govorunova"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#подиум",
+                    "en": "#runway"
+                },
+                "id": "runway"
+            }
+        ],
+        "link": "/article/milan-fashion-week-schiaparelli",
+        "category": {
+            "ru": "мода",
+            "en": "fashion"
+        },
+        "season": "all",
+        "publishedAt": "2024-01-20T10:00:00Z",
+        "status": "published",
+        "slug": "milan-fashion-week-schiaparelli"
+    },
+    {
+        "id": 13,
+        "title": {
+            "ru": "Звезда китайской высокой моды",
+            "en": "Star of Chinese Haute Couture"
+        },
+        "description": {
+            "ru": "Традиционные мотивы и тысячи элементов в изделиях Гуо Пей",
+            "en": "Traditional motifs and thousands of elements in Guo Pei's creations"
+        },
+        "images": [
+            "/assets/fashion/fashion4.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Анна Стиловна",
+                "en": "Anna Stylovna"
+            },
+            "id": "anna_stilovna"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#дизайнер",
+                    "en": "#designer"
+                },
+                "id": "designer"
+            }
+        ],
+        "link": "/article/guo-pei-china-couture",
+        "category": {
+            "ru": "мода",
+            "en": "fashion"
+        },
+        "season": "all",
+        "publishedAt": "2024-05-02T10:00:00Z",
+        "status": "published",
+        "slug": "guo-pei-china-couture"
+    },
+    {
+        "id": 14,
+        "title": {
+            "ru": "Театральный гардероб: как сценические костюмы влияют на уличную моду",
+            "en": "Theatrical Wardrobe: How Stage Costumes Influence Street Fashion"
+        },
+        "description": {
+            "ru": "Костюмеры Большого театра раскрывают, какие сценические приемы уже вошли в повседневный гардероб",
+            "en": "Costumers of the Bolshoi Theater reveal which stage techniques have already entered everyday fashion"
+        },
+        "images": [
+            "/assets/culture/culture1.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Мария Говорунова",
+                "en": "Maria Govorunova"
+            },
+            "id": "maria_govorunova"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#театр",
+                    "en": "#theater"
+                },
+                "id": "theater"
+            }
+        ],
+        "link": "/article/theatrical-wardrobe",
+        "category": {
+            "ru": "культура",
+            "en": "culture"
+        },
+        "season": "all",
+        "publishedAt": "2024-04-25T10:00:00Z",
+        "status": "published",
+        "slug": "theatrical-wardrobe"
+    },
+    {
+        "id": 15,
+        "title": {
+            "ru": "Первый взгляд на новые костюмы Королевского балета, разработанные Эрдемом",
+            "en": "First Look at New Royal Ballet Costumes Designed by Erdem"
+        },
+        "description": {
+            "ru": "Эрдем Моралиоглу представил новую коллекцию костюмов для Королевского балета",
+            "en": "Erdem Moralıoğlu presents a new costume collection for the Royal Ballet"
+        },
+        "images": [
+            "/assets/culture/culture2.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Анна Стиловна",
+                "en": "Anna Stylovna"
+            },
+            "id": "anna_stilovna"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#балет",
+                    "en": "#ballet"
+                },
+                "id": "ballet"
+            }
+        ],
+        "link": "/article/erdem-royal-ballet-costumes",
+        "category": {
+            "ru": "культура",
+            "en": "culture"
+        },
+        "season": "all",
+        "publishedAt": "2024-04-20T10:00:00Z",
+        "status": "published",
+        "slug": "erdem-royal-ballet-costumes"
+    },
+    {
+        "id": 16,
+        "title": {
+            "ru": "Углубленный анализ проблем «уродства» и его восприятия",
+            "en": "In-Depth Analysis of the Problem of 'Ugliness' and Its Perception"
+        },
+        "description": {
+            "ru": "Как понятие уродства менялось со временем и что оно значит сегодня",
+            "en": "How the concept of ugliness has changed over time and what it means today"
+        },
+        "images": [
+            "/assets/culture/culture3.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Павел Нестеров",
+                "en": "Pavel Nesterov"
+            },
+            "id": "pavel_nesterov"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#литература",
+                    "en": "#literature"
+                },
+                "id": "literature"
+            }
+        ],
+        "link": "/article/analysis-of-ugliness",
+        "category": {
+            "ru": "культура",
+            "en": "culture"
+        },
+        "season": "all",
+        "publishedAt": "2024-04-18T10:00:00Z",
+        "status": "published",
+        "slug": "analysis-of-ugliness"
+    },
+    {
+        "id": 17,
+        "title": {
+            "ru": "Опера Джузеппе Верди «Симон Бокканегра» возвращается на сцену театра Ла Скала",
+            "en": "Giuseppe Verdi's Opera 'Simon Boccanegra' Returns to La Scala Stage"
+        },
+        "description": {
+            "ru": "Возвращение легендарной оперы на одну из самых известных оперных сцен мира",
+            "en": "The return of the legendary opera to one of the world's most famous opera stages"
+        },
+        "images": [
+            "/assets/culture/culture4.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Анна Стиловна",
+                "en": "Anna Stylovna"
+            },
+            "id": "anna_stilovna"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#опера",
+                    "en": "#opera"
+                },
+                "id": "opera"
+            }
+        ],
+        "link": "/article/simon-boccanegra-la-scala",
+        "category": {
+            "ru": "культура",
+            "en": "culture"
+        },
+        "season": "all",
+        "publishedAt": "2024-04-15T10:00:00Z",
+        "status": "published",
+        "slug": "simon-boccanegra-la-scala"
+    },
+    {
+        "id": 18,
+        "title": {
+            "ru": "Список самых влиятельных людей в мире моды каждого десятилетия",
+            "en": "List of the Most Influential People in the World of Fashion of Each Decade"
+        },
+        "description": {
+            "ru": "От Коко Шанель до Вирджила Аблова: кто определял тренды в каждое десятилетие",
+            "en": "From Coco Chanel to Virgil Abloh: who set the trends in each decade"
+        },
+        "images": [
+            "/assets/culture/culture5.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Анна Стиловна",
+                "en": "Anna Stylovna"
+            },
+            "id": "anna_stilovna"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#история",
+                    "en": "#history"
+                },
+                "id": "history"
+            }
+        ],
+        "link": "/article/influential-fashion-people",
+        "category": {
+            "ru": "культура",
+            "en": "culture"
+        },
+        "season": "all",
+        "publishedAt": "2021-04-10T10:00:00Z",
+        "status": "published",
+        "slug": "influential-fashion-people"
+    },
+    {
+        "id": 19,
+        "title": {
+            "ru": "Дженни снялась в рекламной кампании CHANNEL x HERA, показав идеальную красную помаду",
+            "en": "Jennie Stars in CHANNEL x HERA Campaign, Showing Off the Perfect Red Lipstick"
+        },
+        "description": {
+            "ru": "BLACKPINK Дженни снова в центре внимания благодаря новой рекламной кампании бренда HERA.",
+            "en": "BLACKPINK Jennie is back in the spotlight thanks to a new campaign by brand HERA."
+        },
+        "images": [
+            "/assets/beauty/beauty1.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Павел Нестеров",
+                "en": "Pavel Nesterov"
+            },
+            "id": "pavel_nesterov"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#косметика",
+                    "en": "#cosmetics"
+                },
+                "id": "cosmetics"
+            }
+        ],
+        "link": "/article/jennie-hera-campaign",
+        "category": {
+            "ru": "красота",
+            "en": "beauty"
+        },
+        "season": "summer",
+        "publishedAt": "2024-05-30T10:00:00Z",
+        "status": "published",
+        "slug": "jennie-hera-campaign",
+        "isSeasonalTrend": true
+    },
+    {
+        "id": 20,
+        "title": {
+            "ru": "6 Великолепных модных причесок лета 2025, которые стоит попробовать прямо сейчас",
+            "en": "6 Stunning Summer 2025 Hairstyles You Should Try Right Now"
+        },
+        "description": {
+            "ru": "Идеальные образы для пляжа, вечеринки или повседневного выхода — всё о трендах в прическах этого лета.",
+            "en": "Perfect looks for the beach, party or everyday wear — everything about this summer’s hairstyle trends."
+        },
+        "images": [
+            "/assets/beauty/beauty2.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Мария Говорунова",
+                "en": "Maria Govorunova"
+            },
+            "id": "maria_govorunova"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#волосы",
+                    "en": "#hair"
+                },
+                "id": "hair"
+            }
+        ],
+        "link": "/article/summer-2025-hairstyles",
+        "category": {
+            "ru": "красота",
+            "en": "beauty"
+        },
+        "season": "summer",
+        "publishedAt": "2024-05-28T10:00:00Z",
+        "status": "published",
+        "slug": "summer-2025-hairstyles",
+        "isSeasonalTrend": true
+    },
+    {
+        "id": 21,
+        "title": {
+            "ru": "Естественная красота Памелы Андерсон: как оставаться красивой даже без макияжа?",
+            "en": "Pamela Anderson's Natural Beauty: How to Stay Beautiful Without Makeup?"
+        },
+        "description": {
+            "ru": "Как актриса сохраняет молодость и сияет естественной красотой даже без тонны косметики.",
+            "en": "How the actress maintains her youth and radiates natural beauty without tons of makeup."
+        },
+        "images": [
+            "/assets/beauty/beauty3.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Мария Говорунова",
+                "en": "Maria Govorunova"
+            },
+            "id": "maria_govorunova"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#уход за кожей",
+                    "en": "#skincare"
+                },
+                "id": "skincare"
+            }
+        ],
+        "link": "/article/pamela-anderson-natural-beauty",
+        "category": {
+            "ru": "красота",
+            "en": "beauty"
+        },
+        "season": "all",
+        "publishedAt": "2024-05-25T10:00:00Z",
+        "status": "published",
+        "slug": "pamela-anderson-natural-beauty"
+    },
+    {
+        "id": 22,
+        "title": {
+            "ru": "Не только блески: косметика Rhode Care также заслуживает вашего внимания",
+            "en": "Not Just Glosses: Rhode Care Cosmetics Also Deserve Your Attention"
+        },
+        "description": {
+            "ru": "Бренд Хейли Бибер расширяет линейку уходовой косметики — что нового и стоит ли пробовать?",
+            "en": "Hailey Bieber’s brand expands its skincare line — what’s new and is it worth trying?"
+        },
+        "images": [
+            "/assets/beauty/beauty4.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Анна Стиловна",
+                "en": "Anna Stylovna"
+            },
+            "id": "anna_stilovna"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#уход за кожей",
+                    "en": "#skincare"
+                },
+                "id": "skincare"
+            }
+        ],
+        "link": "/article/rhode-care-skincare",
+        "category": {
+            "ru": "красота",
+            "en": "beauty"
+        },
+        "season": "all",
+        "publishedAt": "2024-05-20T10:00:00Z",
+        "status": "published",
+        "slug": "rhode-care-skincare"
+    },
+    {
+        "id": 23,
+        "title": {
+            "ru": "Билли Айлиш ограбили на церемонии вручения премии «Грэмми»",
+            "en": "Billie Eilish Was Robbed at the Grammy Awards Ceremony"
+        },
+        "description": {
+            "ru": "Звезда всего интернета осталась без наград",
+            "en": "The internet's darling walked away empty-handed"
+        },
+        "images": [
+            "/assets/music/music1.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Павел Нестеров",
+                "en": "Pavel Nesterov"
+            },
+            "id": "pavel_nesterov"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#грэмми",
+                    "en": "#grammy"
+                },
+                "id": "grammy"
+            }
+        ],
+        "link": "/article/billie-eilish-grammys",
+        "category": {
+            "ru": "музыка",
+            "en": "music"
+        },
+        "season": "all",
+        "publishedAt": "2024-05-18T10:00:00Z",
+        "status": "published",
+        "slug": "billie-eilish-grammys"
+    },
+    {
+        "id": 24,
+        "title": {
+            "ru": "Список главных лауреатов премии «Грэмми»",
+            "en": "List of the Main Grammy Award Winners"
+        },
+        "description": {
+            "ru": "Бейонсе в очередной раз получила одну из главных наград, но заслуженно ли это?",
+            "en": "Beyoncé once again took home one of the top awards — but did she deserve it?"
+        },
+        "images": [
+            "/assets/music/music2.jpg"
+        ],
+        "author": {
+            "name": {
+                "ru": "Мария Говорунова",
+                "en": "Maria Govorunova"
+            },
+            "id": "maria_govorunova"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#грэмми",
+                    "en": "#grammy"
+                },
+                "id": "grammy"
+            }
+        ],
+        "link": "/article/grammy-main-winners",
+        "category": {
+            "ru": "музыка",
+            "en": "music"
+        },
+        "season": "all",
+        "publishedAt": "2024-05-15T10:00:00Z",
+        "status": "published",
+        "slug": "grammy-main-winners"
+    }
+]

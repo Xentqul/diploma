@@ -8,6 +8,7 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage.js";
 import ApplicationPage from "./pages/ApplicationPage/ApplicationPage.js";
 import AccountPage from "./pages/AccountPage/AccountPage.js";
 import axios from "axios";
+import { ArticleProvider } from "@/context/ArticleContext";
 
 axios.defaults.withCredentials = true;
 
@@ -18,18 +19,20 @@ function App() {
 
       {/* Основной контент */}
       <div className="content">
-        <Routes>
-          {/* Главная страница */}
-          <Route path="/" element={<MainPage />} />
-          {/* Страница входа */}
-          <Route path="/login" element={<LoginPage />} />
-          {/* Страница регистрации */}
-          <Route path="/signup" element={<SignUpPage />} />
-          {/* Страница подачи заявки на работу */}
-          <Route path="/application" element={<ApplicationPage />} />
-          {/* Страница аккаунта */}
-          <Route path="/account" element={<AccountPage />} />
-        </Routes>
+        <ArticleProvider>
+          <Routes>
+            {/* Главная страница */}
+            <Route path="/" element={<MainPage />} />
+            {/* Страница входа */}
+            <Route path="/login" element={<LoginPage />} />
+            {/* Страница регистрации */}
+            <Route path="/signup" element={<SignUpPage />} />
+            {/* Страница подачи заявки на работу */}
+            <Route path="/application" element={<ApplicationPage />} />
+            {/* Страница аккаунта */}
+            <Route path="/account" element={<AccountPage />} />
+          </Routes>{" "}
+        </ArticleProvider>
       </div>
 
       <Footer />

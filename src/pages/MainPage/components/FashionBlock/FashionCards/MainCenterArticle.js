@@ -1,46 +1,64 @@
-import { FashionCardsData } from "./FashionCardsData";
+// MainCenterArticle.jsx
 import styles from "./MainCenterArticle.module.css";
-import { Tag } from "@/shared/ui/Tag/Tag.js";
-import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag.js";
+import { Tag } from "@/shared/ui/Tag/Tag";
+import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag";
+import { Link } from "react-router-dom";
+import articles from "@/data/articles.json";
+import React, { useContext, useEffect } from "react";
+import { ArticleContext } from "@/context/ArticleContext";
 
-export function MainCenterArticle() {
-  const featuredArticle = FashionCardsData.find((item) => item.isFeatured);
+// Импортируем изображения
+import mainArticleImg from "@/assets/main-pics/fashion/main-fashion-article.webp";
+
+// Маппинг путей к изображениям
+const images = {
+  "/assets/main-pics/fashion/main-fashion-article.webp": mainArticleImg,
+};
+
+export function MainCenterArticle({ mainArticle }) {
+  const currentLang = "ru";
+
+  if (!mainArticle) return <p>Статья не найдена</p>;
+
+  const featuredImage = mainArticle.images?.[0] ? images[mainArticle.images[0]] : null;
 
   return (
     <article className={styles.mainFashionArticle}>
       <div className={styles.wrapper}>
-        <a href={featuredArticle.articleTag}>
+        <Link to={`/article/${mainArticle.slug}`}>
           <img
-            src={featuredArticle.image}
-            alt={featuredArticle.title}
+            src={featuredImage || "/fallback-image.jpg"}
+            alt={mainArticle.title[currentLang]}
             className={styles.featuredImage}
           />
-        </a>
+        </Link>
 
         <div className={styles.textContent}>
           <Tag
             size="medium"
             underline="underlined_black"
-            noHover="true"
-            href={featuredArticle.tag}
+            noHover={true}
+            href={`/tags/${mainArticle.tags[0].id}`}
           >
-            {featuredArticle.tag}
+            {mainArticle.tags[0]?.visible?.[currentLang] || "#мода"}
           </Tag>
 
-          <a className={styles.mainName} href={featuredArticle.articleTag}>
-            <h3>{featuredArticle.title}</h3>
-          </a>
+          <Link to={`/article/${mainArticle.slug}`} className={styles.mainName}>
+            <h3>{mainArticle.title[currentLang]}</h3>
+          </Link>
 
-          <p className={styles.descr}>{featuredArticle.description}</p>
+          <p className={styles.descr}>{mainArticle.description[currentLang]}</p>
 
           <div className={styles.authorWrapper}>
             <span>рассказывает</span>
             <AuthorTag
               className={styles.italic}
               size="m"
-              href={`/authors/${featuredArticle.authorId}`}
+              href={`/authors/${mainArticle.author.id}`}
             >
-              {featuredArticle.author}
+              {mainArticle.author.name[currentLang]?.toUpperCase() ||
+                mainArticle.author.name?.toUpperCase() ||
+                "Неизвестный автор"}
             </AuthorTag>
           </div>
         </div>

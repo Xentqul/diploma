@@ -56,4 +56,5 @@ export let CultureCardsData = [
     tag: "#история",
     articleTag: "#!",
   },
+  
 ];

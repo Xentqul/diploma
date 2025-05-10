@@ -1,59 +1,34 @@
+import styles from "./MainSlider.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import styles from "./MainSlider.module.css";
 import toLeftButton from "@assets/icons/to-left.png";
 import toRightButton from "@assets/icons/to-right.png";
 import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag";
-import slide1 from "@/assets/main-pics/main-slider/slide-1.webp";
-import slide2 from "@/assets/main-pics/main-slider/slide-2.webp";
-import slide3 from "@/assets/main-pics/main-slider/slide-3.webp";
-import slide4 from "@/assets/main-pics/main-slider/slide-4.webp";
+import articles from "@/data/articles.json";
+import { useContext } from "react";
+import { ArticleContext } from "@/context/ArticleContext";
 
-let slides = [
-  {
-    id: 1,
-    bgImage: `url(${slide1})`,
-    title: "Показ CHANEL Весна-Лето 2025",
-    description:
-      "Цветы, золото и струящиеся ткани: как легкость воплощается в жизнь с новой коллекцией",
-    author: "автор: павел нестеров",
-    authorId: "pavel_nesterov",
-    link: "#",
-  },
-  {
-    id: 2,
-    bgImage: `url(${slide2})`,
-    title: "Кьюри наконец сделала это",
-    description: "Мария Кьюри возвращается с триумфальной осенью-зимой 2025.",
-    author: "автор: мария говорунова",
-    authorId: "maria_govorunova",
-    link: "#",
-  },
-  {
-    id: 3,
-    bgImage: `url(${slide3})`,
-    title: "Из Balenciaga в Gucci",
-    description:
-      "Крупные перестановки в мире моды продалжаются и в этот раз настигли Gucci в лице Демны Гвасалии",
-    author: "автор: павел нестеров",
-    authorId: "pavel_nesterov",
-    link: "#",
-  },
-  {
-    id: 4,
-    bgImage: `url(${slide4})`,
-    title: "Донателла Версаче покидает VERSACE",
-    description:
-      "Уход Донателлы знаменует дому новый творческий этап под руководством Дарио Виталле",
-    author: "автор: мария говорунова",
-    authorId: "maria_govorunova",
-    link: "#",
-  },
-];
+// Явно импортируем изображения
+const images = {
+  "/assets/main-pics/main-slider/slide-1.webp": require("@/assets/main-pics/main-slider/slide-1.webp"),
+  "/assets/main-pics/main-slider/slide-2.webp": require("@/assets/main-pics/main-slider/slide-2.webp"),
+  "/assets/main-pics/main-slider/slide-3.webp": require("@/assets/main-pics/main-slider/slide-3.webp"),
+  "/assets/main-pics/main-slider/slide-4.webp": require("@/assets/main-pics/main-slider/slide-4.webp"),
+  '/assets/main-pics/fashion/main-fashion-article.webp': require("@/assets/main-pics/fashion/main-fashion-article.webp"),
+};
 
 function MainSlider() {
+  const currentLang = 'ru';
+  const { usedArticles } = useContext(ArticleContext);
+
+  // Получаем все опубликованные статьи, исключая уже использованные (включая самую свежую статью)
+  const latestArticles = articles
+    .filter(a => a.status === 'published' && !usedArticles.includes(a.id))
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+    .slice(0, 4); // Берем 4 самые свежие из оставшихся
+
   return (
     <div className={styles.sliderContainer}>
       <Swiper
@@ -69,35 +44,29 @@ function MainSlider() {
         loop={true}
         className={styles.swiper}
       >
-        {slides.map((slide) => (
-          <SwiperSlide key={slide.id} className={styles.slide}>
+        {latestArticles.map((article) => (
+          <SwiperSlide key={article.id} className={styles.slide}>
             <div
               className={styles.slideBackground}
-              style={{ backgroundImage: slide.bgImage }}
+              style={{ backgroundImage: `url(${images[article.images[0]]})` }}
             >
               <div className={styles.textBlock}>
                 <div className={styles.textContent}>
-                  <a
-                    href={`/articles/${slide.id}`}
-                    className={styles.titleLink}
-                  >
-                    <h3 className={styles.title}>{slide.title}</h3>
+                  <a href={article.link} className={styles.titleLink}>
+                    <h3 className={styles.title}>{article.title[currentLang]}</h3>
                   </a>
-
-                  <p className={styles.description}>{slide.description}</p>
-
+                  <p className={styles.description}>{article.description[currentLang]}</p>
                   <AuthorTag
-                    href={`/authors/${slide.authorId}`}
+                    href={`/authors/${article.author.id}`}
                     size="s"
                     color="white"
                     weigth="weightRegular"
                   >
-                    {slide.author}
+                    {article.author.name[currentLang]}
                   </AuthorTag>
                 </div>
-
                 <div className={styles.readButtonWrapper}>
-                  <a href={`/articles/${slide.id}`} className={styles.readLink}>
+                  <a href={article.link} className={styles.readLink}>
                     читать›
                   </a>
                 </div>
@@ -106,20 +75,11 @@ function MainSlider() {
           </SwiperSlide>
         ))}
       </Swiper>
-
       <div className={`${styles.sliderPrev} swiper-button-prev-custom`}>
-        <img
-          src={toLeftButton}
-          alt="Предыдущий"
-          className={styles.arrowImage}
-        />
+        <img src={toLeftButton} alt="Предыдущий" className={styles.arrowImage} />
       </div>
       <div className={`${styles.sliderNext} swiper-button-next-custom`}>
-        <img
-          src={toRightButton}
-          alt="Следующий"
-          className={styles.arrowImage}
-        />
+        <img src={toRightButton} alt="Следующий" className={styles.arrowImage} />
       </div>
     </div>
   );

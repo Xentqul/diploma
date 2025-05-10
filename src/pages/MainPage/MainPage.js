@@ -12,19 +12,19 @@ import ArtPhotoBlock from "./components/ArtPhotoBlock/ArtPhotoBlock";
 
 function MainPage() {
   return (
-    <div className={styles.mainWrapperForAll}>
-      <FirstArticleCard />
-      <hr className={styles.hrMainPage} />
-      <LatestNewsBlock />
-      <SeasonalTrends />
-      <FashionBlock />
-      <MidAd />
-      <CultureBlock />
-      <hr className={styles.hrMainPage2} />
-      <BeautyBlock />
-      <MusicBlock />
-      <ArtPhotoBlock />
-    </div>
+      <div className={styles.mainWrapperForAll}>
+        <FirstArticleCard />
+        <hr className={styles.hrMainPage} />
+        <LatestNewsBlock />
+        <SeasonalTrends />
+        <FashionBlock />
+        <MidAd />
+        <CultureBlock />
+        <hr className={styles.hrMainPage2} />
+        <BeautyBlock />
+        <MusicBlock />
+        <ArtPhotoBlock />
+      </div>
   );
 }
 
