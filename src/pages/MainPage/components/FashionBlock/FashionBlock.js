@@ -6,27 +6,27 @@ import articles from "@/data/articles.json";
 import { ArticleContext } from "@/context/ArticleContext";
 
 function FashionBlock() {
-  const { usedArticles } = useContext(ArticleContext);
+const { usedArticles } = useContext(ArticleContext);
 
-  // 1. Получаем ВСЕ статьи моды, кроме главной (которая в usedArticles)
-  const allFashionArticles = articles
-    .filter(article => 
-      article.category?.ru === "мода" && 
-      article.status === "published"
+  // Главная статья блока моды - самая свежая после главной статьи сайта
+  const mainFashionArticle = articles
+    .filter(a => 
+      a.category?.ru === "мода" && 
+      a.status === "published" &&
+      !usedArticles.includes(a.id) // Исключаем главную статью сайта
     )
-    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))[0];
 
-  // 2. Главная статья блока моды - первая из НЕиспользованных
-  const mainFashionArticle = allFashionArticles
-    .find(article => !usedArticles.includes(article.id));
-
-  // 3. Боковые статьи - следующие 3 после главной, исключая usedArticles
-  const sideArticles = allFashionArticles
-    .filter(article => 
-      article.id !== mainFashionArticle?.id && 
-      !usedArticles.includes(article.id)
+  // Боковые статьи - могут включать статьи из слайдера
+  const sideArticles = articles
+    .filter(a => 
+      a.category?.ru === "мода" && 
+      a.status === "published" &&
+      a.id !== mainFashionArticle?.id // Исключаем главную статью блока
     )
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
     .slice(0, 3);
+
 
   return (
     <section className={styles.fourthSection}>

@@ -7,7 +7,7 @@ import toLeftButton from "@assets/icons/to-left.png";
 import toRightButton from "@assets/icons/to-right.png";
 import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag";
 import articles from "@/data/articles.json";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ArticleContext } from "@/context/ArticleContext";
 
 // Явно импортируем изображения
@@ -21,13 +21,19 @@ const images = {
 
 function MainSlider() {
   const currentLang = 'ru';
-  const { usedArticles } = useContext(ArticleContext);
+ const { usedArticles } = useContext(ArticleContext);
 
-  // Получаем все опубликованные статьи, исключая уже использованные (включая самую свежую статью)
   const latestArticles = articles
-    .filter(a => a.status === 'published' && !usedArticles.includes(a.id))
+    .filter(a => 
+      a.status === 'published' && 
+      !usedArticles.includes(a.id) // Исключаем главную статью
+    )
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
-    .slice(0, 4); // Берем 4 самые свежие из оставшихся
+    .slice(0, 4);
+
+
+
+  // 3. Рендерим слайдер (даже если usedArticles еще не обновился)
 
   return (
     <div className={styles.sliderContainer}>
