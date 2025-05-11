@@ -20,7 +20,7 @@ const images = {
 };
 
 function MainSlider() {
-  const currentLang = 'ru';
+const currentLang = 'ru';
  const { usedArticles } = useContext(ArticleContext);
 
   const latestArticles = articles

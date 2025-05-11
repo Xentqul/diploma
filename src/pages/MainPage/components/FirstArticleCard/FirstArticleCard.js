@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import styles from "./FirstArticleCard.module.css";
 import { LinkButton } from "@/shared/ui/LinkButton/LinkButton";
 import { Tag } from "@/shared/ui/Tag/Tag";
@@ -13,9 +13,9 @@ function FirstArticleCard() {
 
   // 1. Находим самую свежую статью категории "мода"
   const mainArticle = articles
-    .filter(article => 
-      article.category?.ru === "мода" && 
-      article.status === "published"
+    .filter(
+      (article) =>
+        article.category?.ru === "мода" && article.status === "published"
     )
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))[0];
 
@@ -23,7 +23,11 @@ function FirstArticleCard() {
   useEffect(() => {
     if (mainArticle?.id && !usedArticles.includes(mainArticle.id)) {
       markArticleAsUsed(mainArticle.id);
-      console.log('Главная статья помечена:', mainArticle.id, mainArticle.title.ru);
+      console.log(
+        "Главная статья помечена:",
+        mainArticle.id,
+        mainArticle.title.ru
+      );
     }
   }, [mainArticle, usedArticles, markArticleAsUsed]);
 
@@ -47,7 +51,9 @@ function FirstArticleCard() {
             автор: {mainArticle.author.name[currentLang]}
           </AuthorTag>
 
-          <LinkButton className={styles.linkButtonMargin}>к коллекции</LinkButton>
+          <LinkButton className={styles.linkButtonMargin}>
+            к коллекции
+          </LinkButton>
         </div>
 
         <img

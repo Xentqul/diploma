@@ -3,9 +3,6 @@ import styles from "./MainCenterArticle.module.css";
 import { Tag } from "@/shared/ui/Tag/Tag";
 import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag";
 import { Link } from "react-router-dom";
-import articles from "@/data/articles.json";
-import React, { useContext, useEffect } from "react";
-import { ArticleContext } from "@/context/ArticleContext";
 
 // Импортируем изображения
 import mainArticleImg from "@/assets/main-pics/fashion/main-fashion-article.webp";
@@ -20,7 +17,9 @@ export function MainCenterArticle({ mainArticle }) {
 
   if (!mainArticle) return <p>Статья не найдена</p>;
 
-  const featuredImage = mainArticle.images?.[0] ? images[mainArticle.images[0]] : null;
+  const featuredImage = mainArticle.images?.[0]
+    ? images[mainArticle.images[0]]
+    : null;
 
   return (
     <article className={styles.mainFashionArticle}>

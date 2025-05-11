@@ -7,7 +7,7 @@ export const ArticleProvider = ({ children }) => {
 
   // 🔥 Важно: используем `prev`, чтобы избежать проблем с асинхронностью
   const markArticleAsUsed = (articleId) => {
-    setUsedArticles(prev => [...prev, articleId]); // ✅ Корректное обновление
+    setUsedArticles((prev) => [...prev, articleId]); // ✅ Корректное обновление
   };
 
   return (

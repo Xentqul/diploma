@@ -6,8 +6,8 @@
             "en": "Dior Cruise 2025 Show in Tartan and Tweed Pays Tribute to Scotland"
         },
         "description": {
-            "ru": "Мария Грация Кьюри отдала дань уважения прошлому и настоящему страны.",
-            "en": "Maria Grazia Chiuri paid tribute to the past and present of the country."
+            "ru": "Мария Грация Кьюри отдала дань уважения прошлому и настоящему страны",
+            "en": "Maria Grazia Chiuri paid tribute to the past and present of the country"
         },
         "images": [
             "/assets/main-pics/first-main-pic.webp"
@@ -84,8 +84,8 @@
             "en": "Chiuri Finally Did It"
         },
         "description": {
-            "ru": "Мария Кьюри возвращается с триумфальной осенью-зимой 2025.",
-            "en": "Maria Chiuri returns with a triumphant Autumn-Winter 2025 collection."
+            "ru": "Мария Кьюри возвращается с триумфальной осенью-зимой 2025",
+            "en": "Maria Chiuri returns with a triumphant Autumn-Winter 2025 collection"
         },
         "images": [
             "/assets/main-pics/main-slider/slide-2.webp"
@@ -112,7 +112,7 @@
             "en": "fashion"
         },
         "season": "winter",
-        "publishedAt": "2024-05-30T10:00:00Z",
+        "publishedAt": "2024-01-30T10:00:00Z",
         "status": "published",
         "slug": "chiuri-autumn-winter-2025"
     },
@@ -269,7 +269,7 @@
             "en": "fashion"
         },
         "season": "spring",
-        "publishedAt": "2024-05-22T10:00:00Z",
+        "publishedAt": "2024-01-22T10:00:00Z",
         "status": "published",
         "slug": "pantone-trend-colors",
         "isSeasonalTrend": true
@@ -361,8 +361,8 @@
             "en": "Dark Romanticism of McQueen: 5 Iconic Collections"
         },
         "description": {
-            "ru": "Как провокационные идеи британского гения изменили представление о высокой моде.",
-            "en": "How the provocative ideas of a British genius changed haute couture."
+            "ru": "Как провокационные идеи британского гения изменили представление о высокой моде",
+            "en": "How the provocative ideas of a British genius changed haute couture"
         },
         "images": [
             "/assets/main-pics/fashion/main-fashion-article.webp"
@@ -428,7 +428,7 @@
             "en": "fashion"
         },
         "season": "all",
-        "publishedAt": "2024-05-08T10:00:00Z",
+        "publishedAt": "2024-05-03T10:00:00Z",
         "status": "published",
         "slug": "zoomers-retro-trend"
     },
@@ -467,7 +467,7 @@
             "en": "fashion"
         },
         "season": "all",
-        "publishedAt": "2024-01-20T10:00:00Z",
+        "publishedAt": "2024-05-02T10:00:00Z",
         "status": "published",
         "slug": "milan-fashion-week-schiaparelli"
     },
@@ -478,7 +478,7 @@
             "en": "Star of Chinese Haute Couture"
         },
         "description": {
-            "ru": "Традиционные мотивы и тысячи элементов в изделиях Гуо Пей",
+            "ru": "Традиционные мотивы в изделиях Гуо Пей",
             "en": "Traditional motifs and thousands of elements in Guo Pei's creations"
         },
         "images": [
@@ -506,7 +506,7 @@
             "en": "fashion"
         },
         "season": "all",
-        "publishedAt": "2024-05-02T10:00:00Z",
+        "publishedAt": "2024-05-01T10:00:00Z",
         "status": "published",
         "slug": "guo-pei-china-couture"
     },

@@ -7,29 +7,48 @@ import { ArticleContext } from "@/context/ArticleContext";
 
 function FashionBlock() {
 const { usedArticles } = useContext(ArticleContext);
+  
+  // Получаем ID главной статьи (из первого блока)
+  const mainArticleId = articles
+    .filter(a => a.status === 'published')
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))[0]?.id;
 
-  // Главная статья блока моды - самая свежая после главной статьи сайта
+// Получаем ID всех статей из слайдера (первые 5 опубликованных)
+const sliderArticleIds = articles
+  .filter((a) => a.status === "published")
+  .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+  .slice(0, 5)
+  .map(article => article.id);
+
+// Боковые статьи - исключаем:
+// 1. Уже использованные (usedArticles)
+// 2. Статьи из слайдера
+// 3. Сезонные тренды (isSeasonalTrend: true)
+const sideArticles = articles
+  .filter(
+    (article) =>
+      article.category?.ru === "мода" &&
+      article.status === "published" &&
+      !usedArticles.includes(article.id) &&
+      !sliderArticleIds.includes(article.id) &&
+      !article.isSeasonalTrend // Исключаем сезонные тренды
+  )
+  .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+  .slice(0, 3);
+
+  // Главная статья блока моды
   const mainFashionArticle = articles
-    .filter(a => 
-      a.category?.ru === "мода" && 
-      a.status === "published" &&
-      !usedArticles.includes(a.id) // Исключаем главную статью сайта
+    .filter(article => 
+      article.category?.ru === "мода" && 
+      article.status === "published" &&
+      !usedArticles.includes(article.id) &&
+      article.id !== mainArticleId
     )
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))[0];
 
-  // Боковые статьи - могут включать статьи из слайдера
-  const sideArticles = articles
-    .filter(a => 
-      a.category?.ru === "мода" && 
-      a.status === "published" &&
-      a.id !== mainFashionArticle?.id // Исключаем главную статью блока
-    )
-    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
-    .slice(0, 3);
-
 
   return (
-    <section className={styles.fourthSection}>
+<section className={styles.fourthSection}>
       <div className={styles.wrapper}>
         <h2>МОДА</h2>
         <div className={styles.container}>
