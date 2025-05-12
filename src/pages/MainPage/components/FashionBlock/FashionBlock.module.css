@@ -16,6 +16,7 @@
 }
 
 .fourthSection .wrapper h2 {
+    color: var(--bs-black);
     text-align: center;
 }
 

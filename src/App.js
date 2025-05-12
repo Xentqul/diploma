@@ -9,33 +9,36 @@ import ApplicationPage from "./pages/ApplicationPage/ApplicationPage.js";
 import AccountPage from "./pages/AccountPage/AccountPage.js";
 import axios from "axios";
 import { ArticleProvider } from "@/context/ArticleContext";
+import { ThemeProvider } from "./context/ThemeContext";
 
 axios.defaults.withCredentials = true;
 
 function App() {
   return (
     <div className="App">
-      <Header />
+      <ThemeProvider>
+        <Header />
 
-      {/* Основной контент */}
-      <div className="content">
-        <ArticleProvider>
-          <Routes>
-            {/* Главная страница */}
-            <Route path="/" element={<MainPage />} />
-            {/* Страница входа */}
-            <Route path="/login" element={<LoginPage />} />
-            {/* Страница регистрации */}
-            <Route path="/signup" element={<SignUpPage />} />
-            {/* Страница подачи заявки на работу */}
-            <Route path="/application" element={<ApplicationPage />} />
-            {/* Страница аккаунта */}
-            <Route path="/account" element={<AccountPage />} />
-          </Routes>{" "}
-        </ArticleProvider>
-      </div>
+        {/* Основной контент */}
+        <div className="content">
+          <ArticleProvider>
+            <Routes>
+              {/* Главная страница */}
+              <Route path="/" element={<MainPage />} />
+              {/* Страница входа */}
+              <Route path="/login" element={<LoginPage />} />
+              {/* Страница регистрации */}
+              <Route path="/signup" element={<SignUpPage />} />
+              {/* Страница подачи заявки на работу */}
+              <Route path="/application" element={<ApplicationPage />} />
+              {/* Страница аккаунта */}
+              <Route path="/account" element={<AccountPage />} />
+            </Routes>{" "}
+          </ArticleProvider>
+        </div>
 
-      <Footer />
+        <Footer />
+      </ThemeProvider>
     </div>
   );
 }

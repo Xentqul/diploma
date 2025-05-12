@@ -9,6 +9,7 @@
 }
 
 .wrapper h3 {
+    color: var(--bs-black);
     font-size: 32px;
     text-align: center;
     padding-bottom: 50px;

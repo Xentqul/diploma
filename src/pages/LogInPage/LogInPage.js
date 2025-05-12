@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import styles from "./LogInPage.module.css";
 import loginPic from "@/assets/login-pic/login.webp";
 import BackButton from "@/shared/ui/BackButton/BackButton";
@@ -10,41 +10,41 @@ import { useAuth } from "@/context/AuthContext";
 function LogInPage() {
   const { checkAuth } = useAuth();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-  
+    setError("");
+
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/auth/login',
+        "http://localhost:5000/api/auth/login",
         formData,
         { withCredentials: true }
       );
-  
+
       if (response.data.success) {
         await checkAuth(); // обновляем авторизацию
-        navigate('/');     // редирект
-        window.location.reload(); // 🚀 принудительно обновляем страницу
+        navigate("/"); // редирект
+        window.location.reload();
       }
     } catch (err) {
       if (err.response && err.response.data.message) {
         setError(err.response.data.message);
       } else {
-        setError('Ошибка входа. Попробуйте позже.');
+        setError("Ошибка входа. Попробуйте позже.");
       }
     }
   };
@@ -86,7 +86,7 @@ function LogInPage() {
             link: "/signup",
           }}
           onSubmit={handleSubmit}
-          error={error} // <-- передаем ошибку в FormBlock
+          error={error}
         />
       </div>
     </div>

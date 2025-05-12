@@ -14,32 +14,51 @@ export function AllContentCard({ variant = "default", data = [] }) {
   // 2. Жестко привязываем изображения к данным (вариант 1)
   const articlesWithImages = data.map((article, index) => {
     let image;
-    switch(index) {
-      case 0: image = fashionAside1; break;
-      case 1: image = fashionAside2; break;
-      case 2: image = fashionAside3; break;
-      default: image = fashionAside1;
+    switch (index) {
+      case 0:
+        image = fashionAside1;
+        break;
+      case 1:
+        image = fashionAside2;
+        break;
+      case 2:
+        image = fashionAside3;
+        break;
+      default:
+        image = fashionAside1;
     }
     return { ...article, image };
   });
 
   return (
-    <div className={`${styles.asideArticle} ${variant === "vertical" ? styles.flexAlign : ""}`}>
+    <div
+      className={`${styles.asideArticle} ${
+        variant === "vertical" ? styles.flexAlign : ""
+      }`}
+    >
       {articlesWithImages.map((article) => (
         <article
           key={article.id}
-          className={`${styles.wrapperAsideArticle} ${variant === "vertical" ? styles.verticalVariant : ""}`}
+          className={`${styles.wrapperAsideArticle} ${
+            variant === "vertical" ? styles.verticalVariant : ""
+          }`}
         >
           <Link to={article.link}>
             <img
               src={article.image} // Используем жестко заданное изображение
               alt={article.title?.[currentLang] || "Без заголовка"}
-              className={`${styles.asideImage} ${variant === "vertical" ? styles.verticalImage : ""}`}
+              className={`${styles.asideImage} ${
+                variant === "vertical" ? styles.verticalImage : ""
+              }`}
             />
           </Link>
 
           {/* Остальной код без изменений */}
-          <div className={`${styles.asideContent} ${variant === "vertical" ? styles.verticalContent : ""}`}>
+          <div
+            className={`${styles.asideContent} ${
+              variant === "vertical" ? styles.verticalContent : ""
+            }`}
+          >
             {article.tags && article.tags.length > 0 && (
               <Tag size="small" href={`/tags/${article.tags[0].id}`}>
                 {article.tags[0].visible?.[currentLang] || article.tags[0].id}

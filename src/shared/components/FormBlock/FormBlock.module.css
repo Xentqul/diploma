@@ -24,6 +24,7 @@
 .formFooter {
     margin-top: 10px;
     text-align: center;
+    color: var(--bs-black);
     font-size: 18px;
 }
 

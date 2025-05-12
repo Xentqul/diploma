@@ -17,7 +17,8 @@
 }
 
 .asideContent {
-    flex: 1; /* Занимает оставшееся пространство */
+    flex: 1;
+    /* Занимает оставшееся пространство */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -45,6 +46,7 @@
 }
 
 .asideDescription {
+    color: var(--bs-black);
     font-size: 16px;
 }
 
@@ -115,7 +117,8 @@
     }
 
     .asideContent {
-        flex: 1; /* Занимает оставшееся пространство */
+        flex: 1;
+        /* Занимает оставшееся пространство */
         display: flex;
         flex-direction: column;
         justify-content: space-between;

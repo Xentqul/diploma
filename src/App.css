@@ -1,11 +1,77 @@
 :root {
+  /* цвета светлой темы */
   --color-tag: #CB1212;
   --hover-tag: #a10202;
   --pale-accent: #E1E5EE;
   --input-color: #484848;
+  /* общая коллекция бутстрап */
+  --bs-black: #000;
+  --bs-white: #f8f9fa !important;
+  --bs-gray: #6c757d;
+  --bs-gray-dark: #343a40;
+  --bs-gray-500: #adb5bd;
+  --bs-gray-600: #6c757d;
+  --bs-gray-700: #495057;
+  --bs-gray-800: #343a40;
+  --bs-gray-900: #212529;
 }
 
-/* Стили для всех Link из React Router */
-a {
+/* плавный переход между темами */
+.App {
+  width: 100%;
+  height: auto;
+  background-color: var(--bs-white);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+/* стиль для всех Link из react-router-dom */
+a,
+Link {
   width: fit-content;
+}
+
+/* ================================================ Тёмная тема ====================================================== */
+[data-theme="dark"] {
+  --color-tag: #F28282;
+  --hover-tag: #ff5252;
+  --pale-accent: #343a40;
+  --input-color: #e9ecef;
+
+  /* главные цвета */
+  --bs-white: #181818 !important;
+  --bs-black: #A2A3A2 !important;
+  /* второстепенные цвета */
+  --bs-gray-600: #0f80e3 !important;
+  --bs-gray-700: #bd168e !important;
+  --bs-gray-800: #64fa01 !important;
+  --bs-gray-900: #ff0000 !important;
+  /* --bs-gray-500: #adb5bd!important;
+  --bs-gray-600: #ced4da!important;
+  --bs-gray-700: #dee2e6!important;
+  --bs-gray-800: #e9ecef!important;
+  --bs-gray-900: #f8f9fa!important */
+}
+
+[data-theme="dark"] a,
+[data-theme="dark"] hr,
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] button {
+
+  --bs-black: #A2A3A2 !important;
+}
+
+/* инверсия для иконок хэдера */
+[data-theme="dark"] .imgColorInvert,
+[data-theme="dark"] .ColorInversion {
+  filter: invert(100%) brightness(90%) contrast(80%) !important;
+}
+
+/* отключение инверсии для иконок футера */
+[data-theme="dark"] .imgInvertDisable {
+  filter: none;
 }

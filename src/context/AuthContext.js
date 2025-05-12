@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -29,18 +29,24 @@ export const AuthProvider = ({ children }) => {
   // Функция выхода
   const logout = async () => {
     try {
-      await axios.post("http://localhost:5000/api/auth/logout", {}, {
-        withCredentials: true,
-      });
+      await axios.post(
+        "http://localhost:5000/api/auth/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
     } catch (err) {
       console.error("Ошибка выхода");
     }
 
     setIsAuthenticated(false); // ✅ Обновляем состояние
-};
+  };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading, logout, checkAuth }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, isLoading, logout, checkAuth }}
+    >
       {!isLoading && children}
     </AuthContext.Provider>
   );

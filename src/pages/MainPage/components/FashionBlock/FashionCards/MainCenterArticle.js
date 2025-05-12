@@ -26,7 +26,7 @@ export function MainCenterArticle({ mainArticle }) {
       <div className={styles.wrapper}>
         <Link to={`/article/${mainArticle.slug}`}>
           <img
-            src={featuredImage || "/fallback-image.jpg"}
+            src={featuredImage}
             alt={mainArticle.title[currentLang]}
             className={styles.featuredImage}
           />

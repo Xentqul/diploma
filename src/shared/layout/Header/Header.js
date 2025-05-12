@@ -21,12 +21,34 @@ function Header() {
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
   const [isScrollingDown, setIsScrollingDown] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const [isDarkTheme, setIsDarkTheme] = useState(() => {
+    // Проверяем, есть ли сохраненная тема в localStorage
+    const savedTheme = localStorage.getItem("theme");
+    return savedTheme === "dark";
+  });
 
   //--------- ПЕРЕКЛЮЧЕНИЕ ТЕМЫ ---------
   const toggleTheme = () => {
-    setIsDarkTheme((prev) => !prev);
+    setIsDarkTheme((prev) => {
+      const newTheme = !prev;
+      // Сохраняем выбор темы в localStorage
+      localStorage.setItem("theme", newTheme ? "dark" : "light");
+      // Применяем тему ко всему документу
+      document.documentElement.setAttribute(
+        "data-theme",
+        newTheme ? "dark" : "light"
+      );
+      return newTheme;
+    });
   };
+
+  // Применяем тему при первом рендере
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      "data-theme",
+      isDarkTheme ? "dark" : "light"
+    );
+  }, []);
 
   //----------- ОТКРЫТИЕ/ЗАКРЫТИЕ БУРГЕР МЕНЮ --------------
   const toggleBurgerMenu = () => {
@@ -54,7 +76,9 @@ function Header() {
           <img
             src={isAuthenticated ? accountIconChecked : accountIcon}
             alt="account"
-            className={styles.accountImgMobile}
+            className={`${styles.accountImgMobile} ${
+              isDarkTheme ? "ColorInversion" : ""
+            }`}
           />
         </Link>
       </div>
@@ -68,13 +92,17 @@ function Header() {
 
       {/*------------------------------------- КНОПКА ОТКРЫТИЯ БУРГЕР МЕНЮ / МОБИЛЬНАЯ ВЕРСИЯ -------------------------------------*/}
       <div
-        className={`${styles.burgerButton} ${isBurgerMenuOpen ? styles.open : ""}`}
+        className={`${styles.burgerButton} ${
+          isBurgerMenuOpen ? styles.open : ""
+        }`}
         onClick={toggleBurgerMenu}
       >
         <img
           src={burgerMenuIcon}
           alt="меню"
-          className={styles.burgerMenuIcon}
+          className={`${styles.burgerMenuIcon} ${
+            isDarkTheme ? "ColorInversion" : ""
+          }`}
         />
       </div>
 
@@ -89,19 +117,53 @@ function Header() {
             <img
               src={changeLangIcon}
               alt="lang"
-              className={styles.changeLanguage}
+              className={`${styles.changeLanguage} ${
+                isDarkTheme ? "ColorInversion" : ""
+              }`}
             />
           </div>
 
           {/*---------- СОЦИАЛЬНЫЕ СЕТИ -----------*/}
           <div className={styles.socialAccount}>
             <ul className={styles.socialMedia}>
-              <li><a href="#"><img src={instIcon} alt="instagram" /></a></li>
-              <li><a href="#"><img src={tgIcon} alt="telegram" /></a></li>
-              <li><a href="#"><img src={cmIcon} alt="одноклассники" /></a></li>
-              <li><a href="#"><img src={twIcon} alt="twitter" /></a></li>
-              <li><a href="#"><img src={vkIcon} alt="vk" /></a></li>
-              <li><a href="#"><img src={ttIcon} alt="tiktok" /></a></li>
+              <li>
+                <a href="#">
+                  <img
+                    src={instIcon}
+                    alt="instagram"
+                    className="imgColorInvert"
+                  />
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <img src={tgIcon} alt="telegram" className="imgColorInvert" />
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <img
+                    src={cmIcon}
+                    alt="одноклассники"
+                    className="imgColorInvert"
+                  />
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <img src={twIcon} alt="twitter" className="imgColorInvert" />
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <img src={vkIcon} alt="vk" className="imgColorInvert" />
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <img src={ttIcon} alt="tiktok" className="imgColorInvert" />
+                </a>
+              </li>
             </ul>
             <hr className={styles.verticalHr} />
 
@@ -115,7 +177,9 @@ function Header() {
               <img
                 src={isAuthenticated ? accountIconChecked : accountIcon}
                 alt="account"
-                className={styles.accountImg}
+                className={`${styles.accountImg} ${
+                  isDarkTheme ? "ColorInversion" : ""
+                }`}
               />
             </Link>
           </div>
@@ -123,21 +187,41 @@ function Header() {
       </div>
 
       {/*----------------------------- НИЖНИЙ БЛОК ШАПКИ С НАВИГАЦИЦЕЙ / ДЕСКТОП --------------------------------*/}
-      <div className={`${styles.lowerHeaderBlock} ${isScrollingDown ? styles.hidden : ""}`}>
+      <div
+        className={`${styles.lowerHeaderBlock} ${
+          isScrollingDown ? styles.hidden : ""
+        }`}
+      >
         <div className={styles.wrapper}>
           <div className={styles.navBlock}>
             <nav className={styles.navigation} aria-label="Основные разделы">
               <ul>
-                <li><Link to="/fashion">мода и стиль</Link></li>
-                <li><Link to="/beauty">красота</Link></li>
-                <li><Link to="/culture">культура</Link></li>
-                <li><Link to="/art">арт&фотографии</Link></li>
-                <li><Link to="/music">музыка</Link></li>
-                <li><Link to="/news">новости</Link></li>
+                <li>
+                  <Link to="/fashion">мода и стиль</Link>
+                </li>
+                <li>
+                  <Link to="/beauty">красота</Link>
+                </li>
+                <li>
+                  <Link to="/culture">культура</Link>
+                </li>
+                <li>
+                  <Link to="/art">арт&фотографии</Link>
+                </li>
+                <li>
+                  <Link to="/music">музыка</Link>
+                </li>
+                <li>
+                  <Link to="/news">новости</Link>
+                </li>
                 <li className={styles.themeContainer}>
                   <span className={styles.colorThemeGrey}>тема</span>
                   <label className={styles.themeSwitch}>
-                    <input type="checkbox" checked={isDarkTheme} onChange={toggleTheme} />
+                    <input
+                      type="checkbox"
+                      checked={isDarkTheme}
+                      onChange={toggleTheme}
+                    />
                     <span className={styles.slider}></span>
                   </label>
                 </li>
@@ -148,24 +232,52 @@ function Header() {
       </div>
 
       {/*--------------------------------------------- БУРГЕР МЕНЮ ----------------------------------- */}
-      <div className={`${styles.burgerMenuWrapper} ${isBurgerMenuOpen ? styles.open : ""}`}>
+      <div
+        className={`${styles.burgerMenuWrapper} ${
+          isBurgerMenuOpen ? styles.open : ""
+        }`}
+      >
         <div className={styles.closeButton} onClick={toggleBurgerMenu}>
-          <img src={burgerMenuCloseIcon} alt="Закрыть меню" className={styles.closeIcon} />
+          <img
+            src={burgerMenuCloseIcon}
+            alt="Закрыть меню"
+            className={`${styles.closeIcon} ${
+              isDarkTheme ? "ColorInversion" : ""
+            }`}
+          />
         </div>
         <div className={styles.burgerMenu}>
           <ul className={styles.menuList}>
-            <li><span className={styles.burgerLogoInside}>DR</span></li>
-            <li className={styles.paddingDownFromLogo}><Link to="/fashion">мода и стиль</Link></li>
-            <li><Link to="/beauty">красота</Link></li>
-            <li><Link to="/culture">культура</Link></li>
-            <li><Link to="/art">арт&фотографии</Link></li>
-            <li><Link to="/music">музыка</Link></li>
-            <li><Link to="/news">новости</Link></li>
+            <li>
+              <span className={styles.burgerLogoInside}>DR</span>
+            </li>
+            <li className={styles.paddingDownFromLogo}>
+              <Link to="/fashion">мода и стиль</Link>
+            </li>
+            <li>
+              <Link to="/beauty">красота</Link>
+            </li>
+            <li>
+              <Link to="/culture">культура</Link>
+            </li>
+            <li>
+              <Link to="/art">арт&фотографии</Link>
+            </li>
+            <li>
+              <Link to="/music">музыка</Link>
+            </li>
+            <li>
+              <Link to="/news">новости</Link>
+            </li>
             <li>
               <div className={styles.themeContainer}>
                 <span className={styles.burgerSpanSwitch}>тема</span>
                 <label className={styles.themeSwitch}>
-                  <input type="checkbox" checked={isDarkTheme} onChange={toggleTheme} />
+                  <input
+                    type="checkbox"
+                    checked={isDarkTheme}
+                    onChange={toggleTheme}
+                  />
                   <span className={styles.slider}></span>
                 </label>
               </div>
@@ -175,14 +287,34 @@ function Header() {
           {/*-------- СОЦИАЛЬНЫЕ СЕТИ / МОБИЛЬНАЯ ВЕРСИЯ --------*/}
           <div className={styles.socialMediaMobile}>
             <div>
-              <a href="#"><img src={instIcon} alt="instagram" /></a>
-              <a href="#"><img src={tgIcon} alt="telegram" /></a>
-              <a href="#"><img src={vkIcon} alt="vk" /></a>
+              <a href="#">
+                <img
+                  src={instIcon}
+                  alt="instagram"
+                  className="imgColorInvert"
+                />
+              </a>
+              <a href="#">
+                <img src={tgIcon} alt="telegram" className="imgColorInvert" />
+              </a>
+              <a href="#">
+                <img src={vkIcon} alt="vk" className="imgColorInvert" />
+              </a>
             </div>
             <div>
-              <a href="#"><img src={ttIcon} alt="tiktok" /></a>
-              <a href="#"><img src={cmIcon} alt="одноклассники" /></a>
-              <a href="#"><img src={twIcon} alt="twitter" /></a>
+              <a href="#">
+                <img src={ttIcon} alt="tiktok" className="imgColorInvert" />
+              </a>
+              <a href="#">
+                <img
+                  src={cmIcon}
+                  alt="одноклассники"
+                  className="imgColorInvert"
+                />
+              </a>
+              <a href="#">
+                <img src={twIcon} alt="twitter" className="imgColorInvert" />
+              </a>
             </div>
           </div>
         </div>

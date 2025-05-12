@@ -6,6 +6,7 @@
 .seventhSection h2 {
     margin-top: 130px;
     text-align: center;
+    color: var(--bs-black);
     letter-spacing: 3px;
     font-weight: 500;
 }
@@ -38,9 +39,10 @@
 }
 
 .titleOfAlbumsBlock {
+    margin: 20px 0;
     font-size: 24px;
     font-weight: 500;
-    margin: 20px 0;
+    color: var(--bs-black);
 }
 
 @media (max-width: 768px) {

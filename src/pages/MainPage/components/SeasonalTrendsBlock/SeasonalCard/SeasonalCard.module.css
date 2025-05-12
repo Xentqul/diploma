@@ -28,6 +28,10 @@
   flex-grow: 1;
 }
 
+.description {
+  color: var(--bs-black);
+}
+
 .title {
   font-weight: 600;
   font-size: 25px;

@@ -16,32 +16,40 @@ function Footer() {
           <ul className={styles.socialMedia}>
             <li>
               <a href="#">
-                <img src={instIcon} alt="instagram" />
+                <img
+                  src={instIcon}
+                  alt="instagram"
+                  className="imgInvertDisable"
+                />
               </a>
             </li>
             <li>
               <a href="#">
-                <img src={tgIcon} alt="telegram" />
+                <img src={tgIcon} alt="telegram" className="imgInvertDisable" />
               </a>
             </li>
             <li>
               <a href="#">
-                <img src={cmIcon} alt="одноклассники" />
+                <img
+                  src={cmIcon}
+                  alt="одноклассники"
+                  className="imgInvertDisable"
+                />
               </a>
             </li>
             <li>
               <a href="#">
-                <img src={twIcon} alt="twitter" />
+                <img src={twIcon} alt="twitter" className="imgInvertDisable" />
               </a>
             </li>
             <li>
               <a href="#">
-                <img src={vkIcon} alt="vk" />
+                <img src={vkIcon} alt="vk" className="imgInvertDisable" />
               </a>
             </li>
             <li>
               <a href="#">
-                <img src={ttIcon} alt="tiktok" />
+                <img src={ttIcon} alt="tiktok" className="imgInvertDisable" />
               </a>
             </li>
           </ul>

@@ -25,7 +25,7 @@
 }
 
 .albumTitle {
-    color: var(--bs-block);
+    color: var(--bs-black);
     font-size: 16px;
     font-weight: 500;
     text-decoration: none;
