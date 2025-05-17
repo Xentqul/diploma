@@ -19,7 +19,7 @@ export function ThemeProvider({ children }) {
   );
 }
 
-// Важно: эта функция должна быть экспортирована
+// эта функция должна быть экспортирована
 export function useTheme() {
   const context = useContext(ThemeContext);
   if (!context) {

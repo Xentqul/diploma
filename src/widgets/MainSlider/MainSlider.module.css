@@ -136,3 +136,7 @@
         right: -30px;
     }
 }
+
+[data-theme="dark"] .ColorInversion {
+  filter: invert(100%) brightness(90%) contrast(80%) !important;
+}

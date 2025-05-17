@@ -1,5 +1,5 @@
 .link {
-    display: inline-block; /* Изменяем на inline-block для лучшего контроля */
+    display: inline-block;
     align-self: flex-start;
     text-align: center;
     color: var(--bs-black);

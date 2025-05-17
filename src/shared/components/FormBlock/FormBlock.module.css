@@ -1,6 +1,8 @@
 .formBlock {
     display: flex;
     flex-direction: column;
+    min-height: 100%; /* Добавляем минимальную высоту */
+    padding-bottom: 20px; /* Добавляем отступ снизу */
 }
 
 .formTitle {
@@ -14,6 +16,23 @@
     margin-top: 10px;
     display: flex;
     flex-direction: column;
+    gap: 15px; /* Добавляем отступ между полями */
+}
+
+.checkbox {
+    width: 25px;
+    height: 25px;
+}
+
+.checkboxLabel {
+    color: var(--bs-black);
+}
+
+.checkboxContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--bs-white);
 }
 
 .alignButton {

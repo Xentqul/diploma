@@ -1,37 +1,42 @@
 .inputContainer {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-    /* Расстояние между полями */
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  /* Расстояние между полями */
+}
+
+.inputContainer select {
+  border-radius: 4px;
+  height: 40px;
 }
 
 .label {
-    margin-bottom: 2px;
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--input-color);
+  margin-bottom: 2px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--input-color);
 }
 
 .input {
-    padding: 0.4rem;
-    font-size: 18px;
-    border: 1px solid var(--input-color);
-    border-radius: 4px;
-    outline: none;
-    transition: border-color 0.2s ease;
+  padding: 0.4rem;
+  font-size: 18px;
+  border: 1px solid var(--input-color);
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s ease;
 }
 
 .input.error {
-    border: 2px solid var(--color-tag);
-  }
-  
-  .errorMessage {
-    color: var(--color-tag);
-    font-size: 0.8rem;
-    margin-top: 0.25rem;
-  }
-  
-  .required {
-    color: var(--color-tag);
-    margin-left: 0.25rem;
-  }
+  border: 2px solid var(--color-tag);
+}
+
+.errorMessage {
+  color: var(--color-tag);
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.required {
+  color: var(--color-tag);
+  margin-left: 0.25rem;
+}

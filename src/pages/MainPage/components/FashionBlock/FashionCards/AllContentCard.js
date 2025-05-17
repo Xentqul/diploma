@@ -3,7 +3,7 @@ import { Tag } from "@/shared/ui/Tag/Tag";
 import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag";
 import { Link } from "react-router-dom";
 
-// 1. Прямые импорты изображений (убедитесь, что пути правильные)
+// 1. Прямые импорты изображений
 import fashionAside1 from "@/assets/main-pics/fashion/fashion-aside-1.webp";
 import fashionAside2 from "@/assets/main-pics/fashion/fashion-aside-2.webp";
 import fashionAside3 from "@/assets/main-pics/fashion/fashion-aside-3.webp";
@@ -11,7 +11,7 @@ import fashionAside3 from "@/assets/main-pics/fashion/fashion-aside-3.webp";
 export function AllContentCard({ variant = "default", data = [] }) {
   const currentLang = "ru";
 
-  // 2. Жестко привязываем изображения к данным (вариант 1)
+  // 2. Жестко привязываем изображения к данным
   const articlesWithImages = data.map((article, index) => {
     let image;
     switch (index) {
@@ -45,7 +45,7 @@ export function AllContentCard({ variant = "default", data = [] }) {
         >
           <Link to={article.link}>
             <img
-              src={article.image} // Используем жестко заданное изображение
+              src={article.image}
               alt={article.title?.[currentLang] || "Без заголовка"}
               className={`${styles.asideImage} ${
                 variant === "vertical" ? styles.verticalImage : ""
@@ -53,7 +53,6 @@ export function AllContentCard({ variant = "default", data = [] }) {
             />
           </Link>
 
-          {/* Остальной код без изменений */}
           <div
             className={`${styles.asideContent} ${
               variant === "vertical" ? styles.verticalContent : ""

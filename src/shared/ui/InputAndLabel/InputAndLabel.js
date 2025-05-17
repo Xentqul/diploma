@@ -1,50 +1,78 @@
-import styles from "./InputAndLabel.module.css";
+import styles from './InputAndLabel.module.css';
 
-function InputAndLabel({ 
-  label, 
-  placeholder, 
-  type = "text", 
-  name, 
-  value, 
+function InputAndLabel({
+  label,
+  placeholder,
+  type = 'text',
+  name,
+  value,
   onChange,
+  onBlur,
   error,
-  onBlur
+  options = [],
 }) {
+   console.log('Options for', name, ':', options); // <--- Добавь это
   const handleChange = (e) => {
-    let value = e.target.value;
-    
-    // Очистка номера телефона
+    let newValue = e.target.value;
+
+    // Обработка телефона
     if (name === 'phone') {
-      value = value.replace(/\D/g, '').substring(0, 11);
+      newValue = newValue.replace(/\D/g, '').substring(0, 11);
     }
-    
-    // Удаление начальных пробелов для всех полей
+
+    // Удаление пробелов в начале
     if (type !== 'password') {
-      value = value.replace(/^\s+/, '');
+      newValue = newValue.replace(/^\s+/, '');
     }
 
     onChange({
       target: {
         name,
-        value
-      }
+        value: newValue,
+      },
     });
   };
 
   const formatPhone = (value) => {
-    if (!value) return '';
+    if (!value) return '+7';
     const numbers = value.replace(/\D/g, '');
     let result = '+7';
-    
+
     if (numbers.length > 1) result += ` (${numbers.substring(1, 4)}`;
     if (numbers.length > 4) result += `) ${numbers.substring(4, 7)}`;
     if (numbers.length > 7) result += `-${numbers.substring(7, 9)}`;
     if (numbers.length > 9) result += `-${numbers.substring(9, 11)}`;
-    
+
     return result;
   };
 
   const displayValue = name === 'phone' ? formatPhone(value) : value;
+
+  if (type === 'select') {
+    return (
+      <div className={styles.inputContainer}>
+        <label className={styles.label}>{label}</label>
+        <select
+          className={`${styles.select} ${error ? styles.error : ''}`}
+          name={name}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+        >
+          {options.map((option, index) => (
+            <option
+              key={option.value || index}
+              value={option.value}
+              disabled={option.disabled}
+            >
+              {option.label}
+            </option>
+          ))}
+        </select>
+        {error && <div className={styles.errorMessage}>{error}</div>}
+      </div>
+    );
+  }
 
   return (
     <div className={styles.inputContainer}>

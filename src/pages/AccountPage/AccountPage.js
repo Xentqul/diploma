@@ -94,6 +94,11 @@ function AccountPage() {
 
             <label className={styles.checkboxLabel}>
               <input type="checkbox" className={styles.checkbox} />Я даю
+              согласие обработку персональных данных
+            </label>
+
+            <label className={styles.checkboxLabel}>
+              <input type="checkbox" className={styles.checkbox} />Я даю
               согласие на получение рекламных сообщений
             </label>
 

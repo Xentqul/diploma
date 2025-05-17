@@ -4,7 +4,7 @@
 }
 
 .topPart {
-    margin-top: 150px;
+    padding-top: 150px;
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
@@ -47,6 +47,7 @@
     margin-top: 10px;
     font-size: 30px;
     font-weight: 600;
+    color: var(--bs-black);
 }
 
 .buttonGroup > :first-child {
@@ -131,7 +132,7 @@
     }
 
     .topPart {
-        margin-top: 90px;
+        padding-top: 90px;
     }
 
     .userBlock {

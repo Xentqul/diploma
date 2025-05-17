@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -8,7 +7,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Проверяем авторизацию при загрузке
+  // Проверка авторизации при загрузке
   const checkAuth = async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/auth/check", {
@@ -40,7 +39,7 @@ export const AuthProvider = ({ children }) => {
       console.error("Ошибка выхода");
     }
 
-    setIsAuthenticated(false); // ✅ Обновляем состояние
+    setIsAuthenticated(false);
   };
 
   return (

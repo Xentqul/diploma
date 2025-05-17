@@ -9,6 +9,7 @@ function FormBlock({
   footerLink,
   onSubmit,
   errors,
+  checkbox,
 }) {
   return (
     <form onSubmit={onSubmit} className={styles.formBlock}>
@@ -26,9 +27,27 @@ function FormBlock({
             onChange={input.onChange}
             onBlur={input.onBlur}
             error={errors && errors[input.name]}
+            options={input.options}
           />
         ))}
       </div>
+
+      {/* Блок с чекбоксом */}
+      {checkbox && (
+        <div className={styles.checkboxContainer}>
+          <input
+            type="checkbox"
+            id={checkbox.name}
+            name={checkbox.name}
+            checked={checkbox.checked}
+            onChange={checkbox.onChange}
+            className={styles.checkbox}
+          />
+          <label htmlFor={checkbox.name} className={styles.checkboxLabel}>
+            {checkbox.label}
+          </label>
+        </div>
+      )}
 
       <SubmitButton className={styles.alignButton} type="submit">
         {buttonLabel}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext"; // ✅ Используем контекст авторизации
+import { useAuth } from "@/context/AuthContext"; // контекст авторизации
 
 // ------------ ИКОНКИ ---------
 import changeLangIcon from "@assets/icons/change-lang-icon.png";
@@ -17,12 +17,12 @@ import burgerMenuIcon from "@assets/icons/burger_menu-mobile.png";
 import burgerMenuCloseIcon from "@assets/icons/burger_menu-close.png";
 
 function Header() {
-  const { isAuthenticated, logout } = useAuth(); // ✅ Получаем из контекста
+  const { isAuthenticated, logout } = useAuth(); // Получение из контекста
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
   const [isScrollingDown, setIsScrollingDown] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [isDarkTheme, setIsDarkTheme] = useState(() => {
-    // Проверяем, есть ли сохраненная тема в localStorage
+    // Проверка, есть ли сохраненная тема в localStorage
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "dark";
   });
@@ -31,9 +31,9 @@ function Header() {
   const toggleTheme = () => {
     setIsDarkTheme((prev) => {
       const newTheme = !prev;
-      // Сохраняем выбор темы в localStorage
+      // Сохранить выбор темы в localStorage
       localStorage.setItem("theme", newTheme ? "dark" : "light");
-      // Применяем тему ко всему документу
+      // Применить тему ко всему документу
       document.documentElement.setAttribute(
         "data-theme",
         newTheme ? "dark" : "light"
@@ -42,7 +42,7 @@ function Header() {
     });
   };
 
-  // Применяем тему при первом рендере
+  // Применить тему при первом рендере
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",

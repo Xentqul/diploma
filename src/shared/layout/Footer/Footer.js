@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./Footer.module.css";
 import instIcon from "@assets/icons/inst-icon.png";
 import tgIcon from "@assets/icons/telegram-icon.png";

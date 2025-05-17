@@ -1,8 +1,5 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
-// Импортируем пул подключения к БД
-// ❗ Важно: файл db.js находится в папке config, которая на уровень выше
 const pool = require("../config/db"); // ✅ Правильный путь
 
 module.exports = {

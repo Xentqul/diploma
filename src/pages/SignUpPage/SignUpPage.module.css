@@ -28,7 +28,30 @@
     font-size: 28px;
 }
 
+.formWrapper {
+    max-height: 100vh;
+    /* Высота под форму, чтобы не упиралось в низ */
+    overflow-y: auto;
+    padding-right: 10px;
+    /* Чтобы компенсировать скрытие скроллбара */
+
+    /* Скрываем полосу прокрутки (работает в Chrome/Safari) */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.formWrapper::-webkit-scrollbar {
+    display: none;
+}
+
+
 @media (max-width: 768px) {
+
+    .wrapper {
+        margin-top: 0px;
+        padding-top: 20px;
+    }
+
     .sidePic {
         display: none;
     }

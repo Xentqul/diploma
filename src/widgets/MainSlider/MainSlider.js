@@ -11,7 +11,7 @@ import { useContext, useEffect } from "react";
 import { ArticleContext } from "@/context/ArticleContext";
 import { useTheme } from "@/context/ThemeContext";
 
-// Явно импортируем изображения
+// явный импорт изображений
 const images = {
   "/assets/main-pics/main-slider/slide-1.webp": require("@/assets/main-pics/main-slider/slide-1.webp"),
   "/assets/main-pics/main-slider/slide-2.webp": require("@/assets/main-pics/main-slider/slide-2.webp"),
@@ -22,17 +22,17 @@ const images = {
 
 function MainSlider() {
   const currentLang = "ru";
-  const { isDarkTheme } = useTheme(); // Получаем состояние темы
+  const { isDarkTheme } = useTheme(); // Получение состояния темы
   const { usedArticles } = useContext(ArticleContext);
 
   const latestArticles = articles
     .filter(
-      (a) => a.status === "published" && !usedArticles.includes(a.id) // Исключаем главную статью
+      (a) => a.status === "published" && !usedArticles.includes(a.id) // Исключение главной статьи
     )
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
     .slice(0, 4);
 
-  // 3. Рендерим слайдер (даже если usedArticles еще не обновился)
+  // 3. Рендер слайдера (даже если usedArticles еще не обновился)
 
   return (
     <div className={styles.sliderContainer}>
@@ -88,18 +88,14 @@ function MainSlider() {
         <img
           src={toLeftButton}
           alt="Предыдущий"
-          className={`${styles.arrowImage} ${
-            isDarkTheme ? "ColorInversion" : ""
-          }`}
+          className={`${styles.arrowImage} ColorInversion`}
         />
       </div>
       <div className={`${styles.sliderNext} swiper-button-next-custom`}>
         <img
           src={toRightButton}
           alt="Следующий"
-          className={`${styles.arrowImage} ${
-            isDarkTheme ? "ColorInversion" : ""
-          }`}
+          className={`${styles.arrowImage} ColorInversion`}
         />
       </div>
     </div>

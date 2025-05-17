@@ -10,7 +10,7 @@ const pool = new Pool({
 
 // Проверка подключения
 pool.query('SELECT NOW() as time')
-  .then(res => console.log("✅ PostgreSQL подключен. Текущее время:", res.rows[0].time))
-  .catch(err => console.error("❌ Ошибка PostgreSQL:", err.message));
+  .then(res => console.log("Успешно! PostgreSQL подключен. Текущее время:", res.rows[0].time))
+  .catch(err => console.error("Ошибка! Ошибка PostgreSQL:", err.message));
 
 module.exports = pool;
