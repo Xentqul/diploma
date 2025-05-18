@@ -1,12 +1,31 @@
 import { SimpleHorizontalCard } from "./BeautyCards/SimpleHorizontalCard.js";
 import styles from "./BeautyBlock.module.css";
+import { getLatestArticle } from "@/shared/utils/getLatestArticle.js";
+import articlesData from "@/data/articles.json";
 
 function BeautyBlock() {
+  // Получаем все статьи категории "красота"
+  const beautyArticles = articlesData
+    .filter(article => article.category?.ru === "красота" && article.status === "published")
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+
+  // Получаем самую свежую статью среди всех категорий
+  const latestOverallArticle = articlesData
+    .filter(article => article.status === "published")
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))[0];
+
+  // Если самая свежая статья категории "красота" является самой свежей среди всех,
+  // исключаем ее из отображения
+  const displayArticles = 
+    beautyArticles[0]?.id === latestOverallArticle?.id
+      ? beautyArticles.slice(1, 5) // Пропускаем первую, берем следующие 4
+      : beautyArticles.slice(0, 4); // Берем первые 4
+
   return (
     <section className={styles.sixthSection}>
       <h2>КРАСОТА</h2>
-      <SimpleHorizontalCard />
-      <a href="!#" className={styles.linkToMore}>
+      <SimpleHorizontalCard articles={displayArticles} />
+      <a href="/beauty" className={styles.linkToMore}>
         <span>СМОТРЕТЬ ВСЕ›</span>
       </a>
     </section>

@@ -17,11 +17,11 @@ export let AlbumCardsData = [
   {
     id: 2,
     albumCover: album2,
-    albumTitle: "Abracadabra",
+    albumTitle: "MAYHEM",
     albumLink: "#!",
     artistName: "Lady Gaga",
     artistLink: "/artists/lady_gaga",
-    category: "сингл",
+    category: "альбом",
   },
   {
     id: 3,
@@ -35,11 +35,11 @@ export let AlbumCardsData = [
   {
     id: 4,
     albumCover: album4,
-    albumTitle: "Call Me When You Break Up",
+    albumTitle: "I Said I Love You First...",
     albumLink: "#!",
     artistName: "Selena Gomez",
     artistLink: "/artists/selena_gomez",
-    category: "сингл",
+    category: "альбом",
   },
   {
     id: 5,

@@ -556,7 +556,7 @@
             "en": "First Look at New Royal Ballet Costumes Designed by Erdem"
         },
         "description": {
-            "ru": "Эрдем Моралиоглу представил новую коллекцию костюмов для Королевского балета",
+            "ru": "Эрдем представил новую коллекцию костюмов для Королевского балета",
             "en": "Erdem presents a new costume collection for the Royal Ballet"
         },
         "images": [
@@ -940,5 +940,45 @@
         "publishedAt": "2024-05-15T10:00:00Z",
         "status": "published",
         "slug": "grammy-main-winners"
+    },
+    {
+        "id": 25,
+        "title": {
+            "ru": "Неделя самых известных фотографов всех времен",
+            "en": "Week of the Most Famous Photographers of All Time"
+        },
+        "description": {
+            "ru": "В 1968 году Лейбовиц купила в Японии фотоаппарат Minolta SRT 101, с которым она совершила восхождение на гору Фудзияма, где сделала свои первые снимки. У нее не было запасной пленки, а на той, что была в фотоаппарате, оставалось всего несколько кадров...",
+            "en": "In 1968, Leibovitz bought a Minolta SRT 101 camera in Japan, which she used to climb Mount Fuji, where she took her first photos. She had no spare film, and only a few frames remained on the one in the camera..."
+        },
+        "images": [
+            "/assets/art-photo/art_photo1_desktop.webp",
+            "/assets/art-photo/art_photo1_mobile.webp"
+        ],
+        "author": {
+            "name": {
+                "ru": "Павел Нестеров",
+                "en": "Pavel Nesterov"
+            },
+            "id": "pavel_nesterov"
+        },
+        "tags": [
+            {
+                "visible": {
+                    "ru": "#фотограф",
+                    "en": "#photographer"
+                },
+                "id": "photographer"
+            }
+        ],
+        "link": "/article/famous-photographers-week",
+        "category": {
+            "ru": "искусство и фото",
+            "en": "art and photo"
+        },
+        "season": "all",
+        "publishedAt": "2024-05-10T10:00:00Z",
+        "status": "published",
+        "slug": "famous-photographers-week"
     }
 ]
