@@ -1,48 +1,27 @@
-import styles from "./AllContentCard.module.css";
+import styles from "./AllContentCardVertical.module.css";
 import { Tag } from "@/shared/ui/Tag/Tag";
 import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag";
 import { Link } from "react-router-dom";
 
-// Прямые импорты изображений
-import fashionAside1 from "@/assets/main-pics/fashion/fashion-aside-1.webp";
-import fashionAside2 from "@/assets/main-pics/fashion/fashion-aside-2.webp";
-import fashionAside3 from "@/assets/main-pics/fashion/fashion-aside-3.webp";
-
-export function AllContentCard({ data = [] }) {
+export function AllContentCardVertical({ data = [] }) {
   const currentLang = "ru";
 
-  // Жёстко привязываем изображения к данным
-  const articlesWithImages = data.map((article, index) => {
-    let image;
-    switch (index) {
-      case 0:
-        image = fashionAside1;
-        break;
-      case 1:
-        image = fashionAside2;
-        break;
-      case 2:
-        image = fashionAside3;
-        break;
-      default:
-        image = fashionAside1; // fallback
-    }
-    return { ...article, image };
-  });
-
   return (
-    <div className={styles.asideArticle}>
-      {articlesWithImages.map((article) => (
-        <article key={article.id} className={styles.wrapperAsideArticle}>
+    <div className={`${styles.asideArticle} ${styles.flexAlign}`}>
+      {data.map((article) => (
+        <article
+          key={article.id}
+          className={`${styles.wrapperAsideArticle} ${styles.verticalVariant}`}
+        >
           <Link to={article.link}>
             <img
               src={article.image}
               alt={article.title?.[currentLang] || "Без заголовка"}
-              className={styles.asideImage}
+              className={`${styles.asideImage} ${styles.verticalImage}`}
             />
           </Link>
 
-          <div className={styles.asideContent}>
+          <div className={`${styles.asideContent} ${styles.verticalContent}`}>
             {article.tags && article.tags.length > 0 && (
               <Tag size="small" href={`/tags/${article.tags[0].id}`}>
                 {article.tags[0].visible?.[currentLang] || article.tags[0].id}
