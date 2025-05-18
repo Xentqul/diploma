@@ -1,6 +1,5 @@
 import styles from "./AlbumCard.module.css";
 
-// Импортируем обложки напрямую
 import album1 from "@/assets/main-pics/music/main_page-album-1.webp";
 import album2 from "@/assets/main-pics/music/main_page-album-2.webp";
 import album3 from "@/assets/main-pics/music/main_page-album-3.webp";

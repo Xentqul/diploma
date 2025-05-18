@@ -10,6 +10,7 @@ import AccountPage from "./pages/AccountPage/AccountPage.js";
 import axios from "axios";
 import { ArticleProvider } from "@/context/ArticleContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { CookieBanner } from "./shared/components/CookieBanner/CookieBanner";
 
 axios.defaults.withCredentials = true;
 
@@ -18,6 +19,9 @@ function App() {
     <div className="App">
       <ThemeProvider>
         <Header />
+
+        {/* Баннер с куки */}
+        <CookieBanner />
 
         {/* Основной контент */}
         <div className="content">
