@@ -1,35 +1,54 @@
 import styles from "./MainBiggerArticle.module.css";
 import { Tag } from "@/shared/ui/Tag/Tag.js";
 import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag.js";
+import { Link } from "react-router-dom";
+
+// Импортируем изображение напрямую
+import mainCultureImage from "@/assets/main-pics/culture/main-culture-article.webp";
 
 export function MainBiggerArticle({ article }) {
+  if (!article) return null;
+
+  const title = article.title?.ru || "";
+  const description = article.description?.ru || "";
+  const authorName = article.author?.name?.ru || "";
+  const firstTag = article.tags?.[0]?.visible?.ru || "";
+
   return (
     <div className={styles.wrapper}>
-      <a href={article.articleTag}>
+      <Link to={article.link}>
         <img
-          src={article.image}
-          alt={article.title}
+          src={mainCultureImage} // Используем импортированное изображение
+          alt={title}
           className={styles.mainImage}
+          onError={(e) => {
+            e.target.src = ''; // Очищаем src при ошибке
+            e.target.onerror = null;
+          }}
         />
-      </a>
+      </Link>
 
       <div className={styles.textContent}>
-        <Tag href={article.tag} size="big">
-          {article.tag}
-        </Tag>
-
-        <a href={article.articleTag} className={styles.wrapperForTitle}>
-          <h3>{article.title}</h3>
-        </a>
-
-        {article.description && (
-          <p className={styles.description}>{article.description}</p>
+        {firstTag && (
+          <Tag href={`/tag/${article.tags[0].id}`} size="big">
+            {firstTag}
+          </Tag>
         )}
 
+        <Link to={article.link} className={styles.wrapperForTitle}>
+          <h3>{title}</h3>
+        </Link>
+
+        {description && <p className={styles.description}>{description}</p>}
+
         <div className={styles.combinate}>
-          <span>КАК БЫЛО СКАЗАНО </span>
-          <AuthorTag href={`/authors/${article.authorId}`} size="m" color="gray">
-            {article.author}
+          <span>РАССКАЗЫВАЕТ ДЛЯ ВАС </span>
+          <AuthorTag
+            href={`/authors/${article.author?.id}`}
+            size="m"
+            color="gray"
+          >
+            {authorName.toUpperCase()}
           </AuthorTag>
         </div>
       </div>

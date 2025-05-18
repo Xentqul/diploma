@@ -521,7 +521,7 @@
             "en": "Costumers of the Bolshoi Theater reveal which stage techniques have already entered everyday fashion"
         },
         "images": [
-            "/assets/culture/culture1.jpg"
+            "@/assets/main-pics/culture/main-culture-article.webp"
         ],
         "author": {
             "name": {
@@ -557,10 +557,10 @@
         },
         "description": {
             "ru": "Эрдем Моралиоглу представил новую коллекцию костюмов для Королевского балета",
-            "en": "Erdem Moralıoğlu presents a new costume collection for the Royal Ballet"
+            "en": "Erdem presents a new costume collection for the Royal Ballet"
         },
         "images": [
-            "/assets/culture/culture2.jpg"
+            "./assets/main-pics/culture/culture-aside-left-1.webp"
         ],
         "author": {
             "name": {
@@ -599,7 +599,7 @@
             "en": "How the concept of ugliness has changed over time and what it means today"
         },
         "images": [
-            "/assets/culture/culture3.jpg"
+            "/assets/main-pics/culture/culture-aside-left-2.webp"
         ],
         "author": {
             "name": {
@@ -638,7 +638,7 @@
             "en": "The return of the legendary opera to one of the world's most famous opera stages"
         },
         "images": [
-            "/assets/culture/culture4.jpg"
+            "/assets/main-pics/culture/culture-aside-right-1.webp"
         ],
         "author": {
             "name": {
@@ -677,7 +677,7 @@
             "en": "From Coco Chanel to Virgil Abloh: who set the trends in each decade"
         },
         "images": [
-            "/assets/culture/culture5.jpg"
+            "/assets/main-pics/culture/culture-aside-right-1.webp"
         ],
         "author": {
             "name": {

@@ -1,11 +1,25 @@
 import styles from "./CultureBlock.module.css";
-import { CultureCardsData } from "./CultureCards/CultureCardsData";
+import articlesData from "@/data/articles.json";
 import { MainBiggerArticle } from "./CultureCards/MainBiggerArticle";
 import { HorizontalWideArticle } from "./CultureCards/HorizontalWideArticle";
 
 function CultureBlock() {
-  const featuredArticle = CultureCardsData.find(item => item.isFeatured);
-  const asideArticles = CultureCardsData.filter(item => !item.isFeatured);
+  // Если articlesData не загрузился, используем пустой массив
+  const articles = articlesData || [];
+  
+  // Фильтруем и сортируем статьи
+  const cultureArticles = articles
+    .filter(article => 
+      article.category?.ru?.toLowerCase() === "культура" && 
+      article.status === "published"
+    )
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  
+  // Главная статья - самая свежая
+  const featuredArticle = cultureArticles[0];
+  
+  // Боковые статьи - следующие 4 по свежести (2 слева, 2 справа)
+  const asideArticles = cultureArticles.slice(1, 5);
 
   return (  
     <section className={styles.fifthSection}>
@@ -18,7 +32,7 @@ function CultureBlock() {
           </div>
           
           <div className={styles.centerColumn}>
-            <MainBiggerArticle article={featuredArticle} />
+            {featuredArticle && <MainBiggerArticle article={featuredArticle} />}
           </div>
           
           <div className={styles.rightColumn}>
