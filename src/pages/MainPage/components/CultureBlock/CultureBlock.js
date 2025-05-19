@@ -2,6 +2,7 @@ import styles from "./CultureBlock.module.css";
 import articlesData from "@/data/articles.json";
 import { MainBiggerArticle } from "./CultureCards/MainBiggerArticle";
 import { HorizontalWideArticle } from "./CultureCards/HorizontalWideArticle";
+import { Link } from "react-router-dom";
 
 function CultureBlock() {
   // Если articlesData не загрузился, используем пустой массив
@@ -24,7 +25,7 @@ function CultureBlock() {
   return (  
     <section className={styles.fifthSection}>
       <div className={styles.wrapper}>
-        <h2>КУЛЬТУРА</h2>
+        <h2><Link to="/category/culture">КУЛЬТУРА</Link></h2>
 
         <div className={styles.container}>
           <div className={styles.leftColumn}>

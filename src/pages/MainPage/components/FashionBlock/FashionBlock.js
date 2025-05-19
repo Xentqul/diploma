@@ -1,7 +1,8 @@
 import styles from "./FashionBlock.module.css";
 import { MainCenterArticle } from "./FashionCards/MainCenterArticle";
 import { AllContentCard } from "./FashionCards/AllContentCard";
-import React, { useContext } from "react";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 import articles from "@/data/articles.json";
 import { ArticleContext } from "@/context/ArticleContext";
 
@@ -50,7 +51,9 @@ function FashionBlock() {
   return (
     <section className={styles.fourthSection}>
       <div className={styles.wrapper}>
-        <h2>МОДА</h2>
+        <h2>
+          <Link to="/category/fashion">МОДА</Link>
+        </h2>
         <div className={styles.container}>
           {mainFashionArticle && (
             <MainCenterArticle mainArticle={mainFashionArticle} />

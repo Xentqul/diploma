@@ -11,6 +11,7 @@ import axios from "axios";
 import { ArticleProvider } from "@/context/ArticleContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { CookieBanner } from "./shared/components/CookieBanner/CookieBanner";
+import { CategoryPage } from "./pages/CategoryPage/CategoryPage.js";
 
 axios.defaults.withCredentials = true;
 
@@ -37,6 +38,7 @@ function App() {
               <Route path="/application" element={<ApplicationPage />} />
               {/* Страница аккаунта */}
               <Route path="/account" element={<AccountPage />} />
+              <Route path="/category/:categoryId" element={<CategoryPage />} />
             </Routes>{" "}
           </ArticleProvider>
         </div>

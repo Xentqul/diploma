@@ -2,7 +2,8 @@ import styles from "./MusicBlock.module.css";
 import { AllContentCardVertical } from "./MusicCards/AllContentCardVertical"; 
 import AlbumCard from "./MusicCards/AlbumCard";
 import articlesData from "@/data/articles.json";
-import musicData from "@/data/music.json"; // ✅ JSON с данными о релизах
+import musicData from "@/data/music.json";
+import { Link } from "react-router-dom";
 
 // Импортируем ТОЛЬКО музыкальные картинки
 import music1 from "@/assets/main-pics/music/music-article-1.webp";
@@ -32,14 +33,14 @@ function MusicBlock() {
 
   return (
     <div className={styles.seventhSection}>
-      <h2>МУЗЫКА</h2>
+      <h2><Link to="/category/music">МУЗЫКА</Link></h2>
       <div className={styles.wrapper}>
         <div className={styles.leftSide}>
           <AllContentCardVertical data={musicArticlesWithImages} />
         </div>
         <div className={styles.rightSide}>
           <span className={styles.titleOfAlbumsBlock}>ПОСЛЕДНИЕ РЕЛИЗЫ</span>
-          {/* ✅ Используем данные из JSON */} 
+          {/* данные из JSON */} 
           <AlbumCard data={musicData} />
         </div>
       </div>
