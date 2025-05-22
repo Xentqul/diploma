@@ -29,7 +29,7 @@ export const CategoryPage = () => {
       <h1>Статьи: {categoryName}</h1>
 
       {filteredArticles.length > 0 ? (
-        <div className="articles-list">
+        <div className="filteredList">
           {filteredArticles.map((article) => (
             <FilteredArticleCard key={article.id} article={article} lang="ru" />
           ))}

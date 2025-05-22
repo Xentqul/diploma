@@ -33,7 +33,7 @@ function MusicBlock() {
 
   return (
     <div className={styles.seventhSection}>
-      <h2><Link to="/category/music">МУЗЫКА</Link></h2>
+      <h2><Link to="/category/music" className={styles.title}>МУЗЫКА</Link></h2>
       <div className={styles.wrapper}>
         <div className={styles.leftSide}>
           <AllContentCardVertical data={musicArticlesWithImages} />

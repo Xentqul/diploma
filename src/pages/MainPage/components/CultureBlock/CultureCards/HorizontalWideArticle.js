@@ -40,7 +40,7 @@ export function HorizontalWideArticle({ articles }) {
 
             <div className={styles.content}>
               {firstTag && (
-                <Tag size="medium" href={`/tag/${article.tags[0].id}`}>
+                <Tag size="medium" id={article.tags[0].id}>
                   {firstTag}
                 </Tag>
               )}
@@ -50,10 +50,10 @@ export function HorizontalWideArticle({ articles }) {
               </Link>
 
               <AuthorTag
-                href={`/authors/${article.author?.id}`}
                 className={styles.author}
                 color="gray"
                 size="s"
+                id={article.author?.id}
               >
                 {authorName}
               </AuthorTag>

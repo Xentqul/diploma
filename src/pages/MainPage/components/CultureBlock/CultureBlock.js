@@ -25,7 +25,7 @@ function CultureBlock() {
   return (  
     <section className={styles.fifthSection}>
       <div className={styles.wrapper}>
-        <h2><Link to="/category/culture">КУЛЬТУРА</Link></h2>
+        <h2><Link to="/category/culture" className={styles.title}>КУЛЬТУРА</Link></h2>
 
         <div className={styles.container}>
           <div className={styles.leftColumn}>

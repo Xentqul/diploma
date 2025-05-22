@@ -12,6 +12,8 @@ import { ArticleProvider } from "@/context/ArticleContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { CookieBanner } from "./shared/components/CookieBanner/CookieBanner";
 import { CategoryPage } from "./pages/CategoryPage/CategoryPage.js";
+import { AuthorPage } from "./pages/AuthorPage/AuthorPage.js";
+import { TagPage } from "./pages/TagPage/TagPage.js";
 
 axios.defaults.withCredentials = true;
 
@@ -38,8 +40,11 @@ function App() {
               <Route path="/application" element={<ApplicationPage />} />
               {/* Страница аккаунта */}
               <Route path="/account" element={<AccountPage />} />
+              {/* СТРАНИЦЫ ФИЛЬТРАЦИИ */}
               <Route path="/category/:categoryId" element={<CategoryPage />} />
-            </Routes>{" "}
+              <Route path="/author/:authorId" element={<AuthorPage />} />
+              <Route path="/tag/:tagId" element={<TagPage />} />
+            </Routes>
           </ArticleProvider>
         </div>
 

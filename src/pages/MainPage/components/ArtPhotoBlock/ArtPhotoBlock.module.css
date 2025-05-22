@@ -8,6 +8,16 @@
     margin: 0 auto;
 }
 
+.title {
+    color: var(--bs-black);
+    text-decoration: none;
+}
+
+.title:hover {
+    text-decoration: underline 1.4px;
+    text-underline-offset: 0.1em;
+}
+
 .wrapper h3 {
     color: var(--bs-black);
     font-size: 32px;

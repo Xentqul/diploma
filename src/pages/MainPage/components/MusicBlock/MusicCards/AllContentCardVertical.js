@@ -1,14 +1,32 @@
+import React from "react";
 import styles from "./AllContentCardVertical.module.css";
 import { Tag } from "@/shared/ui/Tag/Tag";
 import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag";
 import { Link } from "react-router-dom";
+import articles from "@/data/articles.json";
 
-export function AllContentCardVertical({ data = [] }) {
+export function AllContentCardVertical({ data = [], tagId, authorId }) {
   const currentLang = "ru";
+
+  // Если передан tagId — фильтруем по тегу
+  let filteredData = [...data];
+
+  if (tagId) {
+    filteredData = articles.filter((article) =>
+      article.tags.some((tag) => tag.id === tagId)
+    );
+  }
+
+  // Если передан authorId — фильтруем по автору
+  if (authorId) {
+    filteredData = articles.filter(
+      (article) => article.author?.id === authorId
+    );
+  }
 
   return (
     <div className={`${styles.asideArticle} ${styles.flexAlign}`}>
-      {data.map((article) => (
+      {filteredData.map((article) => (
         <article
           key={article.id}
           className={`${styles.wrapperAsideArticle} ${styles.verticalVariant}`}
@@ -23,7 +41,7 @@ export function AllContentCardVertical({ data = [] }) {
 
           <div className={`${styles.asideContent} ${styles.verticalContent}`}>
             {article.tags && article.tags.length > 0 && (
-              <Tag size="small" href={`/tags/${article.tags[0].id}`}>
+              <Tag id={article.tags[0].id} size="small">
                 {article.tags[0].visible?.[currentLang] || article.tags[0].id}
               </Tag>
             )}
@@ -41,11 +59,7 @@ export function AllContentCardVertical({ data = [] }) {
             )}
 
             {article.author && (
-              <AuthorTag
-                size="s"
-                color="gray"
-                href={`/authors/${article.author.id}`}
-              >
+              <AuthorTag id={article.author.id} size="s" color="gray">
                 {article.author.name?.[currentLang] ||
                   article.author.name ||
                   "Неизвестный автор"}

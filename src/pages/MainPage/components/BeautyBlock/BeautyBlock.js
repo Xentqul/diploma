@@ -27,7 +27,7 @@ function BeautyBlock() {
   return (
     <section className={styles.sixthSection}>
       <h2>
-        <Link to="/category/beauty">КРАСОТА</Link>
+        <Link to="/category/beauty" className={styles.title}>КРАСОТА</Link>
       </h2>
       <SimpleHorizontalCard articles={displayArticles} />
       <a href="/beauty" className={styles.linkToMore}>

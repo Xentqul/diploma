@@ -66,12 +66,14 @@ function MainSlider() {
                     {article.description[currentLang]}
                   </p>
                   <AuthorTag
-                    href={`/authors/${article.author.id}`}
+                    id={article.author.id}
                     size="s"
                     color="white"
-                    weigth="weightRegular"
+                    weight="weightRegular"
                   >
-                    {article.author.name[currentLang]}
+                    {article.author.name[currentLang] ||
+                      article.author.name ||
+                      "Неизвестный автор"}
                   </AuthorTag>
                 </div>
                 <div className={styles.readButtonWrapper}>

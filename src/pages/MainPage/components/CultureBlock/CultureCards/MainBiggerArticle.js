@@ -30,7 +30,7 @@ export function MainBiggerArticle({ article }) {
 
       <div className={styles.textContent}>
         {firstTag && (
-          <Tag href={`/tag/${article.tags[0].id}`} size="big">
+          <Tag id={article.tags[0].id} size="big">
             {firstTag}
           </Tag>
         )}
@@ -44,7 +44,7 @@ export function MainBiggerArticle({ article }) {
         <div className={styles.combinate}>
           <span>РАССКАЗЫВАЕТ ДЛЯ ВАС </span>
           <AuthorTag
-            href={`/authors/${article.author?.id}`}
+            id={article.author?.id}
             size="m"
             color="gray"
           >

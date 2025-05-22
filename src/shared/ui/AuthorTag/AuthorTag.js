@@ -1,10 +1,11 @@
 import styles from "./AuthorTag.module.css";
+import { Link } from "react-router-dom";
 
 export function AuthorTag({
   href,
   children,
-  size = "m", // 's' | 'm' | 'l' | 'xl' | 'xxl'
-  color = "black", // 'black' | 'white' | 'gray'
+  size = "m",
+  color = "black",
   underline = true,
   weight = "weightRegular",
   className = "",
@@ -19,9 +20,19 @@ export function AuthorTag({
       ${className}
     `.trim();
 
+  // Если href передан — используем его
+  if (href) {
+    return (
+      <a href={href} className={tagClasses} {...props}>
+        {children}
+      </a>
+    );
+  }
+
+  // Иначе делаем переход на страницу автора по id из URL
   return (
-    <a href={href} className={tagClasses} {...props}>
+    <Link to={`/author/${props.id}`} className={tagClasses} {...props}>
       {children}
-    </a>
+    </Link>
   );
 }

@@ -23,7 +23,7 @@ function ArtPhotoBlock() {
   return (
     <section className={styles.eighthSection}>
       <div className={styles.wrapper}>
-        <h3><Link to="/category/art">АРТ & ФОТОГРАФИИ</Link></h3>
+        <h3><Link to="/category/art" className={styles.title}>АРТ & ФОТОГРАФИИ</Link></h3>
         {displayArticle && <PhotoContentButtonCard article={displayArticle} />}
       </div>
     </section>

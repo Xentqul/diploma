@@ -31,6 +31,21 @@ Link {
   width: fit-content;
 }
 
+.category-page,
+.author-page,
+.tag-page {
+  min-height: 100vh;
+}
+
+.filteredList {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  max-width: 1685px;
+  width: 70%;
+  margin: 100px auto;
+}
+
 /* ================================================ Тёмная тема ====================================================== */
 [data-theme="dark"] {
   --color-tag: #F28282;
@@ -42,6 +57,7 @@ Link {
   --bs-white: #181818 !important;
   --bs-black: #A2A3A2 !important;
   /* второстепенные цвета */
+  --bs-gray-500: #A2A3A2 !important;
   --bs-gray-600: #C7C7C6 !important;
   --bs-gray-700: #A2A3A2 !important;
   --bs-gray-900: #e3e3e3 !important;
@@ -65,7 +81,7 @@ Link {
 
 /* инверсия */
 [data-theme="dark"] .imgColorInvert,
-[data-theme="dark"] .ColorInversion{
+[data-theme="dark"] .ColorInversion {
   filter: invert(100%) brightness(90%) contrast(80%) !important;
 }
 

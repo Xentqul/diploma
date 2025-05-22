@@ -1,10 +1,9 @@
-// MainCenterArticle.jsx
 import styles from "./MainCenterArticle.module.css";
 import { Tag } from "@/shared/ui/Tag/Tag";
 import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag";
 import { Link } from "react-router-dom";
 
-// Импортируем изображения
+// Импортируем изображение напрямую
 import mainArticleImg from "@/assets/main-pics/fashion/main-fashion-article.webp";
 
 // Маппинг путей к изображениям
@@ -24,7 +23,7 @@ export function MainCenterArticle({ mainArticle }) {
   return (
     <article className={styles.mainFashionArticle}>
       <div className={styles.wrapper}>
-        <Link to={`/article/${mainArticle.slug}`}>
+        <Link to={mainArticle.link} className={styles.imageLink}>
           <img
             src={featuredImage}
             alt={mainArticle.title[currentLang]}
@@ -33,16 +32,14 @@ export function MainCenterArticle({ mainArticle }) {
         </Link>
 
         <div className={styles.textContent}>
-          <Tag
-            size="medium"
-            underline="underlined_black"
-            noHover={true}
-            href={`/tags/${mainArticle.tags[0].id}`}
-          >
-            {mainArticle.tags[0]?.visible?.[currentLang] || "#мода"}
-          </Tag>
+          {/* Используем id вместо href */}
+          {mainArticle.tags.length > 0 && (
+            <Tag size="medium" underline="underlined_black" noHover={true} id={mainArticle.tags[0].id}>
+              {mainArticle.tags[0]?.visible?.[currentLang] || "#мода"}
+            </Tag>
+          )}
 
-          <Link to={`/article/${mainArticle.slug}`} className={styles.mainName}>
+          <Link to={mainArticle.link} className={styles.mainName}>
             <h3>{mainArticle.title[currentLang]}</h3>
           </Link>
 
@@ -50,15 +47,17 @@ export function MainCenterArticle({ mainArticle }) {
 
           <div className={styles.authorWrapper}>
             <span>рассказывает</span>
-            <AuthorTag
-              className={styles.italic}
-              size="m"
-              href={`/authors/${mainArticle.author.id}`}
-            >
-              {mainArticle.author.name[currentLang]?.toUpperCase() ||
-                mainArticle.author.name?.toUpperCase() ||
-                "Неизвестный автор"}
-            </AuthorTag>
+            {mainArticle.author && (
+              <AuthorTag
+                className={styles.italic}
+                size="m"
+                id={mainArticle.author.id}
+              >
+                {mainArticle.author.name[currentLang]?.toUpperCase() ||
+                  mainArticle.author.name?.toUpperCase() ||
+                  "Неизвестный автор"}
+              </AuthorTag>
+            )}
           </div>
         </div>
       </div>

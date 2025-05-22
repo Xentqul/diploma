@@ -14,7 +14,7 @@ const IMAGE_MAP = {
   19: beauty1,
   20: beauty2,
   21: beauty3,
-  22: beauty4
+  22: beauty4,
 };
 
 export function SimpleHorizontalCard({ articles }) {
@@ -45,7 +45,7 @@ export function SimpleHorizontalCard({ articles }) {
 
               <div className={styles.content}>
                 {firstTag && (
-                  <Tag size="big" href={`/tag/${article.tags[0].id}`}>
+                  <Tag size="big" id={article.tags[0].id}>
                     {firstTag}
                   </Tag>
                 )}
@@ -54,11 +54,7 @@ export function SimpleHorizontalCard({ articles }) {
                   <h3>{title}</h3>
                 </Link>
 
-                <AuthorTag 
-                  color="gray" 
-                  size="m" 
-                  href={`/authors/${article.author?.id}`}
-                >
+                <AuthorTag color="gray" size="m" id={article.author?.id}>
                   {authorName}
                 </AuthorTag>
               </div>

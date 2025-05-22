@@ -3,6 +3,16 @@
     height: auto;
 }
 
+.seventhSection .title {
+    text-decoration: none;
+    color: var(--bs-black);
+}
+
+.title:hover {
+    text-decoration: underline 1.4px;
+    text-underline-offset: 0.1em;
+}
+
 .seventhSection h2 {
     margin-top: 130px;
     text-align: center;
@@ -24,7 +34,8 @@
     width: 70%;
     height: auto;
     background-color: var(--pale-accent);
-    padding: 20px; /* учитывать отступы в ширине */
+    padding: 20px;
+    /* учитывать отступы в ширине */
 }
 
 .rightSide {
@@ -35,7 +46,8 @@
     flex-direction: column;
     align-items: center;
     background-color: var(--pale-accent);
-    box-sizing: border-box; /* учитывать отступы в ширине */
+    box-sizing: border-box;
+    /* учитывать отступы в ширине */
 }
 
 .titleOfAlbumsBlock {

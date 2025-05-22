@@ -18,6 +18,16 @@
   letter-spacing: 5px;
 }
 
+.title {
+    color: var(--bs-black);
+    text-decoration: none;
+}
+
+.title:hover {
+    text-decoration: underline 1.4px;
+    text-underline-offset: 0.1em;
+}
+
 .fifthSection {
   padding: 40px 0;
 }

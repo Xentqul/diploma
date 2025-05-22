@@ -24,8 +24,6 @@ export function AllContentCard({ data = [] }) {
       case 2:
         image = fashionAside3;
         break;
-      default:
-        image = fashionAside1; // fallback
     }
     return { ...article, image };
   });
@@ -44,7 +42,7 @@ export function AllContentCard({ data = [] }) {
 
           <div className={styles.asideContent}>
             {article.tags && article.tags.length > 0 && (
-              <Tag size="small" href={`/tags/${article.tags[0].id}`}>
+              <Tag size="small" id={article.tags[0].id}>
                 {article.tags[0].visible?.[currentLang] || article.tags[0].id}
               </Tag>
             )}
@@ -65,7 +63,7 @@ export function AllContentCard({ data = [] }) {
               <AuthorTag
                 size="s"
                 color="gray"
-                href={`/authors/${article.author.id}`}
+                id={article.author?.id}
               >
                 {article.author.name?.[currentLang] ||
                   article.author.name ||

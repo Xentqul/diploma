@@ -19,39 +19,45 @@ function FirstArticleCard() {
     )
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))[0];
 
-  // 2. Помечаем ее как использованную
+  // 2. Помечаем статью как использованную
   useEffect(() => {
     if (mainArticle?.id && !usedArticles.includes(mainArticle.id)) {
       markArticleAsUsed(mainArticle.id);
-      console.log(
-        "Главная статья помечена:",
-        mainArticle.id,
-        mainArticle.title.ru
-      );
+      console.log("Главная статья помечена:", mainArticle.id, mainArticle.title.ru);
     }
   }, [mainArticle, usedArticles, markArticleAsUsed]);
 
   if (!mainArticle) return <p>Статья не найдена</p>;
 
+  const authorName = mainArticle.author.name[currentLang] || mainArticle.author.id;
+
   return (
     <section className={styles.firstSection}>
       <div className={styles.wrapper}>
         <div className={styles.textBlock}>
-          <Tag href={`/tags/${mainArticle.tags[0].id}`} size="big">
-            {mainArticle.tags[0].visible[currentLang]}
-          </Tag>
+          {/* Используем id для тега */}
+          {mainArticle.tags.length > 0 && (
+            <Tag size="big" id={mainArticle.tags[0].id}>
+              {mainArticle.tags[0].visible[currentLang]}
+            </Tag>
+          )}
 
+          {/* Ссылка на статью */}
           <a className={styles.h1} href={mainArticle.link}>
             <h1>{mainArticle.title[currentLang]}</h1>
           </a>
 
+          {/* Описание статьи */}
           <p>{mainArticle.description[currentLang]}</p>
 
-          <AuthorTag href={`/authors/${mainArticle.author.id}`}>
-            автор: {mainArticle.author.name[currentLang]}
-          </AuthorTag>
+          {/* Используем id для автора */}
+          {mainArticle.author && (
+            <AuthorTag id={mainArticle.author.id} color="black">
+              автор: {authorName}
+            </AuthorTag>
+          )}
 
-          <LinkButton className={styles.linkButtonMargin}>
+          <LinkButton className={styles.linkButtonMargin} to={mainArticle.link}>
             к коллекции
           </LinkButton>
         </div>

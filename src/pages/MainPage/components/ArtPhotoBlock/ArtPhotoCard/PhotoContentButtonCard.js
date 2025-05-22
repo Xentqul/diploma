@@ -46,7 +46,7 @@ function PhotoContentButtonCard({ article }) {
         {/* Контент */}
         <div className={styles.content}>
           {firstTag && (
-            <Tag size="large" href={`/tag/${article.tags[0].id}`}>
+            <Tag size="large" id={article.tags[0].id}>
               {firstTag}
             </Tag>
           )}

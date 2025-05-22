@@ -52,7 +52,7 @@ function FashionBlock() {
     <section className={styles.fourthSection}>
       <div className={styles.wrapper}>
         <h2>
-          <Link to="/category/fashion">МОДА</Link>
+          <Link to="/category/fashion" className={styles.title}>МОДА</Link>
         </h2>
         <div className={styles.container}>
           {mainFashionArticle && (
