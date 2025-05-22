@@ -3,48 +3,60 @@ import { Tag } from "@/shared/ui/Tag/Tag";
 import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag";
 import { Link } from "react-router-dom";
 
-// Импортируем изображение напрямую
-import mainArticleImg from "@/assets/main-pics/fashion/main-fashion-article.webp";
-
-// Маппинг путей к изображениям
-const images = {
-  "/assets/main-pics/fashion/main-fashion-article.webp": mainArticleImg,
-};
-
 export function MainCenterArticle({ mainArticle }) {
   const currentLang = "ru";
 
   if (!mainArticle) return <p>Статья не найдена</p>;
 
-  const featuredImage = mainArticle.images?.[0]
-    ? images[mainArticle.images[0]]
-    : null;
+  const title = mainArticle.title?.[currentLang] || "Без заголовка";
+  const description = mainArticle.description?.[currentLang] || "Нет описания";
+  const firstTag =
+    mainArticle.tags?.[0]?.visible?.[currentLang] ||
+    mainArticle.tags?.[0]?.id ||
+    "#мода";
+  const authorName =
+    mainArticle.author?.name?.[currentLang] ||
+    mainArticle.author?.name ||
+    "Неизвестный автор";
+
+  // Берём первую картинку из данных статьи
+  const featuredImage = mainArticle.images?.[0];
 
   return (
     <article className={styles.mainFashionArticle}>
       <div className={styles.wrapper}>
+        {/* Картинка */}
         <Link to={mainArticle.link} className={styles.imageLink}>
-          <img
-            src={featuredImage}
-            alt={mainArticle.title[currentLang]}
-            className={styles.featuredImage}
-          />
+          {featuredImage && (
+            <img
+              src={featuredImage}
+              alt={title}
+              className={styles.featuredImage}
+              onError={(e) => {
+                e.target.style.display = "none"; // скрываем, если ошибка
+              }}
+            />
+          )}
         </Link>
 
+        {/* Контент */}
         <div className={styles.textContent}>
-          {/* Используем id вместо href */}
+          {/* Тег */}
           {mainArticle.tags.length > 0 && (
             <Tag size="medium" underline="underlined_black" noHover={true} id={mainArticle.tags[0].id}>
-              {mainArticle.tags[0]?.visible?.[currentLang] || "#мода"}
+              {firstTag}
             </Tag>
           )}
 
+          {/* Заголовок */}
           <Link to={mainArticle.link} className={styles.mainName}>
-            <h3>{mainArticle.title[currentLang]}</h3>
+            <h3>{title}</h3>
           </Link>
 
-          <p className={styles.descr}>{mainArticle.description[currentLang]}</p>
+          {/* Описание */}
+          <p className={styles.descr}>{description}</p>
 
+          {/* Автор */}
           <div className={styles.authorWrapper}>
             <span>рассказывает</span>
             {mainArticle.author && (
@@ -53,9 +65,7 @@ export function MainCenterArticle({ mainArticle }) {
                 size="m"
                 id={mainArticle.author.id}
               >
-                {mainArticle.author.name[currentLang]?.toUpperCase() ||
-                  mainArticle.author.name?.toUpperCase() ||
-                  "Неизвестный автор"}
+                {authorName.toUpperCase()}
               </AuthorTag>
             )}
           </div>
@@ -64,3 +74,5 @@ export function MainCenterArticle({ mainArticle }) {
     </article>
   );
 }
+
+export default MainCenterArticle;

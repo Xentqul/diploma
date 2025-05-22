@@ -4,7 +4,6 @@ import { LinkButton } from "@/shared/ui/LinkButton/LinkButton";
 import { Tag } from "@/shared/ui/Tag/Tag";
 import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag";
 import articles from "@/data/articles.json";
-import firstMainPic from "@/assets/main-pics/first-main-pic.webp";
 import { ArticleContext } from "@/context/ArticleContext";
 
 function FirstArticleCard() {
@@ -19,7 +18,7 @@ function FirstArticleCard() {
     )
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))[0];
 
-  // 2. Помечаем статью как использованную
+  // 2. Помечаем её как использованную
   useEffect(() => {
     if (mainArticle?.id && !usedArticles.includes(mainArticle.id)) {
       markArticleAsUsed(mainArticle.id);
@@ -62,11 +61,14 @@ function FirstArticleCard() {
           </LinkButton>
         </div>
 
-        <img
-          className={styles.mainPic}
-          src={firstMainPic}
-          alt={mainArticle.title[currentLang]}
-        />
+        {/* Динамическая картинка из статьи */}
+        {mainArticle.images && mainArticle.images.length > 0 && (
+          <img
+            className={styles.mainPic}
+            src={mainArticle.images[0]} // Теперь берём из JSON
+            alt={mainArticle.title[currentLang]}
+          />
+        )}
       </div>
     </section>
   );

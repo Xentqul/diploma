@@ -6,17 +6,18 @@ import InputAndLabel from "@/shared/ui/InputAndLabel/InputAndLabel";
 import SubmitButton from "@/shared/ui/SubmitButton/SubmitButton";
 import { LinkButton } from "@/shared/ui/LinkButton/LinkButton";
 import { Link, useNavigate } from "react-router-dom";
-import user from "@/assets/main-pics/first-main-pic.webp";
-import { CultureCardsData } from "./CultureCardsData";
+
+// Пример данных пользователя (в будущем можно заменить на данные с API)
+const userData = {
+  name: "Павел Нестеров",
+  avatar: "/assets/users/pavel_nesterov.jpg", // должен быть в /public/assets/
+};
 
 function AccountPage() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    console.log("Инициирован выход из системы");
-  
     try {
-      // Отправляем запрос на сервер
       const response = await axios.post(
         "http://localhost:5000/api/auth/logout",
         {},
@@ -27,16 +28,10 @@ function AccountPage() {
           },
         }
       );
-  
-      console.log("Ответ сервера:", response.data);
-  
-      window.location.href = "/";      
+
+      window.location.href = "/";
     } catch (error) {
-      console.error("Ошибка выхода:", {
-        message: error.message,
-        response: error.response?.data,
-        stack: error.stack,
-      });
+      console.error("Ошибка выхода:", error);
       alert("Ошибка при выходе. Проверьте консоль.");
     }
   };
@@ -47,17 +42,25 @@ function AccountPage() {
         <div className={styles.topPart}>
           <div className={styles.column}>
             <Link to="/news">Последние новости</Link>
-            <HorizontalWideArticle articles={CultureCardsData.slice(1, 3)} />
+            <HorizontalWideArticle articles={userData.articles.slice(1, 3)} />
           </div>
 
           <div className={styles.userBlock}>
-            <img
-              src={user}
-              alt="Аватар пользователя"
-              className={styles.imgBlock}
-            />
+            {/* Динамическое изображение */}
+            {userData.avatar ? (
+              <img
+                src={userData.avatar}
+                alt={`${userData.name}`}
+                className={styles.imgBlock}
+                onError={(e) => {
+                  e.target.src = "/assets/users/default-avatar.png"; // fallback
+                }}
+              />
+            ) : (
+              <div className={styles.fallbackAvatar}>?</div>
+            )}
 
-            <p className={styles.name}>Имя Фамилия</p>
+            <p className={styles.name}>{userData.name}</p>
 
             <LabelAndInfo label="эл. почта" value="example@mail.ru" />
             <LabelAndInfo label="пароль" value="*************" />
@@ -73,7 +76,7 @@ function AccountPage() {
 
           <div className={styles.column}>
             <Link to="/favorites">Избранное</Link>
-            <HorizontalWideArticle articles={CultureCardsData.slice(1, 3)} />
+            <HorizontalWideArticle articles={userData.articles.slice(1, 3)} />
           </div>
         </div>
       </div>
@@ -86,19 +89,16 @@ function AccountPage() {
             и эксклюзивы.
           </p>
 
-          <form
-            onSubmit={(e) => e.preventDefault()}
-            className={styles.subscriptionForm}
-          >
+          <form onSubmit={(e) => e.preventDefault()} className={styles.subscriptionForm}>
             <InputAndLabel type="email" placeholder="Введите ваш email" />
 
             <label className={styles.checkboxLabel}>
-              <input type="checkbox" className={styles.checkbox} />Я даю
+              <input type="checkbox" className={styles.checkbox} /> Я даю
               согласие обработку персональных данных
             </label>
 
             <label className={styles.checkboxLabel}>
-              <input type="checkbox" className={styles.checkbox} />Я даю
+              <input type="checkbox" className={styles.checkbox} /> Я даю
               согласие на получение рекламных сообщений
             </label>
 

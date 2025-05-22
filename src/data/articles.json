@@ -404,7 +404,7 @@
             "en": "Silhouettes from the 1950s are becoming increasingly popular"
         },
         "images": [
-            "/assets/fashion/fashion2.jpg"
+            "/assets/main-pics/fashion/fashion-aside-1.webp"
         ],
         "author": {
             "name": {
@@ -443,7 +443,7 @@
             "en": "Schiaparelli celebrates motherhood in its new collection"
         },
         "images": [
-            "/assets/fashion/fashion3.jpg"
+            "/assets/main-pics/fashion/fashion-aside-2.webp"
         ],
         "author": {
             "name": {
@@ -482,7 +482,7 @@
             "en": "Traditional motifs and thousands of elements in Guo Pei's creations"
         },
         "images": [
-            "/assets/fashion/fashion4.jpg"
+            "/assets/main-pics/fashion/fashion-aside-3.webp"
         ],
         "author": {
             "name": {
@@ -521,7 +521,7 @@
             "en": "Costumers of the Bolshoi Theater reveal which stage techniques have already entered everyday fashion"
         },
         "images": [
-            "@/assets/main-pics/culture/main-culture-article.webp"
+            "/assets/main-pics/culture/main-culture-article.webp"
         ],
         "author": {
             "name": {
@@ -560,7 +560,7 @@
             "en": "Erdem presents a new costume collection for the Royal Ballet"
         },
         "images": [
-            "./assets/main-pics/culture/culture-aside-left-1.webp"
+            "/assets/main-pics/culture/culture-aside-left-1.webp"
         ],
         "author": {
             "name": {
@@ -677,7 +677,7 @@
             "en": "From Coco Chanel to Virgil Abloh: who set the trends in each decade"
         },
         "images": [
-            "/assets/main-pics/culture/culture-aside-right-1.webp"
+            "/assets/main-pics/culture/culture-aside-right-2.webp"
         ],
         "author": {
             "name": {
@@ -716,7 +716,7 @@
             "en": "BLACKPINK Jennie is back in the spotlight thanks to a new campaign by brand HERA."
         },
         "images": [
-            "/assets/beauty/beauty1.jpg"
+            "/assets/main-pics/beauty/beauty-1.webp"
         ],
         "author": {
             "name": {
@@ -756,7 +756,7 @@
             "en": "Perfect looks for the beach, party or everyday wear — everything about this summer’s hairstyle trends."
         },
         "images": [
-            "/assets/beauty/beauty2.jpg"
+            "/assets/main-pics/beauty/beauty-2.webp"
         ],
         "author": {
             "name": {
@@ -796,7 +796,7 @@
             "en": "How the actress maintains her youth and radiates natural beauty without tons of makeup."
         },
         "images": [
-            "/assets/beauty/beauty3.jpg"
+            "/assets/main-pics/beauty/beauty-3.webp"
         ],
         "author": {
             "name": {
@@ -835,7 +835,7 @@
             "en": "Hailey Bieber’s brand expands its skincare line — what’s new and is it worth trying?"
         },
         "images": [
-            "/assets/beauty/beauty4.jpg"
+            "/assets/main-pics/beauty/beauty-4.webp"
         ],
         "author": {
             "name": {
@@ -874,7 +874,7 @@
             "en": "The internet's darling walked away empty-handed"
         },
         "images": [
-            "/assets/music/music1.jpg"
+            "/assets/main-pics/music/music-article-1.webp"
         ],
         "author": {
             "name": {
@@ -913,7 +913,7 @@
             "en": "Beyoncé once again took home one of the top awards — but did she deserve it?"
         },
         "images": [
-            "/assets/music/music2.jpg"
+            "/assets/main-pics/music/music-article-2.webp"
         ],
         "author": {
             "name": {
@@ -952,8 +952,8 @@
             "en": "In 1968, Leibovitz bought a Minolta SRT 101 camera in Japan, which she used to climb Mount Fuji, where she took her first photos. She had no spare film, and only a few frames remained on the one in the camera..."
         },
         "images": [
-            "/assets/art-photo/art_photo1_desktop.webp",
-            "/assets/art-photo/art_photo1_mobile.webp"
+            "/assets/main-pics/main-article-art&photo.webp",
+            "/assets/main-pics/mobile-main-article-art&photo.webp"
         ],
         "author": {
             "name": {
