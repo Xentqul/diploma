@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./SignUpPage.module.css";
-import signupPic from "@/assets/signup-pic/signup.webp";
 import BackButton from "@/shared/ui/BackButton/BackButton";
 import FormBlock from "@/shared/components/FormBlock/FormBlock";
 
@@ -115,7 +114,7 @@ function SignUpPage() {
   return (
     <div className={styles.wrapper}>
       <img
-        src={signupPic}
+        src="assets/signup-pic/signup.webp"
         alt="Зарегистрироваться"
         className={styles.sidePic}
       />

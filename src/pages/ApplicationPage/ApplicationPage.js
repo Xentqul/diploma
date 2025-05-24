@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styles from "./ApplicationPage.module.css";
-import applicationPic from "@/assets/application-pic/applicationForm.webp";
 import BackButton from "@/shared/ui/BackButton/BackButton";
 import FormBlock from "@/shared/components/FormBlock/FormBlock";
 
@@ -106,7 +105,7 @@ const validateField = (name, value) => {
 
   return (
     <div className={styles.wrapper}>
-      <img src={applicationPic} alt="Подать заявку" className={styles.sidePic} />
+      <img src="/assets/application-pic/applicationForm.webp" alt="Подать заявку" className={styles.sidePic} />
 
       <div className={styles.rightSide}>
         <div className={styles.topSection}>

@@ -33,7 +33,7 @@ export const FilteredArticleCard = ({ article, lang = "ru" }) => {
           {/* Множество тегов */}
           <div className={styles.tags}>
             {tags.map((tag, index) => (
-              <Tag key={index} id={tag.id} size="small">
+              <Tag key={index} id={tag.id} size="medium">
                 {tag.visible[lang] || tag.id}
               </Tag>
             ))}

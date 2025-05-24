@@ -1,54 +1,66 @@
 import styles from "./Footer.module.css";
-import instIcon from "@assets/icons/inst-icon.png";
-import tgIcon from "@assets/icons/telegram-icon.png";
-import cmIcon from "@assets/icons/classmates-icon.png";
-import twIcon from "@assets/icons/twitter-icon.png";
-import vkIcon from "@assets/icons/vk-icon.png";
-import ttIcon from "@assets/icons/tiktok-icon.png";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer>
+    <footer className={styles.footer}>
       <div className={styles.wrapper}>
         <div className={styles.leftFooterPart}>
           <span className={styles.logo}>DRESSERY</span>
+
           <ul className={styles.socialMedia}>
             <li>
-              <a href="#">
+              <a href="/category/fashion">
                 <img
-                  src={instIcon}
+                  src="/assets/icons/inst-icon.png"
                   alt="instagram"
                   className="imgInvertDisable"
                 />
               </a>
             </li>
             <li>
-              <a href="#">
-                <img src={tgIcon} alt="telegram" className="imgInvertDisable" />
+              <a href="/category/music">
+                <img
+                  src="/assets/icons/telegram-icon.png"
+                  alt="telegram"
+                  className="imgInvertDisable"
+                />
               </a>
             </li>
             <li>
-              <a href="#">
+              <a href="/category/art">
                 <img
-                  src={cmIcon}
+                  src="/assets/icons/classmates-icon.png"
                   alt="одноклассники"
                   className="imgInvertDisable"
                 />
               </a>
             </li>
             <li>
-              <a href="#">
-                <img src={twIcon} alt="twitter" className="imgInvertDisable" />
+              <a href="/category/culture">
+                <img
+                  src="/assets/icons/twitter-icon.png"
+                  alt="twitter"
+                  className="imgInvertDisable"
+                />
               </a>
             </li>
             <li>
-              <a href="#">
-                <img src={vkIcon} alt="vk" className="imgInvertDisable" />
+              <a href="/category/fashion">
+                <img
+                  src="/assets/icons/vk-icon.png"
+                  alt="vk"
+                  className="imgInvertDisable"
+                />
               </a>
             </li>
             <li>
-              <a href="#">
-                <img src={ttIcon} alt="tiktok" className="imgInvertDisable" />
+              <a href="/category/art">
+                <img
+                  src="/assets/icons/tiktok-icon.png"
+                  alt="tiktok"
+                  className="imgInvertDisable"
+                />
               </a>
             </li>
           </ul>
@@ -63,37 +75,38 @@ function Footer() {
             </p>
           </div>
         </div>
+
         <div className={styles.navigationBlock}>
           <nav aria-label="Разделы журнала">
             <ul>
               <li>
-                <a href="#">Главная</a>
+                <Link to="/">Главная</Link>
               </li>
               <li>
-                <a href="#">Арт&фотографии</a>
+                <Link to="/category/art">Арт & Фотографии</Link>
               </li>
               <li>
-                <a href="#">Мода и стиль</a>
+                <Link to="/category/fashion">Мода и стиль</Link>
               </li>
               <li>
-                <a href="#">Культура</a>
+                <Link to="/category/culture">Культура</Link>
               </li>
               <li>
-                <a href="#">Красота</a>
+                <Link to="/category/beauty">Красота</Link>
               </li>
               <li>
-                <a href="#">Новости</a>
+                <Link to="/news">Новости</Link>
               </li>
               <li>
-                <a href="#">Музыка</a>
+                <Link to="/category/music">Музыка</Link>
               </li>
             </ul>
           </nav>
 
           <div className={styles.footerUtils}>
-            <a href="#">Аккаунт</a>
-            <a href="#">Вакансии</a>
-            <a href="#">Контакты</a>
+            <Link to="/account">Аккаунт</Link>
+            <Link to="/vacancies">Вакансии</Link>
+            <Link to="/contacts">Контакты</Link>
           </div>
         </div>
       </div>

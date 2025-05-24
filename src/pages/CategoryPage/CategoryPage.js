@@ -11,7 +11,7 @@ export const CategoryPage = () => {
     music: "музыка",
     beauty: "красота",
     art: "искусство и фото",
-    culture: "культура"
+    culture: "культура",
   };
 
   const categoryName = categoryNames[categoryId] || categoryId;
@@ -25,18 +25,31 @@ export const CategoryPage = () => {
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 
   return (
-    <div className="category-page">
-      <h1>Статьи: {categoryName}</h1>
-
-      {filteredArticles.length > 0 ? (
-        <div className="filteredList">
-          {filteredArticles.map((article) => (
-            <FilteredArticleCard key={article.id} article={article} lang="ru" />
-          ))}
+    <div>
+      <div className="combinate">
+        <div className="block"></div>
+        <div className="textWrapper">
+          <span>Статьи категории:</span>
+          <span>{categoryName.toUpperCase()}</span>
         </div>
-      ) : (
-        <p>Нет статей в этой категории.</p>
-      )}
+        <div className="block"></div>
+      </div>
+
+      <div className="filterPageWrapper">
+        {filteredArticles.length > 0 ? (
+          <div className="filteredList">
+            {filteredArticles.map((article) => (
+              <FilteredArticleCard
+                key={article.id}
+                article={article}
+                lang="ru"
+              />
+            ))}
+          </div>
+        ) : (
+          <p>Нет статей в этой категории.</p>
+        )}
+      </div>
     </div>
   );
 };

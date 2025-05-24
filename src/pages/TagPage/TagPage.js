@@ -9,24 +9,42 @@ export const TagPage = () => {
   const filteredArticles = articles
     .filter(
       (article) =>
-        article.tags.some(tag => tag.id === tagId) &&
+        article.tags.some((tag) => tag.id === tagId) &&
         article.status === "published"
     )
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 
-  return (
-    <div className="tag-page">
-      <h1>Статьи по тегу: {tagId}</h1>
+  // Находим первый подходящий тег с переводом
+  const tagVisibleRu =
+    filteredArticles[0]?.tags.find((tag) => tag.id === tagId)?.visible?.ru ||
+    `#${tagId}`; // fallback
 
-      {filteredArticles.length > 0 ? (
-        <div className="filteredList">
-          {filteredArticles.map((article) => (
-            <FilteredArticleCard key={article.id} article={article} lang="ru" />
-          ))}
+  return (
+    <div>
+      <div className="combinate">
+        <div className="block"></div>
+        <div className="textWrapper">
+          <span>Статьи категории:</span>
+          <span>{tagVisibleRu.toUpperCase()}</span>
         </div>
-      ) : (
-        <p>Нет статей с этим тегом.</p>
-      )}
+        <div className="block"></div>
+      </div>
+
+      <div className="filterPageWrapper">
+        {filteredArticles.length > 0 ? (
+          <div className="filteredList">
+            {filteredArticles.map((article) => (
+              <FilteredArticleCard
+                key={article.id}
+                article={article}
+                lang="ru"
+              />
+            ))}
+          </div>
+        ) : (
+          <p>Нет статей с этим тегом.</p>
+        )}
+      </div>
     </div>
   );
 };

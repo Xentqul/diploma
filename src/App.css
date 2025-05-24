@@ -4,6 +4,7 @@
   --hover-tag: #a10202;
   --pale-accent: #E1E5EE;
   --input-color: #484848;
+  --hover-asphalt: #505050;
   /* общая коллекция бутстрап */
   --bs-black: #000;
   --bs-white: #f8f9fa !important;
@@ -31,22 +32,73 @@ Link {
   width: fit-content;
 }
 
-.category-page,
-.author-page,
-.tag-page {
-  min-height: 100vh;
-}
+/*================================= СТИЛИ ВСЕХ СТРАНИЦ КАТЕГОРИЙ ==================================*/
 
-.filteredList {
+.filterPageWrapper {
+  padding-top: 50px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   gap: 25px;
   max-width: 1685px;
   width: 70%;
-  margin: 100px auto;
+  margin: 0 auto;
 }
 
-/* ================================================ Тёмная тема ====================================================== */
+.filteredList {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 50px;
+  padding-bottom: 50px;
+}
+
+.combinate {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  width: 100%;
+  padding-top: 180px;
+}
+
+.textWrapper {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 0 40px;
+}
+
+.textWrapper span:first-child {
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--bs-black);
+}
+
+.textWrapper span:last-child {
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--bs-black);
+  text-transform: uppercase;
+}
+
+.block {
+  height: 80px;
+  background-color: var(--bs-black);
+}
+
+.block:first-child {
+  border-radius: 0 4px 4px 0;
+  grid-column: 1;
+}
+
+.block:last-child {
+  grid-column: 3;
+  border-radius: 4px 0 0 4px;
+}
+
+/* ========================================================= ТЁМНАЯ ТЕМА ======================================================================= */
 [data-theme="dark"] {
   --color-tag: #F28282;
   --hover-tag: #EF3E3E;
@@ -88,4 +140,38 @@ Link {
 /* отключение инверсии для иконок футера */
 [data-theme="dark"] .imgInvertDisable {
   filter: none;
+}
+
+@media (max-width: 768px) {
+
+.filterPageWrapper {
+  padding-top: 20px;
+  max-width: 100%;
+  width: 98%;
+  margin: 0 auto;
+}
+
+.filteredList {
+  margin-top: 10px;
+}
+
+.combinate {
+  padding-top: 80px;
+}
+
+.textWrapper {
+  padding: 0 30px;
+}
+
+.textWrapper span:first-child {
+  font-size: 24px;
+}
+
+.textWrapper span:last-child {
+  font-size: 28px;
+}
+
+.block {
+  height: 50px;
+}
 }

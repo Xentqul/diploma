@@ -1,46 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/context/AuthContext"; // контекст авторизации
-
-// ------------ ИКОНКИ ---------
-import changeLangIcon from "@assets/icons/change-lang-icon.png";
-import instIcon from "@assets/icons/inst-icon.png";
-import tgIcon from "@assets/icons/telegram-icon.png";
-import cmIcon from "@assets/icons/classmates-icon.png";
-import twIcon from "@assets/icons/twitter-icon.png";
-import vkIcon from "@assets/icons/vk-icon.png";
-import ttIcon from "@assets/icons/tiktok-icon.png";
-import accountIcon from "@assets/icons/account-icon.png";
-import accountIconChecked from "@assets/icons/account-icon-checked.png";
-import burgerMenuIcon from "@assets/icons/burger_menu-mobile.png";
-import burgerMenuCloseIcon from "@assets/icons/burger_menu-close.png";
+import { useAuth } from "@/context/AuthContext";
 
 function Header() {
-  const { isAuthenticated, logout } = useAuth(); // Получение из контекста
+  const { isAuthenticated, logout } = useAuth(); // Получение статуса авторизации
   const [isBurgerMenuOpen, setIsBurgerMenuOpen] = useState(false);
   const [isScrollingDown, setIsScrollingDown] = useState(false);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [isDarkTheme, setIsDarkTheme] = useState(() => {
-    // Проверка, есть ли сохраненная тема в localStorage
     const savedTheme = localStorage.getItem("theme");
     return savedTheme === "dark";
   });
-
-  //--------- ПЕРЕКЛЮЧЕНИЕ ТЕМЫ ---------
-  const toggleTheme = () => {
-    setIsDarkTheme((prev) => {
-      const newTheme = !prev;
-      // Сохранить выбор темы в localStorage
-      localStorage.setItem("theme", newTheme ? "dark" : "light");
-      // Применить тему ко всему документу
-      document.documentElement.setAttribute(
-        "data-theme",
-        newTheme ? "dark" : "light"
-      );
-      return newTheme;
-    });
-  };
 
   // Применить тему при первом рендере
   useEffect(() => {
@@ -48,65 +19,59 @@ function Header() {
       "data-theme",
       isDarkTheme ? "dark" : "light"
     );
-  }, []);
+  }, [isDarkTheme]);
 
-  //----------- ОТКРЫТИЕ/ЗАКРЫТИЕ БУРГЕР МЕНЮ --------------
-  const toggleBurgerMenu = () => {
-    setIsBurgerMenuOpen((prev) => !prev);
+  // Переключение темы
+  const toggleTheme = () => {
+    const newTheme = !isDarkTheme;
+    setIsDarkTheme(newTheme);
+    localStorage.setItem("theme", newTheme ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", newTheme ? "dark" : "light");
   };
 
-  //-------- ЛОГИКА ДЛЯ СКРОЛЛА НИЖНЕЙ ЧАСТИ ШАПКИ ----------
+  // Логика скрытия нижней части шапки при скролле
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
-      setIsScrollingDown(
-        prevScrollPos < currentScrollPos && currentScrollPos > 10
-      );
+      setIsScrollingDown(prevScrollPos < currentScrollPos && currentScrollPos > 10);
       setPrevScrollPos(currentScrollPos);
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [prevScrollPos]);
 
   return (
     <header className={styles.header}>
-      {/*------------------------------------- КНОПКА АККАУНТА / МОБИЛЬНАЯ ВЕРСИЯ -------------------------------------*/}
+      {/* Мобильная версия */}
       <div className={styles.accountButtonMobile}>
         <Link to={isAuthenticated ? "/account" : "/login"}>
           <img
-            src={isAuthenticated ? accountIconChecked : accountIcon}
+            src={isAuthenticated ? "/assets/icons/account-icon-checked.png" : "/assets/icons/account-icon.png"}
             alt="account"
-            className={`${styles.accountImgMobile} ${
-              isDarkTheme ? "ColorInversion" : ""
-            }`}
+            className={`${styles.accountImgMobile} ${isDarkTheme ? "ColorInversion" : ""}`}
           />
         </Link>
       </div>
 
-      {/*----------- Логотип DR ------------*/}
       <div className={styles.logoMobileWrapper}>
         <Link to={"/"}>
           <span className={styles.logoMobile}>DR</span>
         </Link>
       </div>
 
-      {/*------------------------------------- КНОПКА ОТКРЫТИЯ БУРГЕР МЕНЮ / МОБИЛЬНАЯ ВЕРСИЯ -------------------------------------*/}
       <div
-        className={`${styles.burgerButton} ${
-          isBurgerMenuOpen ? styles.open : ""
-        }`}
-        onClick={toggleBurgerMenu}
+        className={`${styles.burgerButton} ${isBurgerMenuOpen ? styles.open : ""}`}
+        onClick={() => setIsBurgerMenuOpen((prev) => !prev)}
       >
         <img
-          src={burgerMenuIcon}
+          src="/assets/icons/burger_menu-mobile.png"
           alt="меню"
-          className={`${styles.burgerMenuIcon} ${
-            isDarkTheme ? "ColorInversion" : ""
-          }`}
+          className={`${styles.burgerMenuIcon} ${isDarkTheme ? "ColorInversion" : ""}`}
         />
       </div>
 
-      {/*---------------------------------------- ВЕРХНЯЯ ЧАСТЬ ШАПКИ / ДЕСКТОП -----------------------------*/}
+      {/* Верхняя часть шапки / Десктоп */}
       <div className={styles.upperHeader}>
         <div className={styles.wrapper}>
           <div className={styles.logoLanguage}>
@@ -115,53 +80,43 @@ function Header() {
             </Link>
             <hr className={styles.verticalHr} />
             <img
-              src={changeLangIcon}
-              alt="lang"
-              className={`${styles.changeLanguage} ${
-                isDarkTheme ? "ColorInversion" : ""
-              }`}
+              src="/assets/icons/change-lang-icon.png"
+              alt="change language"
+              className={`${styles.changeLanguage} ${isDarkTheme ? "ColorInversion" : ""}`}
             />
           </div>
 
-          {/*---------- СОЦИАЛЬНЫЕ СЕТИ -----------*/}
+          {/* Соцсети */}
           <div className={styles.socialAccount}>
             <ul className={styles.socialMedia}>
               <li>
                 <a href="#">
-                  <img
-                    src={instIcon}
-                    alt="instagram"
-                    className="imgColorInvert"
-                  />
+                  <img src="/assets/icons/inst-icon.png" alt="instagram" className="imgColorInvert" />
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <img src={tgIcon} alt="telegram" className="imgColorInvert" />
+                  <img src="/assets/icons/telegram-icon.png" alt="telegram" className="imgColorInvert" />
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <img
-                    src={cmIcon}
-                    alt="одноклассники"
-                    className="imgColorInvert"
-                  />
+                  <img src="/assets/icons/classmates-icon.png" alt="одноклассники" className="imgColorInvert" />
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <img src={twIcon} alt="twitter" className="imgColorInvert" />
+                  <img src="/assets/icons/twitter-icon.png" alt="twitter" className="imgColorInvert" />
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <img src={vkIcon} alt="vk" className="imgColorInvert" />
+                  <img src="/assets/icons/vk-icon.png" alt="vk" className="imgColorInvert" />
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <img src={ttIcon} alt="tiktok" className="imgColorInvert" />
+                  <img src="/assets/icons/tiktok-icon.png" alt="tiktok" className="imgColorInvert" />
                 </a>
               </li>
             </ul>
@@ -172,21 +127,18 @@ function Header() {
                 Войти
               </Link>
             )}
-
             <Link to={isAuthenticated ? "/account" : "/login"}>
               <img
-                src={isAuthenticated ? accountIconChecked : accountIcon}
+                src={isAuthenticated ? "/assets/icons/account-icon-checked.png" : "/assets/icons/account-icon.png"}
                 alt="account"
-                className={`${styles.accountImg} ${
-                  isDarkTheme ? "ColorInversion" : ""
-                }`}
+                className={`${styles.accountImg} ${isDarkTheme ? "ColorInversion" : ""}`}
               />
             </Link>
           </div>
         </div>
       </div>
 
-      {/*----------------------------- НИЖНИЙ БЛОК ШАПКИ С НАВИГАЦИЦЕЙ / ДЕСКТОП --------------------------------*/}
+      {/* Навигация по категориям / Десктоп */}
       <div
         className={`${styles.lowerHeaderBlock} ${
           isScrollingDown ? styles.hidden : ""
@@ -197,31 +149,27 @@ function Header() {
             <nav className={styles.navigation} aria-label="Основные разделы">
               <ul>
                 <li>
-                  <Link to="/fashion">мода и стиль</Link>
+                  <Link to="/category/fashion">мода и стиль</Link>
                 </li>
                 <li>
-                  <Link to="/beauty">красота</Link>
+                  <Link to="/category/beauty">красота</Link>
                 </li>
                 <li>
-                  <Link to="/culture">культура</Link>
+                  <Link to="/category/culture">культура</Link>
                 </li>
                 <li>
-                  <Link to="/art">арт&фотографии</Link>
+                  <Link to="/category/art">арт&фотографии</Link>
                 </li>
                 <li>
-                  <Link to="/music">музыка</Link>
+                  <Link to="/category/music">музыка</Link>
                 </li>
                 <li>
-                  <Link to="/news">новости</Link>
+                  <Link to="/category/news">новости</Link>
                 </li>
                 <li className={styles.themeContainer}>
                   <span className={styles.colorThemeGrey}>тема</span>
                   <label className={styles.themeSwitch}>
-                    <input
-                      type="checkbox"
-                      checked={isDarkTheme}
-                      onChange={toggleTheme}
-                    />
+                    <input type="checkbox" checked={isDarkTheme} onChange={toggleTheme} />
                     <span className={styles.slider}></span>
                   </label>
                 </li>
@@ -231,43 +179,40 @@ function Header() {
         </div>
       </div>
 
-      {/*--------------------------------------------- БУРГЕР МЕНЮ ----------------------------------- */}
+      {/* Бургер-меню */}
       <div
-        className={`${styles.burgerMenuWrapper} ${
-          isBurgerMenuOpen ? styles.open : ""
-        }`}
+        className={`${styles.burgerMenuWrapper} ${isBurgerMenuOpen ? styles.open : ""}`}
       >
-        <div className={styles.closeButton} onClick={toggleBurgerMenu}>
+        <div className={styles.closeButton} onClick={() => setIsBurgerMenuOpen(false)}>
           <img
-            src={burgerMenuCloseIcon}
+            src="/assets/icons/burger_menu-close.png"
             alt="Закрыть меню"
-            className={`${styles.closeIcon} ${
-              isDarkTheme ? "ColorInversion" : ""
-            }`}
+            className={`${styles.closeIcon} ${isDarkTheme ? "ColorInversion" : ""}`}
           />
         </div>
+
         <div className={styles.burgerMenu}>
           <ul className={styles.menuList}>
             <li>
               <span className={styles.burgerLogoInside}>DR</span>
             </li>
             <li className={styles.paddingDownFromLogo}>
-              <Link to="/fashion">мода и стиль</Link>
+              <Link to="/category/fashion">мода и стиль</Link>
             </li>
             <li>
-              <Link to="/beauty">красота</Link>
+              <Link to="/category/beauty">красота</Link>
             </li>
             <li>
-              <Link to="/culture">культура</Link>
+              <Link to="/category/culture">культура</Link>
             </li>
             <li>
-              <Link to="/art">арт&фотографии</Link>
+              <Link to="/category/art">арт&фотографии</Link>
             </li>
             <li>
-              <Link to="/music">музыка</Link>
+              <Link to="/category/music">музыка</Link>
             </li>
             <li>
-              <Link to="/news">новости</Link>
+              <Link to="/category/news">новости</Link>
             </li>
             <li>
               <div className={styles.themeContainer}>
@@ -284,36 +229,52 @@ function Header() {
             </li>
           </ul>
 
-          {/*-------- СОЦИАЛЬНЫЕ СЕТИ / МОБИЛЬНАЯ ВЕРСИЯ --------*/}
+          {/* Соцсети в бургере */}
           <div className={styles.socialMediaMobile}>
             <div>
               <a href="#">
                 <img
-                  src={instIcon}
+                  src="/assets/icons/inst-icon.png"
                   alt="instagram"
                   className="imgColorInvert"
                 />
               </a>
               <a href="#">
-                <img src={tgIcon} alt="telegram" className="imgColorInvert" />
+                <img
+                  src="/assets/icons/telegram-icon.png"
+                  alt="telegram"
+                  className="imgColorInvert"
+                />
               </a>
               <a href="#">
-                <img src={vkIcon} alt="vk" className="imgColorInvert" />
+                <img
+                  src="/assets/icons/vk-icon.png"
+                  alt="vk"
+                  className="imgColorInvert"
+                />
               </a>
             </div>
             <div>
               <a href="#">
-                <img src={ttIcon} alt="tiktok" className="imgColorInvert" />
+                <img
+                  src="/assets/icons/tiktok-icon.png"
+                  alt="tiktok"
+                  className="imgColorInvert"
+                />
               </a>
               <a href="#">
                 <img
-                  src={cmIcon}
+                  src="/assets/icons/classmates-icon.png"
                   alt="одноклассники"
                   className="imgColorInvert"
                 />
               </a>
               <a href="#">
-                <img src={twIcon} alt="twitter" className="imgColorInvert" />
+                <img
+                  src="/assets/icons/twitter-icon.png"
+                  alt="twitter"
+                  className="imgColorInvert"
+                />
               </a>
             </div>
           </div>

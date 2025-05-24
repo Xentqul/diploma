@@ -7,22 +7,44 @@ export const AuthorPage = () => {
 
   // Фильтруем статьи по author.id
   const filteredArticles = articles
-    .filter((article) => article.author?.id === authorId && article.status === "published")
+    .filter(
+      (article) =>
+        article.author?.id === authorId && article.status === "published"
+    )
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 
-  return (
-    <div className="author-page">
-      <h1>Статьи от: {authorId}</h1>
+  // Берём имя автора с первой статьи (или ставим заглушку)
+  const authorName =
+    filteredArticles[0]?.author?.name?.ru ||
+    filteredArticles[0]?.author?.name?.en ||
+    authorId;
 
-      {filteredArticles.length > 0 ? (
-        <div className="filteredList">
-          {filteredArticles.map((article) => (
-            <FilteredArticleCard key={article.id} article={article} lang="ru" />
-          ))}
+  return (
+    <div>
+      <div className="combinate">
+        <div className="block"></div>
+        <div className="textWrapper">
+          <span>Статьи от:</span>
+          <span>{authorName.toUpperCase()}</span>
         </div>
-      ) : (
-        <p>Нет статей этого автора.</p>
-      )}
+        <div className="block"></div>
+      </div>
+      
+      <div className="filterPageWrapper">
+        {filteredArticles.length > 0 ? (
+          <div className="filteredList">
+            {filteredArticles.map((article) => (
+              <FilteredArticleCard
+                key={article.id}
+                article={article}
+                lang="ru"
+              />
+            ))}
+          </div>
+        ) : (
+          <p>Нет статей этого автора.</p>
+        )}
+      </div>
     </div>
   );
 };

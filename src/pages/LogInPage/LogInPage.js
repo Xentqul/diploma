@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styles from "./LogInPage.module.css";
-import loginPic from "@/assets/login-pic/login.webp";
 import BackButton from "@/shared/ui/BackButton/BackButton";
 import FormBlock from "@/shared/components/FormBlock/FormBlock";
 import { useAuth } from "@/context/AuthContext";
@@ -51,7 +50,7 @@ function LogInPage() {
 
   return (
     <div className={styles.wrapper}>
-      <img src={loginPic} alt="Войти" className={styles.sidePic} />
+      <img src="/assets/login-pic/login.webp" alt="Войти" className={styles.sidePic} />
 
       <div className={styles.rightSide}>
         <div className={styles.topSection}>

@@ -1,5 +1,4 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
 import Header from "./shared/layout/Header/Header";
 import Footer from "./shared/layout/Footer/Footer";
 import MainPage from "./pages/MainPage/MainPage.js";
@@ -8,6 +7,8 @@ import SignUpPage from "./pages/SignUpPage/SignUpPage.js";
 import ApplicationPage from "./pages/ApplicationPage/ApplicationPage.js";
 import AccountPage from "./pages/AccountPage/AccountPage.js";
 import axios from "axios";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ScrollToTop } from "@/hooks/useScrollToTop.js";
 import { ArticleProvider } from "@/context/ArticleContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import { CookieBanner } from "./shared/components/CookieBanner/CookieBanner";
@@ -29,6 +30,7 @@ function App() {
         {/* Основной контент */}
         <div className="content">
           <ArticleProvider>
+            <ScrollToTop />
             <Routes>
               {/* Главная страница */}
               <Route path="/" element={<MainPage />} />

@@ -6,6 +6,7 @@
 
 .card {
   display: flex;
+  gap: 30px;
   background-color: var(--bs-white);
   padding: 1rem 0;
   border-bottom: 1px solid var(--bs-gray-500);
@@ -13,19 +14,19 @@
 }
 
 .imageWrapper {
-  flex: 0 0 30%;
-  max-width: 30%;
+  width: 20%;
+  height: 180px;
+  /* Фиксируем высоту */
+  overflow: hidden;
 }
 
 .image {
   width: 100%;
-  height: auto;
-  border-radius: 8px;
+  height: 100%;
+  object-fit: cover;
+  /* Обрезаем лишнее, сохраняя пропорции */
+  object-position: center;
   transition: transform 0.2s ease;
-}
-
-.image:hover {
-  transform: scale(1.01);
 }
 
 .content {
@@ -55,6 +56,11 @@
   line-height: 1.4;
 }
 
+.title:hover {
+  text-decoration: 1.5px underline var(--bs-black);
+  text-underline-offset: 0.1em;
+}
+
 .description {
   font-size: 16px;
   color: var(--bs-black);
@@ -75,4 +81,32 @@
 .date {
   color: var(--bs-gray-600);
   font-style: italic;
+  transition: all 0.2s ease;
+}
+
+.date:hover {
+  color: var(--hover-asphalt);
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+
+  .title {
+    font-size: 16px;
+  }
+
+  .description {
+    font-size: 15px;
+  }
+
+  .footer> :first-child,
+  .footer :last-child {
+    font-size: 14px;
+  }
+
+  .imageWrapper {
+    width: 35%;
+    height: 180px;
+  }
+
 }
