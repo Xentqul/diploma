@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import styles from "./AccountPage.module.css";
 import axios from "axios";
 import { HorizontalWideArticle } from "@/pages/MainPage/components/CultureBlock/CultureCards/HorizontalWideArticle";
@@ -6,15 +7,33 @@ import InputAndLabel from "@/shared/ui/InputAndLabel/InputAndLabel";
 import SubmitButton from "@/shared/ui/SubmitButton/SubmitButton";
 import { LinkButton } from "@/shared/ui/LinkButton/LinkButton";
 import { Link, useNavigate } from "react-router-dom";
+import articles from "@/data/articles.json"; // Предполагается, что это JSON с последними статьями
 
-// Пример данных пользователя (в будущем можно заменить на данные с API)
-const userData = {
-  name: "Павел Нестеров",
-  avatar: "/assets/users/pavel_nesterov.jpg", // должен быть в /public/assets/
+const getLatestArticles = (count = 2) => {
+  return articles.slice(0, count); // Берём первые 3 статьи
 };
 
 function AccountPage() {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
+
+useEffect(() => {
+  const fetchUserData = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/users/me", {
+        withCredentials: true
+      });
+
+      console.log("Данные пользователя:", response.data); // 💡 Смотри сюда
+      setUserData(response.data.user); // 👈 Обрати внимание на .user
+    } catch (error) {
+      console.error("Ошибка получения данных пользователя:", error.response?.data || error.message);
+      alert("Не удалось загрузить данные пользователя");
+    }
+  };
+
+  fetchUserData();
+}, []);
 
   const handleLogout = async () => {
     try {
@@ -36,35 +55,72 @@ function AccountPage() {
     }
   };
 
+  const renderArticlesSection = (title, link, articlesData) => (
+    <div className={styles.column}>
+      <Link to={link}>{title}</Link>
+      {articlesData.length > 0 ? (
+        <HorizontalWideArticle articles={articlesData} />
+      ) : (
+        <div className={styles.placeholder}>Нет статей для отображения</div>
+      )}
+    </div>
+  );
+
+  const formatPhoneNumber = (phone) => {
+  if (!phone) return "+7 (---) --- -- --";
+
+  // Убираем все нецифровые символы
+  const digits = phone.replace(/\D/g, '');
+
+  // Проверяем, начинается ли с 7 или 8, и обрезаем
+  const number = digits.startsWith('7') || digits.startsWith('8')
+    ? digits.slice(1)
+    : digits;
+
+  // Дополняем нулями, если меньше 10 цифр
+  const paddedNumber = number.padEnd(10, '0');
+
+  // Форматируем
+  return `+7 (${paddedNumber.slice(0, 3)}) ${paddedNumber.slice(3, 6)}-${paddedNumber.slice(6, 8)}-${paddedNumber.slice(8, 10)}`;
+};
+
   return (
     <div className={styles.accountWrapper}>
       <div className={styles.justify}>
         <div className={styles.topPart}>
-          <div className={styles.column}>
-            <Link to="/news">Последние новости</Link>
-            <HorizontalWideArticle articles={userData.articles.slice(1, 3)} />
-          </div>
+          {renderArticlesSection(
+            "Последние новости",
+            "/news",
+            getLatestArticles()
+          )}
 
           <div className={styles.userBlock}>
-            {/* Динамическое изображение */}
-            {userData.avatar ? (
+            {userData?.avatar ? (
               <img
                 src={userData.avatar}
-                alt={`${userData.name}`}
+                alt={`${userData.first_name} ${userData.last_name}`}
                 className={styles.imgBlock}
                 onError={(e) => {
-                  e.target.src = "/assets/users/default-avatar.png"; // fallback
+                  e.target.src = "/assets/users/default-avatar.png";
                 }}
               />
             ) : (
               <div className={styles.fallbackAvatar}>?</div>
             )}
 
-            <p className={styles.name}>{userData.name}</p>
+            <p className={styles.name}>
+              {userData?.first_name} {userData?.last_name}
+            </p>
 
-            <LabelAndInfo label="эл. почта" value="example@mail.ru" />
+            <LabelAndInfo
+              label="эл. почта"
+              value={userData?.email || "example@mail.ru"}
+            />
             <LabelAndInfo label="пароль" value="*************" />
-            <LabelAndInfo label="номер телефона" value="+7-(926)-666-66-66" />
+<LabelAndInfo
+  label="номер телефона"
+  value={formatPhoneNumber(userData?.phone_number)}
+/>
 
             <div className={styles.buttonGroup}>
               <LinkButton size="small" onClick={handleLogout}>
@@ -74,10 +130,7 @@ function AccountPage() {
             </div>
           </div>
 
-          <div className={styles.column}>
-            <Link to="/favorites">Избранное</Link>
-            <HorizontalWideArticle articles={userData.articles.slice(1, 3)} />
-          </div>
+          {renderArticlesSection("Избранное", "/favorites", [])}
         </div>
       </div>
 
@@ -89,7 +142,10 @@ function AccountPage() {
             и эксклюзивы.
           </p>
 
-          <form onSubmit={(e) => e.preventDefault()} className={styles.subscriptionForm}>
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className={styles.subscriptionForm}
+          >
             <InputAndLabel type="email" placeholder="Введите ваш email" />
 
             <label className={styles.checkboxLabel}>

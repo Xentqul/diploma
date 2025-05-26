@@ -1,3 +1,4 @@
+// Импортируем необходимые модули
 let express = require("express");
 let bodyParser = require("body-parser");
 let bcrypt = require("bcryptjs"); // Для хеширования паролей
@@ -5,9 +6,11 @@ let cors = require("cors"); // для передачи данных между �
 let cookieParser = require("cookie-parser"); // Для работы с cookies
 let pool = require("./config/db"); // Подключаем пул соединений из конфига
 let jwt = require('jsonwebtoken');
+let usersRoutes = require('./routes/users');
 
+// Создаем экземпляр приложения Express
 let app = express();
-let PORT = 5000;
+
 // ----------------------------- НАСТРОЙКА CORS -----------------------------------
 app.use(cors({
   origin: 'http://localhost:3000',
@@ -26,6 +29,9 @@ app.use(cookieParser());
 // ----------------------------- ПОДКЛЮЧАЕМ МАРШРУТЫ --------------------------------
 let authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
+
+// Подключаем роуты пользователей
+app.use('/api/users', usersRoutes);
 
 //---------------------------------------------------- РОУТ ДЛЯ РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ --------------------------------------------------
 app.post("/api/register", async (req, res) => {
@@ -129,7 +135,9 @@ app.post("/api/auth/logout", (req, res) => {
     res.status(500).json({ success: false, message: "Ошибка сервера" });
   }
 });
+
 //---------------------------------------------------- ЗАПУСК СЕРВЕРА ------------------------------------------------------
+const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
