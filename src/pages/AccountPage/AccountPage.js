@@ -10,30 +10,33 @@ import { Link, useNavigate } from "react-router-dom";
 import articles from "@/data/articles.json"; // Предполагается, что это JSON с последними статьями
 
 const getLatestArticles = (count = 2) => {
-  return articles.slice(0, count); // Берём первые 3 статьи
+  return articles.slice(0, count); // Берём первые 2 статьи
 };
 
 function AccountPage() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
 
-useEffect(() => {
-  const fetchUserData = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/api/users/me", {
-        withCredentials: true
-      });
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/users/me", {
+          withCredentials: true,
+        });
 
-      console.log("Данные пользователя:", response.data); // 💡 Смотри сюда
-      setUserData(response.data.user); // 👈 Обрати внимание на .user
-    } catch (error) {
-      console.error("Ошибка получения данных пользователя:", error.response?.data || error.message);
-      alert("Не удалось загрузить данные пользователя");
-    }
-  };
+        console.log("Данные пользователя:", response.data);
+        setUserData(response.data.user);
+      } catch (error) {
+        console.error(
+          "Ошибка получения данных пользователя:",
+          error.response?.data || error.message
+        );
+        alert("Не удалось загрузить данные пользователя");
+      }
+    };
 
-  fetchUserData();
-}, []);
+    fetchUserData();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -67,22 +70,51 @@ useEffect(() => {
   );
 
   const formatPhoneNumber = (phone) => {
-  if (!phone) return "+7 (---) --- -- --";
+    if (!phone) return "+7 (---) --- -- --";
 
-  // Убираем все нецифровые символы
-  const digits = phone.replace(/\D/g, '');
+    const digits = phone.replace(/\D/g, "");
+    const number =
+      digits.startsWith("7") || digits.startsWith("8")
+        ? digits.slice(1)
+        : digits;
 
-  // Проверяем, начинается ли с 7 или 8, и обрезаем
-  const number = digits.startsWith('7') || digits.startsWith('8')
-    ? digits.slice(1)
-    : digits;
+    const paddedNumber = number.padEnd(10, "0");
 
-  // Дополняем нулями, если меньше 10 цифр
-  const paddedNumber = number.padEnd(10, '0');
+    return `+7 (${paddedNumber.slice(0, 3)}) ${paddedNumber.slice(3, 6)}-${paddedNumber.slice(6, 8)}-${paddedNumber.slice(8, 10)}`;
+  };
 
-  // Форматируем
-  return `+7 (${paddedNumber.slice(0, 3)}) ${paddedNumber.slice(3, 6)}-${paddedNumber.slice(6, 8)}-${paddedNumber.slice(8, 10)}`;
-};
+  // 💡 Загрузка аватара
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/users/upload-avatar",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      // Обновляем только аватар в userData
+      setUserData((prev) => ({
+        ...prev,
+        avatar: response.data.avatarUrl,
+      }));
+
+      alert("Аватар успешно загружен!");
+    } catch (error) {
+      console.error("Ошибка загрузки аватара:", error);
+      alert("Не удалось загрузить аватар");
+    }
+  };
 
   return (
     <div className={styles.accountWrapper}>
@@ -95,18 +127,29 @@ useEffect(() => {
           )}
 
           <div className={styles.userBlock}>
-            {userData?.avatar ? (
-              <img
-                src={userData.avatar}
-                alt={`${userData.first_name} ${userData.last_name}`}
-                className={styles.imgBlock}
-                onError={(e) => {
-                  e.target.src = "/assets/users/default-avatar.png";
-                }}
+            {/* 👇 Кнопка загрузки аватара */}
+            <label className={styles.avatarUpload}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarChange}
+                hidden
               />
-            ) : (
-              <div className={styles.fallbackAvatar}>?</div>
-            )}
+
+              {/* Отображение аватара */}
+              {userData?.avatar ? (
+                <img
+                  src={`http://localhost:5000${userData.avatar}`}
+                  alt={`${userData?.first_name} ${userData?.last_name}`}
+                  className={styles.imgBlock}
+                  onError={(e) => {
+                    e.target.src = ""; // Очистим src, чтобы избежать ошибок
+                  }}
+                />
+              ) : (
+                <div className={styles.fallbackAvatar}>?</div>
+              )}
+            </label>
 
             <p className={styles.name}>
               {userData?.first_name} {userData?.last_name}
@@ -117,10 +160,10 @@ useEffect(() => {
               value={userData?.email || "example@mail.ru"}
             />
             <LabelAndInfo label="пароль" value="*************" />
-<LabelAndInfo
-  label="номер телефона"
-  value={formatPhoneNumber(userData?.phone_number)}
-/>
+            <LabelAndInfo
+              label="номер телефона"
+              value={formatPhoneNumber(userData?.phone_number)}
+            />
 
             <div className={styles.buttonGroup}>
               <LinkButton size="small" onClick={handleLogout}>

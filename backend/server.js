@@ -1,15 +1,15 @@
 // Импортируем необходимые модули
-let express = require("express");
-let bodyParser = require("body-parser");
-let bcrypt = require("bcryptjs"); // Для хеширования паролей
-let cors = require("cors"); // для передачи данных между разными доменами
-let cookieParser = require("cookie-parser"); // Для работы с cookies
-let pool = require("./config/db"); // Подключаем пул соединений из конфига
-let jwt = require('jsonwebtoken');
-let usersRoutes = require('./routes/users');
+const express = require("express");
+const bodyParser = require("body-parser");
+const bcrypt = require("bcryptjs"); // Для хеширования паролей
+const cors = require("cors"); // для передачи данных между разными доменами
+const cookieParser = require("cookie-parser"); // Для работы с cookies
+const path = require("path"); // Для работы с путями файлов
+const pool = require("./config/db"); // Подключаем пул соединений из конфига
+const jwt = require('jsonwebtoken');
 
 // Создаем экземпляр приложения Express
-let app = express();
+const app = express();
 
 // ----------------------------- НАСТРОЙКА CORS -----------------------------------
 app.use(cors({
@@ -19,30 +19,32 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-// Добавляем поддержку OPTIONS для конкретного маршрута logout
-app.options('/api/auth/logout', cors()); // 👈 Это важно!
-
 // ----------------------------- ПАРСИНГ ТЕЛА ЗАПРОСОВ -----------------------------
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// ----------------------------- ПОДКЛЮЧАЕМ МАРШРУТЫ --------------------------------
-let authRoutes = require('./routes/auth');
-app.use('/api/auth', authRoutes);
+// ----------------------------- ОБРАБОТКА СТАТИЧЕСКИХ ФАЙЛОВ ----------------------
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Подключаем роуты пользователей
+// ----------------------------- ПОДКЛЮЧАЕМ МАРШРУТЫ --------------------------------
+// Импортируем роуты после инициализации app
+const authRoutes = require('./routes/auth');
+const usersRoutes = require('./routes/users');
+
+app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
 
 //---------------------------------------------------- РОУТ ДЛЯ РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ --------------------------------------------------
 app.post("/api/register", async (req, res) => {
-  let { firstName, lastName, email, phone, password } = req.body;
+  const { firstName, lastName, email, phone, password } = req.body;
 
   try {
     // Хеширование пароля
-    let hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // Вставка данных в таблицу users
-    let result = await pool.query(
+    const result = await pool.query(
       "INSERT INTO dressery_schema.users (first_name, last_name, email, phone_number, password_hash, role) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
       [firstName, lastName, email, phone, hashedPassword, "user"]
     );
@@ -52,7 +54,6 @@ app.post("/api/register", async (req, res) => {
   } catch (err) {
     console.error(err);
     if (err.code === "23505") {
-      // Ошибка уникальности
       res.status(400).send("Электронная почта или номер телефона уже заняты.");
     } else {
       res.status(500).send("Ошибка сервера");
@@ -65,7 +66,6 @@ app.post("/api/auth/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // 1. Находим пользователя по email
     const user = await pool.query(
       "SELECT * FROM dressery_schema.users WHERE email = $1",
       [email]
@@ -75,41 +75,34 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(401).json({ error: "Неверный email или пароль" });
     }
 
-    // 2. Проверяем пароль
-    const isValidPassword = await bcrypt.compare(
-      password,
-      user.rows[0].password_hash
-    );
+    const isValidPassword = await bcrypt.compare(password, user.rows[0].password_hash);
     
     if (!isValidPassword) {
       return res.status(401).json({ error: "Неверный email или пароль" });
     }
 
-    // ✅ Генерируем JWT
     const token = jwt.sign(
-      { userId: user.rows[0].id }, // payload
-      process.env.JWT_SECRET || 'secret_key', // секретный ключ
+      { userId: user.rows[0].id },
+      process.env.JWT_SECRET || 'secret_key',
       { expiresIn: '24h' }
     );
 
-    // ✅ Теперь устанавливаем куку
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false, // true только на HTTPS
+      secure: false,
       sameSite: 'lax',
-      maxAge: 24 * 60 * 60 * 1000, // 1 день
-      path: '/',
-      domain: 'localhost'
+      maxAge: 24 * 60 * 60 * 1000,
+      path: '/'
     });
 
-    // 4. Возвращаем успешный ответ
     res.json({ 
       success: true,
       user: {
         id: user.rows[0].id,
         email: user.rows[0].email,
         firstName: user.rows[0].first_name,
-        lastName: user.rows[0].last_name
+        lastName: user.rows[0].last_name,
+        avatar: user.rows[0].avatar
       }
     });
 
@@ -122,10 +115,9 @@ app.post("/api/auth/login", async (req, res) => {
 //---------------------------------------------------- РОУТ ДЛЯ ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
 app.post("/api/auth/logout", (req, res) => {
   try {
-    // ✅ Удаляем правильную куку 'token'
     res.cookie('token', '', {
       httpOnly: true,
-      expires: new Date(0), // прошлое
+      expires: new Date(0),
       path: '/'
     });
     
@@ -139,5 +131,5 @@ app.post("/api/auth/logout", (req, res) => {
 //---------------------------------------------------- ЗАПУСК СЕРВЕРА ------------------------------------------------------
 const PORT = 5000;
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Сервер запущен на http://localhost:${PORT}`);
 });
