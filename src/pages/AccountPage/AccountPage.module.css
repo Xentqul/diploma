@@ -16,7 +16,7 @@
     margin: 0 auto;
 }
 
-.column > :first-child {
+.column> :first-child {
     text-decoration: 1.2px underline;
     text-underline-offset: 0.2rem;
     margin-bottom: 20px;
@@ -50,11 +50,15 @@
     color: var(--bs-black);
 }
 
-.buttonGroup > :first-child {
+.dbValue {
+  color: var(--bs-black);
+}
+
+.buttonGroup> :first-child {
     align-self: center;
 }
 
-.buttonGroup > :last-child {
+.buttonGroup> :last-child {
     align-self: center;
     color: var(--color-tag);
     font-weight: 700;
@@ -68,98 +72,50 @@
     margin-top: 20px;
 }
 
-.bottomPart {
-    width: 100%;
-    background-color: var(--bs-black);
-    padding-bottom: 50px;
-}
-
-.bottomPart .subscriptionBlock {
-    max-width: 1685px;
-    width: 89%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.subscriptionBlock h3 {
-    margin-top: 50px;
-    font-size: 32px;
+.saveButton {
     font-weight: 600;
-    color: var(--bs-white);
-}
-
-.subscriptionBlock p {
-    width: 50%;
-    font-size: 25px;
-    font-weight: 320;
-    color: var(--bs-white);
-}
-
-.subscriptionBlock form > :first-child {
-    width: 35%
-}
-
-.checkbox {
-    width: 18px;
-    height: 18px;
-}
-
-.checkboxLabel {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--bs-white);
-}
-
-.subscriptionBlock form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 50px;
-}
-
-.subscriptionBlock form > :last-child {
-    align-self: flex-start;
-    background-color: var(--bs-white);
-    color: var(--bs-black);
-    font-weight: 500;
-}
-.avatarUpload {
-  position: relative;
-  cursor: pointer;
-  margin-bottom: 10px;
 }
 
 .imgBlock {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #ccc;
-  transition: border-color 0.3s ease;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    transition: border-color 0.3s ease;
 }
 
 .imgBlock:hover {
-  border-color: #888;
+    border-color: #888;
 }
 
 .fallbackAvatar {
-  width: 100px;
-  height: 100px;
-  background-color: #f0f0f0;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: #888;
-  border: 2px dashed #ccc;
-  transition: border-color 0.3s ease;
+    width: 100px;
+    height: 100px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #888;
+    border: 2px dashed #ccc;
+    transition: border-color 0.3s ease;
 }
 
 .fallbackAvatar:hover {
-  border-color: #888;
+    border-color: #888;
+}
+
+.editableRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.editIcon {
+    cursor: pointer;
+    margin-left: 10px;
 }
 
 @media (max-width: 768px) {
@@ -189,7 +145,7 @@
         margin-top: 50px;
         font-size: 30px;
     }
-    
+
     .subscriptionBlock p {
         margin-top: 10px;
         width: 100%;
@@ -201,7 +157,7 @@
         margin-top: 20px;
     }
 
-    .subscriptionBlock form > :first-child {
+    .subscriptionBlock form> :first-child {
         width: 100%
     }
 }

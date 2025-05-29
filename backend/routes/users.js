@@ -118,4 +118,26 @@ router.post(
   }
 );
 
+
+//------------------------------------- МЕТОД ДЛЯ ОБНОВЛЕНИЯ ДАННЫХ ПРОФИЛЯ --------------------------------------------------------
+router.post("/update-profile", authenticateToken, async (req, res) => {
+  const { first_name, last_name, phone_number, email } = req.body;
+  const userId = req.userId;
+
+  try {
+    const result = await pool.query(
+      `UPDATE dressery_schema.users 
+       SET first_name = $1, last_name = $2, phone_number = $3, email = $4 
+       WHERE id = $5
+       RETURNING id, first_name, last_name, email, phone_number`,
+      [first_name, last_name, phone_number, email, userId]
+    );
+
+    res.json({ user: result.rows[0] });
+  } catch (err) {
+    console.error("Ошибка при обновлении профиля:", err);
+    res.status(500).json({ error: "Не удалось обновить данные" });
+  }
+});
+
 module.exports = router;
