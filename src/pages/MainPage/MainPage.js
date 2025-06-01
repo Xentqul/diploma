@@ -24,7 +24,7 @@ function MainPage() {
       <BeautyBlock />
       <MusicBlock />
       <ArtPhotoBlock />
-      <MailingBlock />
+      {/* <MailingBlock /> */}
     </div>
   );
 }

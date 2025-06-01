@@ -62,3 +62,63 @@
     cursor: pointer;
     margin-bottom: 10px;
 }
+
+.subscriptionForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.checkbox {
+  margin-right: 6px;
+  accent-color: #3498db; /* Цвет галочек */
+}
+
+/* Сообщения */
+.successMessage {
+  color: green;
+  font-size: 14px;
+  margin-top: -5px;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 14px;
+  margin-top: -5px;
+}
+.checkboxErrorMessage {
+  color: red;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+
+@media (max-width: 768px) {
+
+    .subscriptionBlock h3 {
+        margin-top: 50px;
+        font-size: 30px;
+    }
+
+    .subscriptionBlock p {
+        margin-top: 10px;
+        width: 100%;
+        font-size: 22px;
+    }
+
+    .subscriptionBlock form {
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .subscriptionBlock form> :first-child {
+        width: 100%
+    }
+}

@@ -74,16 +74,12 @@ function Header() {
       {/* Верхняя часть шапки / Десктоп */}
       <div className={styles.upperHeader}>
         <div className={styles.wrapper}>
-          <div className={styles.logoLanguage}>
+          <div className={styles.logoSlogan}>
             <Link to="/">
               <span className={styles.logo}>DRESSERY</span>
             </Link>
             <hr className={styles.verticalHr} />
-            <img
-              src="/assets/icons/change-lang-icon.png"
-              alt="change language"
-              className={`${styles.changeLanguage} ${isDarkTheme ? "ColorInversion" : ""}`}
-            />
+            <span className={styles.slogan}>Тренды. Стиль. Вдохновение.</span>
           </div>
 
           {/* Соцсети */}

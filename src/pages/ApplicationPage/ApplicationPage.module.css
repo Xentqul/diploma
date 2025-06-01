@@ -1,25 +1,29 @@
 .wrapper {
-    height: 950px;
+    height: 100vh;
     display: flex;
     margin-top: 70px;
 }
 
 .sidePic {
     width: 40%;
-    height: 950px;
+    height: 100vh;
     object-fit: cover;
+    position: sticky;
+    top: 0;
 }
 
 .rightSide {
     width: 30%;
     max-width: 38%;
     margin: 70px auto;
+    padding-top: 0; /* Убрали отступ сверху, так как хедер теперь внутри формы */
 }
 
 .topSection {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-bottom: 20px; /* Отступ от формы */
 }
 
 .logo {
@@ -28,13 +32,82 @@
     font-size: 28px;
 }
 
+.formWrapper {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    
+    /* Стили для тонкой полосы прокрутки */
+    scrollbar-width: thin;
+    scrollbar-color: #d1d1d1 transparent;
+}
+
+.formWrapper::-webkit-scrollbar {
+    width: 4px;
+}
+
+.formWrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.formWrapper::-webkit-scrollbar-thumb {
+    background-color: #d1d1d1;
+    border-radius: 2px;
+}
+
+.inputGroup input,
+.inputGroup select,
+.inputGroup textarea {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.inputGroup .errorMessage {
+    color: red;
+    font-size: 12px;
+    margin-top: -5px;
+    margin-bottom: 10px;
+}
+
+.checkbox input[type="checkbox"] {
+  accent-color: #3498db; /* цвет галочки */
+  width: 20px;
+  height: 20px;
+}
+
 @media (max-width: 768px) {
+    .wrapper {
+        height: auto;
+        min-height: 100vh;
+        margin-top: 0;
+        flex-direction: column;
+    }
+
     .sidePic {
         display: none;
     }
 
     .rightSide {
-        min-width: 90%;
         width: 90%;
+        max-width: 90%;
+        margin: 30px auto;
+    }
+
+    .formWrapper {
+        max-height: none;
+        overflow-y: visible;
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .rightSide {
+        width: 95%;
+        max-width: 95%;
+        margin: 20px auto;
     }
 }

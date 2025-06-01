@@ -35,6 +35,11 @@ const usersRoutes = require('./routes/users');
 app.use('/api/auth', authRoutes);
 app.use('/api/users', usersRoutes);
 
+// Подключение подписки
+// app.use("/api", require("./routes/subscribes"));
+// Подключение заявки на устройство на работу
+// app.use("/api", require("./routes/applications"));
+
 //---------------------------------------------------- РОУТ ДЛЯ РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ --------------------------------------------------
 app.post("/api/register", async (req, res) => {
   const { firstName, lastName, email, phone, password } = req.body;
