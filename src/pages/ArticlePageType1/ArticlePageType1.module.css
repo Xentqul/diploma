@@ -3,6 +3,73 @@
     height: 100vh;
 }
 
-.bla > :first-child {
+.bla> :first-child {
     margin-top: 400px;
+}
+
+.imageBlock {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 50px;
+    margin-top: 30px;
+}
+
+.image {
+    max-width: 330px;
+    aspect-ratio: 420 / 470;
+    /* сохраняет пропорции */
+}
+
+.imageOnlyBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.imageOnly {
+    max-width: 80%;
+    height: auto;
+}
+
+.imageCaption {
+    margin-top: 3px;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--bs-gray-700);
+}
+
+.content {
+    max-width: 65%;
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 15px;
+    gap: 12px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 70px;
+}
+
+.subheader {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--bs-black);
+}
+
+.paragraph,
+.textSettings,
+.text,
+.highlightedText,
+.regularText {
+    font-size: 18px;
+    color: var(--bs-black);
+}
+
+.paragraph::first-letter {
+    font-size: 30px;
+    font-weight: 550;
+    color: var(--bs-black);
 }

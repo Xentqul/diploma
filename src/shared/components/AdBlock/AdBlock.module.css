@@ -1,0 +1,41 @@
+.adBlock {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  /* расстояние между изображением и текстом */
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.hr {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  color: var(--bs-black);
+}
+
+.image {
+  max-width: 330px;
+  aspect-ratio: 420 / 470;
+  /* сохраняет пропорции */
+}
+
+.adBlock .text p {
+  color: var(--bs-black);
+  font-size: 18px;
+  font-style: italic;
+}
+
+.adBlock .adButton {
+  background-color: var(--bs-black);
+  color: var(--bs-white);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}

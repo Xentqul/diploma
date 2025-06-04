@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./ArticleHeader.module.css";
 import { Tag } from "@/shared/ui/Tag/Tag";
 import { AuthorTag } from "@/shared/ui/AuthorTag/AuthorTag";
