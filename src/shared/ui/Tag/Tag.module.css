@@ -1,5 +1,5 @@
 .tag {
-    transition: color 0.2s ease;
+    transition: color .2s ease;
     color: var(--color-tag)
 }
 

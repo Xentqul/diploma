@@ -228,7 +228,7 @@
             "ru": "стиль",
             "en": "style"
         },
-        "season": "spring",
+        "season": "summer",
         "publishedAt": "2024-05-20T10:00:00Z",
         "status": "published",
         "slug": "classic-blue-stripe",
@@ -268,7 +268,7 @@
             "ru": "мода",
             "en": "fashion"
         },
-        "season": "spring",
+        "season": "summer",
         "publishedAt": "2024-01-22T10:00:00Z",
         "status": "published",
         "slug": "pantone-trend-colors",
@@ -308,7 +308,7 @@
             "ru": "мода",
             "en": "fashion"
         },
-        "season": "spring",
+        "season": "summer",
         "publishedAt": "2024-04-18T10:00:00Z",
         "status": "published",
         "slug": "chiffon-dresses-korea",
@@ -348,7 +348,7 @@
             "ru": "мода",
             "en": "fashion"
         },
-        "season": "spring",
+        "season": "summer",
         "publishedAt": "2024-05-15T10:00:00Z",
         "status": "published",
         "slug": "rainy-season-coats",
@@ -743,7 +743,7 @@
         "publishedAt": "2024-05-30T10:00:00Z",
         "status": "published",
         "slug": "jennie-hera-campaign",
-        "isSeasonalTrend": true
+                "isSeasonalTrend": true
     },
     {
         "id": 20,
@@ -782,8 +782,7 @@
         "season": "summer",
         "publishedAt": "2024-05-28T10:00:00Z",
         "status": "published",
-        "slug": "summer-2025-hairstyles",
-        "isSeasonalTrend": true
+        "slug": "summer-2025-hairstyles"
     },
     {
         "id": 21,

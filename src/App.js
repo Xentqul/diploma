@@ -15,6 +15,7 @@ import { CookieBanner } from "./shared/components/CookieBanner/CookieBanner";
 import { CategoryPage } from "./pages/CategoryPage/CategoryPage.js";
 import { AuthorPage } from "./pages/AuthorPage/AuthorPage.js";
 import { TagPage } from "./pages/TagPage/TagPage.js";
+import ArticlePageType1 from "@/pages/ArticlePageType1/ArticlePageType1"
 
 axios.defaults.withCredentials = true;
 
@@ -46,6 +47,8 @@ function App() {
               <Route path="/category/:categoryId" element={<CategoryPage />} />
               <Route path="/author/:authorId" element={<AuthorPage />} />
               <Route path="/tag/:tagId" element={<TagPage />} />
+              {/* СТРАНИЦЫ СТАТЕЙ*/}
+              <Route path="/article/:slug" element={<ArticlePageType1 />} />
             </Routes>
           </ArticleProvider>
         </div>

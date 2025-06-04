@@ -1,4 +1,3 @@
-// LatestNewsBlock.jsx
 import React, { useContext } from "react";
 import styles from './LatestNewsBlock.module.css';
 import MainSlider from '@/widgets/MainSlider/MainSlider';
@@ -13,7 +12,7 @@ function LatestNewsBlock() {
   const filteredArticles = getFilteredArticles(articles, usedArticles, 4);
 
   return ( 
-    <section className={styles.secondSection}>
+    <section className={styles}>
       <div className={styles.wrapper}>
         <h2 className={styles.heading}>ПОСЛЕДНИЕ НОВОСТИ</h2>
         <MainSlider articles={filteredArticles} />
