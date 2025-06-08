@@ -5,19 +5,27 @@ const bcrypt = require("bcryptjs"); // Для хеширования парол�
 const cors = require("cors"); // для передачи данных между разными доменами
 const cookieParser = require("cookie-parser"); // Для работы с cookies
 const path = require("path"); // Для работы с путями файлов
-const pool = require("./config/db"); // Подключаем пул соединений из конфига
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
+// ----------------------------- НАСТРОЙКА БАЗЫ ДАННЫХ -----------------------------
+const { Pool } = require("pg");
+
+// Создаём пул соединений с БД
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 // Создаем экземпляр приложения Express
 const app = express();
 
 // ----------------------------- НАСТРОЙКА CORS -----------------------------------
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(
+  cors({
+    origin: 'https://dressery-magazine.ru',
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 // ----------------------------- ПАРСИНГ ТЕЛА ЗАПРОСОВ -----------------------------
 app.use(bodyParser.json());
@@ -25,15 +33,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // ----------------------------- ОБРАБОТКА СТАТИЧЕСКИХ ФАЙЛОВ ----------------------
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // ----------------------------- ПОДКЛЮЧАЕМ МАРШРУТЫ --------------------------------
 // Импортируем роуты после инициализации app
-const authRoutes = require('./routes/auth');
-const usersRoutes = require('./routes/users');
+const authRoutes = require("./routes/auth");
+const usersRoutes = require("./routes/users");
 
-app.use('/api/auth', authRoutes);
-app.use('/api/users', usersRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/users", usersRoutes);
 
 // Подключение подписки
 app.use("/api", require("./routes/subscribes"));
@@ -80,37 +88,39 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(401).json({ error: "Неверный email или пароль" });
     }
 
-    const isValidPassword = await bcrypt.compare(password, user.rows[0].password_hash);
-    
+    const isValidPassword = await bcrypt.compare(
+      password,
+      user.rows[0].password_hash
+    );
+
     if (!isValidPassword) {
       return res.status(401).json({ error: "Неверный email или пароль" });
     }
 
     const token = jwt.sign(
       { userId: user.rows[0].id },
-      process.env.JWT_SECRET || 'secret_key',
-      { expiresIn: '24h' }
+      process.env.JWT_SECRET || "secret_key",
+      { expiresIn: "24h" }
     );
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+      secure: true,
+      sameSite: "lax",
       maxAge: 24 * 60 * 60 * 1000,
-      path: '/'
+      path: "/",
     });
 
-    res.json({ 
+    res.json({
       success: true,
       user: {
         id: user.rows[0].id,
         email: user.rows[0].email,
         firstName: user.rows[0].first_name,
         lastName: user.rows[0].last_name,
-        avatar: user.rows[0].avatar
-      }
+        avatar: user.rows[0].avatar,
+      },
     });
-
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Ошибка сервера" });
@@ -120,15 +130,15 @@ app.post("/api/auth/login", async (req, res) => {
 //---------------------------------------------------- РОУТ ДЛЯ ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
 app.post("/api/auth/logout", (req, res) => {
   try {
-    res.cookie('token', '', {
+    res.cookie("token", "", {
       httpOnly: true,
       expires: new Date(0),
-      path: '/'
+      path: "/",
     });
-    
+
     res.json({ success: true, message: "Вы успешно вышли из системы" });
   } catch (err) {
-    console.error('Ошибка выхода:', err);
+    console.error("Ошибка выхода:", err);
     res.status(500).json({ success: false, message: "Ошибка сервера" });
   }
 });
