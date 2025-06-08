@@ -23,13 +23,13 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin-bottom: 20px; /* Отступ от формы */
+    margin-bottom: 1.75rem; /* Отступ от формы */
 }
 
 .logo {
     font-family: "Libre Baskerville";
     color: var(--bs-black);
-    font-size: 28px;
+    font-size: 1.75rem;
 }
 
 .formWrapper {
@@ -61,14 +61,14 @@
 .inputGroup textarea {
     border: 1px solid #ccc;
     padding: 8px 12px;
-    font-size: 14px;
+    font-size: 0.875rem;
     width: 100%;
     box-sizing: border-box;
 }
 
 .inputGroup .errorMessage {
     color: red;
-    font-size: 12px;
+    font-size: 0.75rem;
     margin-top: -5px;
     margin-bottom: 10px;
 }

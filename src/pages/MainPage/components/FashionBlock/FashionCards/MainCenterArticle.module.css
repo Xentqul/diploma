@@ -33,13 +33,13 @@
 .mainName h3 {
     padding-top: 10px;
     font-weight: 500;
-    font-size: 30px;
+    font-size: 1.875rem;
 }
 
 .descr {
     color: var(--bs-black);
     padding-top: 24px;
-    font-size: 22px;
+    font-size: 1.375rem;
 }
 
 .authorWrapper {
@@ -51,7 +51,7 @@
 
 .authorWrapper span {
     color: var(--bs-black);
-    font-size: 18px;
+    font-size: 1.125rem;
     font-style: italic;
 }
 
@@ -83,12 +83,12 @@
     }
 
     .mainName h3 {
-        font-size: 22px;
+        font-size: 1.375rem;
     }
 
     .descr {
         padding-top: 10px;
-        font-size: 20px;
+        font-size: 1.25rem;
     }
 
     .authorWrapper {
@@ -96,10 +96,10 @@
     }
 
     .authorWrapper:first-child {
-        font-size: 16px;
+        font-size: 1rem;
     }
 
     .authorWrapper> :last-child {
-        font-size: 16px;
+        font-size: 1rem;
     }
 }

@@ -1,158 +1,80 @@
-.wrapperAsideArticle {
+.wrapper {
     display: flex;
+    flex-direction: flex;
+    justify-content: space-around;
     gap: 20px;
 }
 
-.asideArticle {
+.card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 640px;
+    width: 350px;
 }
 
-.articleTag {
+.cardImage {
     width: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-.asideContent {
-    flex: 1;
-    /* Занимает оставшееся пространство */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.asideImage {
-    width: 100%;
-    height: 170px;
+    height: auto;
     object-fit: cover;
 }
 
-.asideTitle {
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 0;
+    gap: 10px;
+}
+
+.cardTitle {
     color: var(--bs-black);
     font-weight: 500;
-    font-size: 20px;
+    font-size: 1.5rem;
+}
+
+.cardTitle:hover {
+    text-decoration: underline 1.5px;
+    text-underline-offset: 0.2rem;
 }
 
 .linkUnderline {
     text-decoration: none;
 }
 
-.linkUnderline:hover {
-    text-decoration: 0.5px underline var(--bs-black);
-    text-underline-offset: 0.1em;
-}
-
-.asideDescription {
+.cardDescription {
+    display: flex;
+    flex-shrink: 1;
     color: var(--bs-black);
-    font-size: 16px;
+    font-size: 1.2rem;
 }
 
-/*------------------------- ВЕРТИКАЛЬНАЯ ВЕРСИЯ --------------------------------*/
-
-.flexAlign {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+.cardLink {
+  text-decoration: none;
 }
 
-.verticalVariant {
-    width: 350px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    margin-top: 0;
-}
-
-.verticalImage {
-    max-width: 100%;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
-.verticalContent {
-    width: 350px;
-    padding: 0;
-    display: flex;
-    gap: 5px 0;
-}
-
-.verticalContent h3 {
-    font-size: 24px;
-}
-
-.verticalContent p {
-    font-size: 20px;
-}
-
-.verticalContent> :first-child,
-.verticalContent> :last-child {
-    font-size: 19px;
-}
-
-/*---------------------- АДАПТИВ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ ----------------------------*/
+/*---------------------- АДАПТИВ ----------------------------*/
 
 @media (max-width: 768px) {
 
-    .wrapperAsideArticle {
-        padding: 10px;
+    .wrapper {
+    flex-direction: column;
+    padding: 15px;
+}
+
+    .card {
+        width: 80%;
+        margin: 0 auto;
     }
 
-    .wrapperAsideArticle:nth-child(2),
-    .wrapperAsideArticle:nth-child(3) {
-        margin-top: 30px;
-    }
-
-    .asideArticle {
-        height: auto;
-    }
-
-    .asideImage {
-        width: 30vw;
-        height: 30vw;
-        object-position: center;
-    }
-
-    .asideContent {
-        flex: 1;
-        /* Занимает оставшееся пространство */
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-
-    .asideTitle {
-        font-size: 16px;
-    }
-
-    .asideDescription {
-        display: none;
-    }
-
-    /*-------------------------- АДАПТИВ ВЕРТИКАЛЬНАЯ ВЕРСИЯ --------------------------------*/
-
-    .verticalVariant {
-        padding: 15px 0;
-        display: flex;
-        align-self: center;
-    }
-
-    .flexAlign {
-        flex-direction: column;
-    }
-
-    .verticalVariant:nth-child(2) {
-        margin-top: 10px;
-    }
-
-    .verticalImage {
-        max-width: 100% !important;
+    .cardImage {
         width: 100%;
         height: auto;
-        object-fit: cover;
-        margin: 0;
+    }
+
+    .cardTitle {
+        font-size: 1.1rem;
+    }
+
+    .cardDescription {
+        display: none;
     }
 }

@@ -1,0 +1,170 @@
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding-top: 8rem;
+}
+
+.header {
+    text-align: center;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--bs-black);
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--bs-black);
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--bs-black);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.icon {
+  transition: filter 0.3s ease;
+}
+
+/* Инвертируем цвета только для чёрных иконок в тёмной теме */
+[data-theme="dark"] .icon {
+  filter: invert(1);
+}
+
+.iconInversion {
+  filter: invert(1);
+}
+
+[data-theme="dark"] .iconInversion {
+  filter: invert(0);
+}
+
+.contactCards {
+    display: flex;
+    flex-direction: column;
+}
+
+.card {
+    background: var(--bs-white);
+    border-radius: 2px;
+    padding: 2rem;
+    border-bottom: 1px solid var(--bs-black);
+    text-align: center;
+}
+
+.cardBlack {
+    background: var(--bs-black);
+    border-radius: 2px;
+    padding: 2rem;
+    text-align: center;
+}
+
+.cardBlack h3 {
+    color: var(--bs-white);
+}
+
+.cardBlack .cardText {
+    color: var(--bs-white);
+}
+
+.cardBlack a {
+    color: var(--bs-black);
+    background-color: var(--bs-white);
+}
+
+.cardIcon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.cardTitle {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--bs-black);
+}
+
+.cardText {
+    color: var(--bs-black);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.contactLink {
+    display: inline-block;
+    background: var(--bs-black);
+    color: var(--bs-white);
+    padding: 0.7rem 1.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.instructions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bs-black);
+    border: 1px solid;
+    border-color: var(--bs-black);
+    padding: 2rem;
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+.instructionsTitle {
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;
+    color: var(--bs-white);
+    font-size: 1.5rem;
+}
+
+.instructionsList {
+    text-align: center;
+    list-style-type: none;
+    padding-left: 1.5rem;
+    line-height: 1.8;
+    color: var(--bs-black);
+}
+
+.instructionsList li {
+    margin-bottom: 0.8rem;
+    color: var(--bs-white);
+}
+
+.note {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-style: italic;
+    color: var(--bs-white);
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+    .title {
+        font-size: 2rem;
+    }
+
+    .contactCards {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        margin-bottom: 2rem;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .instructions {
+        padding: 1.5rem;
+    }
+}

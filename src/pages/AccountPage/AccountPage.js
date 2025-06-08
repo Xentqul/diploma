@@ -8,8 +8,29 @@ import { LinkButton } from "@/shared/ui/LinkButton/LinkButton";
 import { Link, useNavigate } from "react-router-dom";
 import articles from "@/data/articles.json";
 
+// Берём последние 2 опубликованные статьи
 const getLatestArticles = (count = 2) => {
-  return articles.slice(0, count); // Берём первые 2 статьи
+  return articles
+    .filter((article) => article.status === "published")
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+    .slice(0, count);
+};
+
+// Берём последние 2 избранные статьи
+const getFavoriteArticles = (count = 2) => {
+  const favoriteIds = JSON.parse(localStorage.getItem("favorites")) || [];
+  if (!favoriteIds.length) return [];
+
+  // Фильтруем и сортируем по дате
+  const favorites = articles
+    .filter(
+      (article) =>
+        favoriteIds.includes(article.id) && article.status === "published"
+    )
+    .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+    .slice(0, count);
+
+  return favorites;
 };
 
 // Регулярка для email
@@ -22,9 +43,7 @@ function AccountPage() {
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
-
   const [phoneInputValue, setPhoneInputValue] = useState("");
-
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -39,7 +58,6 @@ function AccountPage() {
           withCredentials: true,
         });
         const user = response.data.user;
-
         setUserData(user);
         setFormData({
           first_name: user.first_name || "",
@@ -56,7 +74,6 @@ function AccountPage() {
         alert("Не удалось загрузить данные пользователя");
       }
     };
-
     fetchUserData();
   }, []);
 
@@ -72,11 +89,31 @@ function AccountPage() {
           },
         }
       );
-
       window.location.href = "/";
     } catch (error) {
       console.error("Ошибка выхода:", error);
       alert("Ошибка при выходе. Проверьте консоль.");
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (window.confirm("Вы уверены, что хотите удалить аккаунт?")) {
+      try {
+        const response = await axios.delete(
+          "http://localhost:5000/api/users/me",
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        alert("Аккаунт успешно удалён");
+        window.location.href = "/"; // Перенаправление на главную
+      } catch (error) {
+        console.error("Ошибка удаления аккаунта:", error);
+        alert("Не удалось удалить аккаунт. Попробуйте позже.");
+      }
     }
   };
 
@@ -93,9 +130,7 @@ function AccountPage() {
 
   const formatPhoneNumberDisplay = (phone) => {
     if (!phone) return "+7 (---) --- -- --";
-
     const digits = phone.replace(/\D/g, "");
-
     let number = digits;
     if (number.startsWith("8")) {
       number = "7" + number.slice(1, 11);
@@ -104,7 +139,6 @@ function AccountPage() {
     } else {
       number = number.slice(0, 11);
     }
-
     return `+7 (${number.slice(1, 4)}) ${number.slice(4, 7)}-${number.slice(
       7,
       9
@@ -113,20 +147,13 @@ function AccountPage() {
 
   const handleChangePhoneInput = (e) => {
     let value = e.target.value;
-
-    // Убираем всё, кроме цифр
     let digitsOnly = value.replace(/\D/g, "");
-
-    // Добавляем 7, если её нет
     if (!digitsOnly.startsWith("7")) {
       digitsOnly = "7" + digitsOnly.slice(0, 10);
     } else {
       digitsOnly = digitsOnly.slice(0, 11);
     }
-
     setPhoneInputValue(digitsOnly);
-
-    // Форматируем и обновляем инпут
     let formatted = "";
     for (let i = 0; i < digitsOnly.length; i++) {
       const digit = digitsOnly[i];
@@ -148,7 +175,6 @@ function AccountPage() {
           break;
       }
     }
-
     const phoneField = document.querySelector("[name='phone_number']");
     if (phoneField) {
       phoneField.value = formatted;
@@ -165,17 +191,14 @@ function AccountPage() {
       // Сохраняем изменения
       const saveChanges = async () => {
         const phoneDigits = phoneInputValue.replace(/\D/g, "");
-
         if (!/^7\d{10}$/.test(phoneDigits)) {
           alert("Введите корректный телефон в формате +7...");
           return;
         }
-
         if (!isValidEmail(formData.email)) {
           alert("Введите корректный email с @ и доменом");
           return;
         }
-
         try {
           const response = await axios.post(
             "http://localhost:5000/api/users/update-profile",
@@ -192,13 +215,10 @@ function AccountPage() {
               },
             }
           );
-
-          // Сохраняем аватар, если он есть
           const updatedUser = {
             ...response.data.user,
             avatar: userData.avatar,
           };
-
           setUserData(updatedUser);
           setIsEditing(false);
           alert("Данные успешно обновлены");
@@ -207,21 +227,17 @@ function AccountPage() {
           alert("Не удалось сохранить изменения");
         }
       };
-
       saveChanges();
     } else {
       setIsEditing(true);
     }
   };
 
-  // 💡 Загрузка аватара
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const formData = new FormData();
     formData.append("avatar", file);
-
     try {
       const response = await axios.post(
         "http://localhost:5000/api/users/upload-avatar",
@@ -233,12 +249,10 @@ function AccountPage() {
           },
         }
       );
-
       setUserData((prev) => ({
         ...prev,
         avatar: response.data.avatarUrl,
       }));
-
       alert("Аватар успешно загружен!");
     } catch (error) {
       console.error("Ошибка загрузки аватара:", error);
@@ -250,14 +264,16 @@ function AccountPage() {
     <div className={styles.accountWrapper}>
       <div className={styles.justify}>
         <div className={styles.topPart}>
+          {/* Последние новости */}
           {renderArticlesSection(
             "Последние новости",
             "/news",
             getLatestArticles()
           )}
 
+          {/* Блок пользователя */}
           <div className={styles.userBlock}>
-            {/* 👇 Кнопка загрузки аватара */}
+            {/* Аватар */}
             <label className={styles.avatarUpload}>
               <input
                 type="file"
@@ -265,8 +281,6 @@ function AccountPage() {
                 onChange={handleAvatarChange}
                 hidden
               />
-
-              {/* Отображение аватара */}
               {userData?.avatar ? (
                 <img
                   src={`http://localhost:5000${userData.avatar}`}
@@ -311,55 +325,58 @@ function AccountPage() {
             </div>
 
             {/* Эл. почта */}
-<div className={styles.editableRow}>
-  <LabelAndInfo
-    label="эл. почта"
-    value={
-      isEditing ? (
-        <InputAndLabel
-          name="email"
-          value={formData.email}
-          onChange={handleChangeOther}
-        />
-      ) : (
-        <span className={styles.dbValue}>{userData?.email || "example@mail.ru"}</span>
-      )
-    }
-  />
-  {!isEditing && (
-    <span onClick={toggleEdit} className={styles.editIcon}>
-      ✏️
-    </span>
-  )}
-</div>
+            <div className={styles.editableRow}>
+              <LabelAndInfo
+                label="эл. почта"
+                value={
+                  isEditing ? (
+                    <InputAndLabel
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChangeOther}
+                    />
+                  ) : (
+                    <span className={styles.dbValue}>
+                      {userData?.email || "example@mail.ru"}
+                    </span>
+                  )
+                }
+              />
+              {!isEditing && (
+                <span onClick={toggleEdit} className={styles.editIcon}>
+                  ✏️
+                </span>
+              )}
+            </div>
 
-{/* Номер телефона */}
-<div className={styles.editableRow}>
-  <LabelAndInfo
-    label="номер телефона"
-    value={
-      isEditing ? (
-        <input
-          type="text"
-          name="phone_number"
-          placeholder="+7 (926) 123-45-67"
-          className={styles.inputField}
-          maxLength={18}
-          onInput={handleChangePhoneInput}
-        />
-      ) : (
-        <span className={styles.dbValue}>
-          {formatPhoneNumberDisplay(userData?.phone_number)}
-        </span>
-      )
-    }
-  />
-  {!isEditing && (
-    <span onClick={toggleEdit} className={styles.editIcon}>
-      ✏️
-    </span>
-  )}
-</div>
+            {/* Номер телефона */}
+            <div className={styles.editableRow}>
+              <LabelAndInfo
+                label="номер телефона"
+                value={
+                  isEditing ? (
+                    <input
+                      type="text"
+                      name="phone_number"
+                      placeholder="+7 (926) 123-45-67"
+                      className={styles.inputField}
+                      maxLength={18}
+                      onInput={handleChangePhoneInput}
+                    />
+                  ) : (
+                    <span className={styles.dbValue}>
+                      {formatPhoneNumberDisplay(userData?.phone_number)}
+                    </span>
+                  )
+                }
+              />
+              {!isEditing && (
+                <span onClick={toggleEdit} className={styles.editIcon}>
+                  ✏️
+                </span>
+              )}
+            </div>
+
             {/* Кнопка сохранить */}
             {isEditing && (
               <div className={styles.buttonGroup}>
@@ -378,11 +395,18 @@ function AccountPage() {
               <LinkButton size="small" onClick={handleLogout}>
                 выйти
               </LinkButton>
-              <LinkButton size="small">удалить аккаунт</LinkButton>
+              <LinkButton size="small" onClick={handleDeleteAccount}>
+                удалить аккаунт
+              </LinkButton>
             </div>
           </div>
 
-          {renderArticlesSection("Избранное", "/favorites", [])}
+          {/* Избранное */}
+          {renderArticlesSection(
+            "Избранное",
+            "/favorites",
+            getFavoriteArticles()
+          )}
         </div>
       </div>
     </div>

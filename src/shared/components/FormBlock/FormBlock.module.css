@@ -1,8 +1,10 @@
 .formBlock {
     display: flex;
     flex-direction: column;
-    min-height: 100%; /* Добавляем минимальную высоту */
-    padding-bottom: 20px; /* Добавляем отступ снизу */
+    min-height: 100%;
+    /* Добавляем минимальную высоту */
+    padding-bottom: 20px;
+    /* Добавляем отступ снизу */
 }
 
 .formTitle {
@@ -16,7 +18,8 @@
     margin-top: 10px;
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Добавляем отступ между полями */
+    gap: 15px;
+    /* Добавляем отступ между полями */
 }
 
 .checkbox {

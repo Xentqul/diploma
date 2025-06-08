@@ -1,28 +1,34 @@
 .line {
   width: 100%;
-  height: 200px;
+  height: 180px;
   background-color: var(--pale-accent);
 }
 
 .articleHeader {
-  max-width: 60%;
-  width: 50%;
+  max-width: 1300px;
+  width: 55%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   padding-top: 15px;
   gap: 12px;
-  margin: 0 auto;
+
 }
 
 .title {
-  font-size: 24px;
+  font-size: 1.75rem;
   line-height: 1.3;
   margin: 0;
   font-weight: bold;
   color: var(--bs-black);
 }
 
+.publishedLabel {
+  font-size: 1rem;
+}
+
 .description {
+  font-size: 1.125rem;
   color: var(--bs-black);
 }
 
@@ -33,6 +39,7 @@
 .authorDateWrapper {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 /* Кнопка избранного */
@@ -63,14 +70,117 @@
 }
 
 .imageContainer {
-  width: 100%; /* Ширина контейнера */
-  height: 600px; /* Высота контейнера */
+  width: 100%;
+  height: 600px;
   overflow: hidden; /* Обрезает лишнее, если изображение больше контейнера */
 }
 
 .imageContainer img {
-  width: 100%; /* Занимает всю ширину контейнера */
-  height: 100%; /* Занимает всю высоту контейнера */
-  object-fit: contain; /* Сохраняет пропорции без обрезки */
-  object-position: center; /* Центрирует изображение */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.favoriteIcon img {
+  width: 20px;
+  height: 20px;
+  filter: invert(1); /* Инвертирует цвета */
+}
+
+/* Инверсия для тёмной темы */
+[data-theme="dark"] .favoriteIcon img {
+  filter: invert(0); /* Инвертирует цвета */
+}
+
+@media (max-width: 1024px) {
+  .articleHeader {
+    width: 70%;
+  }
+  
+  .imageContainer {
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .line {
+    height: 100px; /* Уменьшаем высоту серой линии */
+  }
+  
+  .articleHeader {
+    width: 85%;
+    padding-top: 10px;
+    gap: 8px;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    line-height: 1.25;
+  }
+  
+  .description {
+    font-size: 1rem;
+  }
+  
+  .authorDateWrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .publishedLabel {
+    font-size: 0.875rem;
+  }
+  
+  .imageContainer {
+    height: 350px;
+  }
+  
+  .favoriteButton,
+  .favoriteButtonActive {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .articleHeader {
+    width: 90%;
+    padding: 10px 15px 0;
+  }
+  
+  .title {
+    font-size: 1.3rem;
+  }
+  
+  .description {
+    font-size: 0.95rem;
+  }
+  
+  .imageContainer {
+    height: 250px;
+    margin-left: -15px; /* Компенсируем padding контейнера */
+    margin-right: -15px;
+    width: calc(100% + 30px); /* Растягиваем на всю ширину */
+  }
+  
+  .tagContainer {
+    margin-bottom: 5px;
+  }
+  
+  .favoriteButton,
+  .favoriteButtonActive {
+    margin-top: 8px;
+    padding: 7px 10px;
+  }
+  
+  .favoriteText {
+    font-size: 12px;
+  }
+  
+  .favoriteIcon svg {
+    width: 16px;
+    height: 16px;
+  }
 }

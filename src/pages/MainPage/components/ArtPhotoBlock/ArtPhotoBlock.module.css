@@ -20,7 +20,7 @@
 
 .wrapper h3 {
     color: var(--bs-black);
-    font-size: 32px;
+    font-size: 2rem;
     text-align: center;
     padding-bottom: 50px;
 }
@@ -37,7 +37,7 @@
     }
 
     .wrapper h3 {
-        font-size: 25px;
+        font-size: 1.75rem;
         padding-bottom: 30px;
     }
 }

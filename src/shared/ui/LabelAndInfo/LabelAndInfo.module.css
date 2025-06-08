@@ -1,9 +1,9 @@
 .componentWrapper span {
-    font-size: 16px;
+    font-size: 1rem;
     color: var(--input-color);
 }
 
 .componentWrapper p {
-    font-size: 20px;
+    font-size: 1.25rem;
     color: var(--bs-black);
 }

@@ -7,7 +7,7 @@
 .sixthSection h2 {
     margin-top: 90px;
     margin-bottom: 60px;
-    font-size: 40px;
+    font-size: 2.5rem;
     color: var(--bs-black);
     letter-spacing: 1px;
     text-align: center;
@@ -24,7 +24,7 @@
 }
 
 .sixthSection span {
-    font-size: 25px;
+    font-size: 1.5625rem;
     font-weight: 500;
 }
 
@@ -43,7 +43,7 @@
     .sixthSection h2 {
         margin-top: 40px;
         margin-bottom: 40px;
-        font-size: 25px;
+        font-size: 1.5625rem;
     }
 
     .linkToMore {
@@ -51,6 +51,6 @@
     }
 
     .linkToMore span {
-        font-size: 18px;
+        font-size: 1.125rem;
     }
 }

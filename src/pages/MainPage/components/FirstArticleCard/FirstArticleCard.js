@@ -18,13 +18,18 @@ function FirstArticleCard() {
   useEffect(() => {
     if (mainArticle?.id && !usedArticles.includes(mainArticle.id)) {
       markArticleAsUsed(mainArticle.id);
-      console.log("Главная статья помечена:", mainArticle.id, mainArticle.title.ru);
+      console.log(
+        "Главная статья помечена:",
+        mainArticle.id,
+        mainArticle.title.ru
+      );
     }
   }, [mainArticle, usedArticles, markArticleAsUsed]);
 
   if (!mainArticle) return <p>Статья не найдена</p>;
 
-  const authorName = mainArticle.author.name[currentLang] || mainArticle.author.id;
+  const authorName =
+    mainArticle.author.name[currentLang] || mainArticle.author.id;
   const firstTag = mainArticle.tags?.[0]?.visible?.[currentLang] || "#мода";
 
   return (
@@ -52,8 +57,12 @@ function FirstArticleCard() {
           )}
 
           {/* Кнопка */}
-          <LinkButton className={styles.linkButtonMargin} to={mainArticle.link}>
-            к коллекции
+          <LinkButton
+            className={styles.linkButtonMargin}
+            href={mainArticle.externalLink || undefined} // если есть внешняя ссылка — используем её
+            to={mainArticle.externalLink ? undefined : mainArticle.link} // иначе используем internal link
+          >
+            {mainArticle.externalLink ? "к коллекции" : "к статье"}
           </LinkButton>
         </div>
 

@@ -31,14 +31,14 @@
 .wrapperForTitle h3 {
     margin-top: 5px;
     letter-spacing: -1px;
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: 400;
     color: var(--bs-black);
 }
 
 .description {
     color: var(--bs-black);
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 
 .combinate {
@@ -48,11 +48,11 @@
 @media (max-width: 768px) {
     .wrapperForTitle h3 {
         margin-top: 5px;
-        font-size: 24px;
+        font-size: 1.5rem;
     }
 
     .combinate> :last-child,
     .combinate> :first-child {
-        font-size: 16px;
+        font-size: 1rem;
     }
 }

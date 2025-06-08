@@ -26,18 +26,18 @@
 
 .albumTitle {
     color: var(--bs-black);
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 500;
     text-decoration: none;
 }
 
 .artistName {
-    font-size: 16px;
+    font-size: 1rem;
     color: var(--color-tag);
     text-decoration: none;
 }
 
 .category {
-    font-size: 14px;
+    font-size: 0.875rem;
     color: var(--bs-gray-600);
 }

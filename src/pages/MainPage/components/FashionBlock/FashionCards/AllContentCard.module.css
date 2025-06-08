@@ -33,7 +33,7 @@
 .asideTitle {
     color: var(--bs-black);
     font-weight: 500;
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 
 .linkUnderline {
@@ -47,7 +47,7 @@
 
 .asideDescription {
     color: var(--bs-black);
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 /*---------------------- АДАПТИВ ДЛЯ МОБИЛЬНОЙ ВЕРСИИ ----------------------------*/
@@ -82,7 +82,7 @@
     }
 
     .asideTitle {
-        font-size: 16px;
+        font-size: 1rem;
     }
 
     .asideDescription {

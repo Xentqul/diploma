@@ -1,6 +1,7 @@
 import styles from "./FormBlock.module.css";
 import InputAndLabel from "@/shared/ui/InputAndLabel/InputAndLabel";
 import SubmitButton from "@/shared/ui/SubmitButton/SubmitButton";
+import { Link } from "react-router-dom";
 
 function FormBlock({
   title,
@@ -8,6 +9,7 @@ function FormBlock({
   buttonLabel,
   footerLink,
   onSubmit,
+  helpLink,
   errors,
   checkbox,
 }) {
@@ -59,6 +61,15 @@ function FormBlock({
           <a href={footerLink.link} className={styles.formLink}>
             {footerLink.label}
           </a>
+        </p>
+      )}
+
+      {/* Проблемы со входом */}
+      {helpLink && (
+        <p className={styles.formFooter}>
+          <Link to={helpLink.link} className={styles.formLink}>
+            {helpLink.text}
+          </Link>
         </p>
       )}
     </form>

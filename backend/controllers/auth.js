@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const pool = require("../config/db"); // ✅ Правильный путь
+const pool = require("../config/db");
 
 module.exports = {
   //------------------------------------------------------------------ МЕТОД РЕГИСТРАЦИИ ----------------------------------------------------------------------
@@ -18,13 +18,15 @@ module.exports = {
       res.status(201).json(result.rows[0]);
     } catch (err) {
       if (err.code === "23505") {
-        res.status(400).send("Email или телефон уже заняты");
+        return res.status(400).send("Email или телефон уже заняты");
       } else {
-        res.status(500).send("Ошибка сервера");
+        console.error('Ошибка регистрации:', err);
+        return res.status(500).send("Ошибка сервера");
       }
     }
   },
-//---------------------------------------------------- МЕТОД ВХОДА  ----------------------------------------------------
+
+  //---------------------------------------------------- МЕТОД ВХОДА  ----------------------------------------------------
   login: async (req, res) => {
     const { email, password } = req.body;
 
@@ -61,19 +63,21 @@ module.exports = {
       // Установка куки
       res.cookie("token", token, {
         httpOnly: true,
-        secure: false, // true в production (HTTPS)
+        secure: process.env.NODE_ENV === "production", // true в production (HTTPS)
         sameSite: 'lax',
         maxAge: 24 * 60 * 60 * 1000, // 24 часа
         path: '/',
-        domain: 'localhost'
       });
 
-      // Ответ клиенту
+      // Ответ клиенту с токеном в теле
       res.json({ 
         success: true,
         user: {
           id: user.rows[0].id,
-          email: user.rows[0].email
+          email: user.rows[0].email,
+          firstName: user.rows[0].first_name,
+          lastName: user.rows[0].last_name,
+          avatar: user.rows[0].avatar,
         }
       });
 
@@ -98,19 +102,20 @@ module.exports = {
       const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret_key');
       res.json({ isAuthenticated: true, user: decoded });
     } catch (e) {
+      console.error('Ошибка проверки токена:', e);
       res.json({ isAuthenticated: false });
     }
   },
-//---------------------------------------------------- МЕТОД ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
+
+  //---------------------------------------------------- МЕТОД ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
   logout: async (req, res) => {
     try {
       res.cookie("token", "", {
         httpOnly: true,
-        secure: false,
+        secure: process.env.NODE_ENV === "production", // true в production (HTTPS)
         sameSite: 'lax',
         maxAge: 0,
         path: '/',
-        domain: 'localhost'
       });
   
       res.json({ success: true, message: "Вы успешно вышли из системы" });

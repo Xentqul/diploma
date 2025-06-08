@@ -12,7 +12,7 @@ export default function SeasonalCard({ card, lang = "ru" }) {
 
   return (
     <div className={styles.card}>
-      <Link to={`/articles/${card.slug}`} className={styles.imageWrapper}>
+      <Link to={`/article/${card.slug}`} className={styles.imageWrapper}>
         {imageSrc && (
           <img
             src={imageSrc}
@@ -26,7 +26,7 @@ export default function SeasonalCard({ card, lang = "ru" }) {
       </Link>
 
       <div className={styles.content}>
-        <Link to={`/articles/${card.slug}`} className={styles.link}>
+        <Link to={`/article/${card.slug}`} className={styles.link}>
           <h3 className={styles.title}>{title}</h3>
         </Link>
 

@@ -1,7 +1,7 @@
 :root {
   /* цвета светлой темы */
   --color-tag: #CB1212;
-  --hover-tag: #a10202;
+  --hover-tag: #950000;
   --pale-accent: #E1E5EE;
   --input-color: #484848;
   --hover-asphalt: #505050;
@@ -18,13 +18,17 @@
 }
 
 /* плавный переход между темами */
+* {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
 .App {
   width: 100%;
   height: auto;
   background-color: var(--bs-white);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
+/* ====================================================== */
 
 /* стиль для всех Link из react-router-dom */
 a,
@@ -71,13 +75,13 @@ Link {
 }
 
 .textWrapper span:first-child {
-  font-size: 36px;
+  font-size: 2.25rem;
   font-weight: 400;
   color: var(--bs-black);
 }
 
 .textWrapper span:last-child {
-  font-size: 40px;
+  font-size: 2.5rem;
   font-weight: 700;
   color: var(--bs-black);
   text-transform: uppercase;
@@ -164,11 +168,11 @@ Link {
 }
 
 .textWrapper span:first-child {
-  font-size: 24px;
+  font-size: 1.5rem;
 }
 
 .textWrapper span:last-child {
-  font-size: 28px;
+  font-size: 1.75rem;
 }
 
 .block {

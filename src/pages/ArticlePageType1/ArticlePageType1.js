@@ -8,29 +8,25 @@ function ArticlePageType1() {
   const { slug } = useParams();
   const article = articles.find((a) => a.slug === slug);
 
-  // Отладочная информация
-  console.log("Current slug:", slug);
-  console.log("Found article:", article);
-  if (article) {
-    console.log("Article content:", article.content);
-    console.log("Is array?", Array.isArray(article.content));
-    console.log("Content length:", article.content?.length);
-  }
-
   if (!article) {
     return <div>Статья не найдена</div>;
   }
 
+  // Проверяем избранное из localStorage или API
+  const userFavorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+  const isFavorite = userFavorites.includes(article.id);
+
   return (
     <div className={styles.articleWrapper}>
       <ArticleHeader
+        id={article.id}
         title={article.title}
         description={article.description}
         tags={article.tags}
         author={article.author}
         publishedAt={article.publishedAt}
         image={article.images?.[0]}
-        isFavorite={false}
+        isFavorite={isFavorite}
       />
 
       <div className={styles.content}>

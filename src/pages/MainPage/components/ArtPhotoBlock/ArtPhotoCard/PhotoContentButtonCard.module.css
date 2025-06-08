@@ -25,7 +25,7 @@
 
 .title {
     margin-top: 15px;
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: 500;
 }
 
@@ -33,7 +33,7 @@
     flex-grow: 1;
     margin-top: 15px;
     color: var(--bs-black);
-    font-size: 21px;
+    font-size: 1.3125rem;
 }
 
 @media (max-width: 768px) {
@@ -60,18 +60,19 @@
         text-align: center;
     }
 
-    .content> :first-child {
-        font-size: 16px;
+    .content > :first-child {
+        align-self: center;
+        font-size: 1rem;
     }
 
     .title {
         margin: 10px 0;
-        font-size: 20px;
+        font-size: 1.25rem;
     }
 
     .description {
         margin: 0 0 10px 0;
-        font-size: 18px;
+        font-size: 1.125rem;
     }
 
     .content> :last-child {

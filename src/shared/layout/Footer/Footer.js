@@ -10,7 +10,7 @@ function Footer() {
 
           <ul className={styles.socialMedia}>
             <li>
-              <a href="/category/fashion">
+              <a href="#!">
                 <img
                   src="/assets/icons/inst-icon.png"
                   alt="instagram"
@@ -19,7 +19,7 @@ function Footer() {
               </a>
             </li>
             <li>
-              <a href="/category/music">
+              <a href="https://t.me/DRESSERY">
                 <img
                   src="/assets/icons/telegram-icon.png"
                   alt="telegram"
@@ -28,7 +28,7 @@ function Footer() {
               </a>
             </li>
             <li>
-              <a href="/category/art">
+              <a href="#!">
                 <img
                   src="/assets/icons/classmates-icon.png"
                   alt="одноклассники"
@@ -37,7 +37,7 @@ function Footer() {
               </a>
             </li>
             <li>
-              <a href="/category/culture">
+              <a href="#!">
                 <img
                   src="/assets/icons/twitter-icon.png"
                   alt="twitter"
@@ -46,7 +46,7 @@ function Footer() {
               </a>
             </li>
             <li>
-              <a href="/category/fashion">
+              <a href="#!">
                 <img
                   src="/assets/icons/vk-icon.png"
                   alt="vk"
@@ -55,7 +55,7 @@ function Footer() {
               </a>
             </li>
             <li>
-              <a href="/category/art">
+              <a href="#!">
                 <img
                   src="/assets/icons/tiktok-icon.png"
                   alt="tiktok"
@@ -94,9 +94,9 @@ function Footer() {
               <li>
                 <Link to="/category/beauty">Красота</Link>
               </li>
-              <li>
-                <Link to="/news">Новости</Link>
-              </li>
+                <li>
+                  <Link to="/favorites">Избранное</Link>
+                </li>
               <li>
                 <Link to="/category/music">Музыка</Link>
               </li>
@@ -105,7 +105,7 @@ function Footer() {
 
           <div className={styles.footerUtils}>
             <Link to="/account">Аккаунт</Link>
-            <Link to="/vacancies">Вакансии</Link>
+            <Link to="/application">Вакансии</Link>
             <Link to="/contacts">Контакты</Link>
           </div>
         </div>

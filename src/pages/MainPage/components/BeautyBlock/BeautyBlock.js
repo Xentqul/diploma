@@ -27,12 +27,14 @@ function BeautyBlock() {
   return (
     <section className={styles.sixthSection}>
       <h2>
-        <Link to="/category/beauty" className={styles.title}>КРАСОТА</Link>
+        <Link to="/category/beauty" className={styles.title}>
+          КРАСОТА
+        </Link>
       </h2>
       <SimpleHorizontalCard articles={displayArticles} />
-      <a href="/beauty" className={styles.linkToMore}>
-        <span>СМОТРЕТЬ ВСЕ›</span>
-      </a>
+      <Link to="/category/beauty" className={styles.linkToMore}>
+        <span className={styles.seeAll}>СМОТРЕТЬ ВСЕ›</span>
+      </Link>
     </section>
   );
 }

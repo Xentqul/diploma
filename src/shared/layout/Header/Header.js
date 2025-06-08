@@ -26,14 +26,19 @@ function Header() {
     const newTheme = !isDarkTheme;
     setIsDarkTheme(newTheme);
     localStorage.setItem("theme", newTheme ? "dark" : "light");
-    document.documentElement.setAttribute("data-theme", newTheme ? "dark" : "light");
+    document.documentElement.setAttribute(
+      "data-theme",
+      newTheme ? "dark" : "light"
+    );
   };
 
   // Логика скрытия нижней части шапки при скролле
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
-      setIsScrollingDown(prevScrollPos < currentScrollPos && currentScrollPos > 10);
+      setIsScrollingDown(
+        prevScrollPos < currentScrollPos && currentScrollPos > 10
+      );
       setPrevScrollPos(currentScrollPos);
     };
 
@@ -47,9 +52,15 @@ function Header() {
       <div className={styles.accountButtonMobile}>
         <Link to={isAuthenticated ? "/account" : "/login"}>
           <img
-            src={isAuthenticated ? "/assets/icons/account-icon-checked.png" : "/assets/icons/account-icon.png"}
+            src={
+              isAuthenticated
+                ? "/assets/icons/account-icon-checked.png"
+                : "/assets/icons/account-icon.png"
+            }
             alt="account"
-            className={`${styles.accountImgMobile} ${isDarkTheme ? "ColorInversion" : ""}`}
+            className={`${styles.accountImgMobile} ${
+              isDarkTheme ? "ColorInversion" : ""
+            }`}
           />
         </Link>
       </div>
@@ -61,13 +72,17 @@ function Header() {
       </div>
 
       <div
-        className={`${styles.burgerButton} ${isBurgerMenuOpen ? styles.open : ""}`}
+        className={`${styles.burgerButton} ${
+          isBurgerMenuOpen ? styles.open : ""
+        }`}
         onClick={() => setIsBurgerMenuOpen((prev) => !prev)}
       >
         <img
           src="/assets/icons/burger_menu-mobile.png"
           alt="меню"
-          className={`${styles.burgerMenuIcon} ${isDarkTheme ? "ColorInversion" : ""}`}
+          className={`${styles.burgerMenuIcon} ${
+            isDarkTheme ? "ColorInversion" : ""
+          }`}
         />
       </div>
 
@@ -87,32 +102,56 @@ function Header() {
             <ul className={styles.socialMedia}>
               <li>
                 <a href="#">
-                  <img src="/assets/icons/inst-icon.png" alt="instagram" className="imgColorInvert" />
+                  <img
+                    src="/assets/icons/inst-icon.png"
+                    alt="instagram"
+                    className="imgColorInvert"
+                  />
+                </a>
+              </li>
+              <li>
+                <a href="https://t.me/DRESSERY">
+                  <img
+                    src="/assets/icons/telegram-icon.png"
+                    alt="telegram"
+                    className="imgColorInvert"
+                  />
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <img src="/assets/icons/telegram-icon.png" alt="telegram" className="imgColorInvert" />
+                  <img
+                    src="/assets/icons/classmates-icon.png"
+                    alt="одноклассники"
+                    className="imgColorInvert"
+                  />
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <img src="/assets/icons/classmates-icon.png" alt="одноклассники" className="imgColorInvert" />
+                  <img
+                    src="/assets/icons/twitter-icon.png"
+                    alt="twitter"
+                    className="imgColorInvert"
+                  />
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <img src="/assets/icons/twitter-icon.png" alt="twitter" className="imgColorInvert" />
+                  <img
+                    src="/assets/icons/vk-icon.png"
+                    alt="vk"
+                    className="imgColorInvert"
+                  />
                 </a>
               </li>
               <li>
                 <a href="#">
-                  <img src="/assets/icons/vk-icon.png" alt="vk" className="imgColorInvert" />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <img src="/assets/icons/tiktok-icon.png" alt="tiktok" className="imgColorInvert" />
+                  <img
+                    src="/assets/icons/tiktok-icon.png"
+                    alt="tiktok"
+                    className="imgColorInvert"
+                  />
                 </a>
               </li>
             </ul>
@@ -125,9 +164,15 @@ function Header() {
             )}
             <Link to={isAuthenticated ? "/account" : "/login"}>
               <img
-                src={isAuthenticated ? "/assets/icons/account-icon-checked.png" : "/assets/icons/account-icon.png"}
+                src={
+                  isAuthenticated
+                    ? "/assets/icons/account-icon-checked.png"
+                    : "/assets/icons/account-icon.png"
+                }
                 alt="account"
-                className={`${styles.accountImg} ${isDarkTheme ? "ColorInversion" : ""}`}
+                className={`${styles.accountImg} ${
+                  isDarkTheme ? "ColorInversion" : ""
+                }`}
               />
             </Link>
           </div>
@@ -160,12 +205,16 @@ function Header() {
                   <Link to="/category/music">музыка</Link>
                 </li>
                 <li>
-                  <Link to="/category/news">новости</Link>
+                  <Link to="/favorites">избранное</Link>
                 </li>
                 <li className={styles.themeContainer}>
                   <span className={styles.colorThemeGrey}>тема</span>
                   <label className={styles.themeSwitch}>
-                    <input type="checkbox" checked={isDarkTheme} onChange={toggleTheme} />
+                    <input
+                      type="checkbox"
+                      checked={isDarkTheme}
+                      onChange={toggleTheme}
+                    />
                     <span className={styles.slider}></span>
                   </label>
                 </li>
@@ -177,13 +226,20 @@ function Header() {
 
       {/* Бургер-меню */}
       <div
-        className={`${styles.burgerMenuWrapper} ${isBurgerMenuOpen ? styles.open : ""}`}
+        className={`${styles.burgerMenuWrapper} ${
+          isBurgerMenuOpen ? styles.open : ""
+        }`}
       >
-        <div className={styles.closeButton} onClick={() => setIsBurgerMenuOpen(false)}>
+        <div
+          className={styles.closeButton}
+          onClick={() => setIsBurgerMenuOpen(false)}
+        >
           <img
             src="/assets/icons/burger_menu-close.png"
             alt="Закрыть меню"
-            className={`${styles.closeIcon} ${isDarkTheme ? "ColorInversion" : ""}`}
+            className={`${styles.closeIcon} ${
+              isDarkTheme ? "ColorInversion" : ""
+            }`}
           />
         </div>
 
@@ -208,7 +264,7 @@ function Header() {
               <Link to="/category/music">музыка</Link>
             </li>
             <li>
-              <Link to="/category/news">новости</Link>
+              <Link to="/favorites">избранное</Link>
             </li>
             <li>
               <div className={styles.themeContainer}>
@@ -235,7 +291,7 @@ function Header() {
                   className="imgColorInvert"
                 />
               </a>
-              <a href="#">
+              <a href="https://t.me/DRESSERY">
                 <img
                   src="/assets/icons/telegram-icon.png"
                   alt="telegram"

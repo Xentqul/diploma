@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Импортируем для навигации
 import styles from "./SignUpPage.module.css";
 import BackButton from "@/shared/ui/BackButton/BackButton";
 import FormBlock from "@/shared/components/FormBlock/FormBlock";
@@ -17,6 +18,8 @@ function SignUpPage() {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const navigate = useNavigate(); // <-- Хук для навигации
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -97,12 +100,19 @@ function SignUpPage() {
         password: formData.password,
       });
 
-      alert("Регистрация успешна!");
-      console.log(response.data);
+      // Сохраняем токен и данные пользователя в localStorage (если сервер его возвращает)
+      if (response.data.success && response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+      }
+
+      // Перенаправление на главную страницу
+      navigate("/"); // <-- Редирект на главную
+      window.location.reload(); // Опционально: обновляем, чтобы сразу обновились данные UI
     } catch (error) {
       console.error(error);
       if (error.response && error.response.status === 400) {
-        alert(error.response.data);
+        alert(error.response.data.message || "Ошибка при регистрации");
       } else {
         alert("Ошибка при регистрации");
       }

@@ -36,10 +36,10 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname); // Получаем расширение файла
     const userId = req.userId; // Теперь должен быть определён
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const filename = `avatar-${userId}-${uniqueSuffix}${ext}`;
     cb(null, filename);
-  }
+  },
 });
 
 const upload = multer({ storage });
@@ -118,6 +118,32 @@ router.post(
   }
 );
 
+// Роут /api/users/me — удаление аккаунта
+router.delete("/me", authenticateToken, async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    // Удаляем пользователя из базы данных
+    const result = await pool.query(
+      "DELETE FROM dressery_schema.users WHERE id = $1 RETURNING *",
+      [userId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Пользователь не найден" });
+    }
+
+    // Необязательно: можно удалить аватар и другие данные пользователя
+
+    // Очищаем токен в куках
+    res.clearCookie("token");
+
+    res.json({ message: "Аккаунт успешно удалён" });
+  } catch (err) {
+    console.error("Ошибка при удалении аккаунта:", err);
+    res.status(500).json({ error: "Не удалось удалить аккаунт" });
+  }
+});
 
 //------------------------------------- МЕТОД ДЛЯ ОБНОВЛЕНИЯ ДАННЫХ ПРОФИЛЯ --------------------------------------------------------
 router.post("/update-profile", authenticateToken, async (req, res) => {

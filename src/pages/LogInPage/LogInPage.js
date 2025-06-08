@@ -50,7 +50,11 @@ function LogInPage() {
 
   return (
     <div className={styles.wrapper}>
-      <img src="/assets/login-pic/login.webp" alt="Войти" className={styles.sidePic} />
+      <img
+        src="/assets/login-pic/login.webp"
+        alt="Войти"
+        className={styles.sidePic}
+      />
 
       <div className={styles.rightSide}>
         <div className={styles.topSection}>
@@ -83,6 +87,10 @@ function LogInPage() {
             text: "ещё нет аккаунта?",
             label: "зарегистрироваться",
             link: "/signup",
+          }}
+          helpLink={{
+            text: "проблемы со входом?",
+            link: "/contacts",
           }}
           onSubmit={handleSubmit}
           error={error}

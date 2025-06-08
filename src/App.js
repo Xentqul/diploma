@@ -15,7 +15,9 @@ import { CookieBanner } from "./shared/components/CookieBanner/CookieBanner";
 import { CategoryPage } from "./pages/CategoryPage/CategoryPage.js";
 import { AuthorPage } from "./pages/AuthorPage/AuthorPage.js";
 import { TagPage } from "./pages/TagPage/TagPage.js";
-import ArticlePageType1 from "@/pages/ArticlePageType1/ArticlePageType1"
+import { FavoritePage } from "./pages/FavoritePage/FavoritePage.js";
+import ArticlePageType1 from "@/pages/ArticlePageType1/ArticlePageType1";
+import ContactPage from "@/pages/ContactPage/ContactPage.js";
 
 axios.defaults.withCredentials = true;
 
@@ -47,8 +49,12 @@ function App() {
               <Route path="/category/:categoryId" element={<CategoryPage />} />
               <Route path="/author/:authorId" element={<AuthorPage />} />
               <Route path="/tag/:tagId" element={<TagPage />} />
-              {/* СТРАНИЦЫ СТАТЕЙ*/}
+              {/* СТРАНИЦЫ СТАТЕЙ */}
               <Route path="/article/:slug" element={<ArticlePageType1 />} />
+              {/* СТРАНИЦА ИЗБРАННОГО */}
+              <Route path="/favorites" element={<FavoritePage />} />
+              {/* СТРАНИЦА КОНТАКТОВ\ТЕХ.ПОДДЕРЖКИ */}
+              <Route path="/contacts" element={<ContactPage />} />
             </Routes>
           </ArticleProvider>
         </div>

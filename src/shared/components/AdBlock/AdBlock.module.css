@@ -24,7 +24,7 @@
 
 .adBlock .text p {
   color: var(--bs-black);
-  font-size: 18px;
+  font-size: 1.125rem;
   font-style: italic;
 }
 
@@ -32,10 +32,70 @@
   background-color: var(--bs-black);
   color: var(--bs-white);
   border: none;
-  padding: 8px 16px;
+  padding: 8px 1rem;
   border-radius: 30px;
   cursor: pointer;
   text-decoration: none;
   font-weight: bold;
   transition: background-color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .adBlock {
+    flex-direction: column !important;
+    gap: 20px;
+    padding: 20px 0;
+  }
+
+  .image {
+    max-width: 100% !important;
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 4px;
+    order: 1;
+  }
+
+  .text {
+    width: 100%;
+    text-align: center;
+    order: 2;
+  }
+
+  .text p {
+    font-size: 1rem !important;
+    margin-bottom: 15px;
+  }
+
+  .adButton {
+    width: 100%;
+    padding: 10px !important;
+    font-size: 0.9rem;
+    order: 3;
+  }
+
+  .hr {
+    position: relative;
+    margin: 15px 0;
+  }
+
+  .flexBlock {
+    flex-direction: column !important;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .adBlock {
+    gap: 15px;
+    padding: 15px 0;
+  }
+
+  .text p {
+    font-size: 0.95rem !important;
+  }
+
+  .adButton {
+    font-size: 0.85rem;
+  }
 }

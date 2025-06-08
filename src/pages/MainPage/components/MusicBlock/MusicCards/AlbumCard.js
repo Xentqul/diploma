@@ -10,7 +10,7 @@ function AlbumCard({ data }) {
       {sortedData.map((item) => (
         <div key={item.id} className={styles.item}>
           {/* Обложка альбома */}
-          <a href={item.externalLink} target="_blank" rel="noopener noreferrer" className={styles.albumCoverLink}>
+          <Link to={item.externalLink} target="_blank" rel="noopener noreferrer" className={styles.albumCoverLink}>
             {item.cover && (
               <img
                 src={item.cover}
@@ -18,19 +18,19 @@ function AlbumCard({ data }) {
                 className={styles.albumCover}
               />
             )}
-          </a>
+          </Link>
 
           <div className={styles.contentBlock}>
             {/* Название альбома */}
-            <a href={item.externalLink} target="_blank" rel="noopener noreferrer" className={styles.albumTitle}>
+            <Link to={item.externalLink} target="_blank" rel="noopener noreferrer" className={styles.albumTitle}>
               {item.title}
-            </a>
+            </Link>
 
             {/* Артист */}
             {item.artist ? (
-              <a href={item.artist.link} className={styles.artistName}>
+              <Link to={item.artist.link} className={styles.artistName}>
                 {item.artist.name}
-              </a>
+              </Link>
             ) : (
               <span className={styles.artistName}>Неизвестный артист</span>
             )}
