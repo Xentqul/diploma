@@ -14,6 +14,7 @@ const { Pool } = require("pg");
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
+
 // Создаем экземпляр приложения Express
 const app = express();
 
@@ -21,15 +22,15 @@ const app = express();
 const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
-      "https://dressery-magazine.ru",
-      "https://diploma-nu-nine.vercel.app",
+      "https://dressery-magazine.ru", 
+      "https://diploma-nu-nine.vercel.app", 
       "http://localhost:3000",
     ];
 
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
+      callback(null, origin); // ← Передаём origin вместо true
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(new Error("Not allowed by CORS"), false);
     }
   },
   credentials: true,
@@ -42,13 +43,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Явная обработка OPTIONS-запросов
-app.options("*", cors(corsOptions));
-
-// Настройка куки для кросс-доменных запросов
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
+app.options("*", cors(corsOptions)); // ← автоматически применяет corsOptions
 
 // ----------------------------- ПАРСИНГ ТЕЛА ЗАПРОСОВ -----------------------------
 app.use(bodyParser.json());
