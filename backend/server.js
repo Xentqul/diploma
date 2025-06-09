@@ -18,17 +18,37 @@ const pool = new Pool({
 const app = express();
 
 // ----------------------------- НАСТРОЙКА CORS -----------------------------------
-app.use(
-  cors({
-    origin: [
+const corsOptions = {
+  origin: (origin, callback) => {
+    const allowedOrigins = [
       "https://dressery-magazine.ru",
-      "https://diploma-nu-nine.vercel.app/",
-    ],
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+      "https://diploma-nu-nine.vercel.app",
+      "http://localhost:3000"
+    ];
+    
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  exposedHeaders: ["Authorization"],
+  maxAge: 86400 // Кэшируем CORS-настройки на 24 часа
+};
+
+app.use(cors(corsOptions));
+
+// Явная обработка OPTIONS-запросов
+app.options('*', cors(corsOptions));
+
+// Настройка куки для кросс-доменных запросов
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
+});
 
 // ----------------------------- ПАРСИНГ ТЕЛА ЗАПРОСОВ -----------------------------
 app.use(bodyParser.json());
@@ -110,6 +130,7 @@ app.post("/api/auth/login", async (req, res) => {
       httpOnly: true,
       secure: true,
       sameSite: "lax",
+      domain: '.onrender.com',
       maxAge: 24 * 60 * 60 * 1000,
       path: "/",
     });
