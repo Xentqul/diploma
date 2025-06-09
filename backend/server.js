@@ -1,12 +1,15 @@
-// Импортируем необходимые модули
-require('dotenv').config(); // Для загрузки .env переменных
+require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const bcrypt = require("bcryptjs"); // Для хеширования паролей
-const cors = require("cors"); // для передачи данных между разными доменами
-const cookieParser = require("cookie-parser"); // Для работы с cookies
-const path = require("path"); // Для работы с путями файлов
+const bcrypt = require("bcryptjs");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const path = require("path");
 const jwt = require("jsonwebtoken");
+const { Pool } = require("pg"); // Добавьте эту строку
+
+// Сначала создаем экземпляр приложения
+const app = express();
 
 // ----------------------------- НАСТРОЙКА БАЗЫ ДАННЫХ -----------------------------
 const pool = new Pool({
@@ -14,27 +17,39 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
-// Проверка подключения к БД
-pool.connect()
-  .then(() => console.log("Connected to PostgreSQL"))
-  .catch(err => console.error("Database connection error:", err));
-
 // ----------------------------- НАСТРОЙКА CORS -----------------------------------
+const allowedOrigins = [
+  'https://diploma-nu-nine.vercel.app',
+  'https://dressery-magazine.ru',
+  'http://localhost:3000'
+];
+
 const corsOptions = {
+  origin: function (origin, callback) {
+    if (process.env.NODE_ENV === 'development' || !origin) {
+      return callback(null, true);
+    }
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.warn(`CORS blocked for origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
-  origin: process.env.CLIENT_URL || "http://localhost:3000",
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['Authorization', 'Set-Cookie']
 };
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
 // ----------------------------- MIDDLEWARES -----------------------------
-const app = express();
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Логгер запросов
 app.use((req, res, next) => {
@@ -42,10 +57,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// ----------------------------- ОБРАБОТКА СТАТИЧЕСКИХ ФАЙЛОВ ----------------------
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+// Проверка подключения к БД при старте
+pool.connect()
+  .then(() => console.log("Connected to PostgreSQL"))
+  .catch(err => console.error("Database connection error:", err));
 
-// ----------------------------- ПОДКЛЮЧАЕМ МАРШРУТЫ --------------------------------
+// ----------------------------- ПОДКЛЮЧЕНИЕ РОУТОВ -----------------------------
 const authRouter = require("./routes/auth");
 const usersRouter = require("./routes/users");
 const subscribesRouter = require("./routes/subscribes");
@@ -55,6 +72,27 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/subscribes", subscribesRouter);
 app.use("/api/applications", applicationsRouter);
+
+// ----------------------------- HEALTH CHECK -----------------------------
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'OK',
+    db: pool ? 'connected' : 'disconnected',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// ----------------------------- ОБРАБОТКА ОШИБОК -----------------------------
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  
+  if (err.message === 'Not allowed by CORS') {
+    return res.status(403).json({ error: 'CORS policy violation' });
+  }
+  
+  res.status(500).json({ error: 'Internal Server Error' });
+});
+
 
 //---------------------------------------------------- РОУТ ДЛЯ РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ --------------------------------------------------
 app.post("/api/register", async (req, res) => {
