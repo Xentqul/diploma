@@ -27,11 +27,10 @@ const allowedOrigins = [
 const corsOptions = {
   origin: function (origin, callback) {
     if (process.env.NODE_ENV === 'development' || !origin) {
-      return callback(null, true);
-    }
-    
-    if (allowedOrigins.includes(origin)) {
+      // Разрешаем все в dev
       callback(null, true);
+    } else if (allowedOrigins.includes(origin)) {
+      callback(null, origin); // <-- ВАЖНО: передавать именно origin, а не true
     } else {
       console.warn(`CORS blocked for origin: ${origin}`);
       callback(new Error('Not allowed by CORS'));
