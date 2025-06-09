@@ -20,7 +20,10 @@ const app = express();
 // ----------------------------- НАСТРОЙКА CORS -----------------------------------
 app.use(
   cors({
-    origin: 'https://dressery-magazine.ru',
+    origin: [
+      "https://dressery-magazine.ru",
+      "https://diploma-nu-nine.vercel.app/",
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
