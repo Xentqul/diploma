@@ -1,4 +1,5 @@
 // Импортируем необходимые модули
+require('dotenv').config(); // Для загрузки .env переменных
 const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs"); // Для хеширования паролей
@@ -8,71 +9,71 @@ const path = require("path"); // Для работы с путями файло�
 const jwt = require("jsonwebtoken");
 
 // ----------------------------- НАСТРОЙКА БАЗЫ ДАННЫХ -----------------------------
-const { Pool } = require("pg");
-
-// Создаём пул соединений с БД
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
-// Создаем экземпляр приложения Express
-const app = express();
+// Проверка подключения к БД
+pool.connect()
+  .then(() => console.log("Connected to PostgreSQL"))
+  .catch(err => console.error("Database connection error:", err));
 
 // ----------------------------- НАСТРОЙКА CORS -----------------------------------
+const allowedOrigins = [
+  'https://diploma-nu-nine.vercel.app',
+  'https://dressery-magazine.ru',
+  'http://localhost:3000'
+];
+
 const corsOptions = {
   origin: (origin, callback) => {
-    const allowedOrigins = [
-      "https://dressery-magazine.ru",
-      "https://diploma-nu-nine.vercel.app",
-      "http://localhost:3000",
-    ];
-
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, origin); // ← Передаём origin вместо true
+    if (process.env.NODE_ENV === 'development') {
+      return callback(null, true);
+    }
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"), false);
+      console.warn(`CORS blocked for origin: ${origin}`);
+      callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
-  exposedHeaders: ["Authorization"],
-  maxAge: 86400, // Кэшируем CORS-настройки на 24 часа
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['Authorization', 'Set-Cookie'],
+  maxAge: 86400
 };
 
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
-// Явная обработка OPTIONS-запросов
-app.options("*", cors(corsOptions)); // ← автоматически применяет corsOptions
-
-app.use((req, res, next) => {
-  console.log("Request URL:", req.url);
-  console.log("Origin:", req.headers.origin);
-  next();
-});
-
-app.use(cors(corsOptions));
-
-// ----------------------------- ПАРСИНГ ТЕЛА ЗАПРОСОВ -----------------------------
+// ----------------------------- MIDDLEWARES -----------------------------
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Логгер запросов
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path}`);
+  next();
+});
 
 // ----------------------------- ОБРАБОТКА СТАТИЧЕСКИХ ФАЙЛОВ ----------------------
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // ----------------------------- ПОДКЛЮЧАЕМ МАРШРУТЫ --------------------------------
-// Импортируем роуты после инициализации app
-const authRoutes = require("./routes/auth");
-const usersRoutes = require("./routes/users");
+const authRouter = require("./routes/auth");
+const usersRouter = require("./routes/users");
+const subscribesRouter = require("./routes/subscribes");
+const applicationsRouter = require("./routes/applications");
 
-app.use("/api/auth", authRoutes);
-app.use("/api/users", usersRoutes);
-
-// Подключение подписки
-app.use("/api", require("./routes/subscribes"));
-// Подключение заявки на устройство на работу
-app.use("/api", require("./routes/applications"));
+app.use("/api/auth", authRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/subscribes", subscribesRouter);
+app.use("/api/applications", applicationsRouter);
 
 //---------------------------------------------------- РОУТ ДЛЯ РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ --------------------------------------------------
 app.post("/api/register", async (req, res) => {
@@ -170,9 +171,10 @@ app.post("/api/auth/logout", (req, res) => {
 });
 
 //---------------------------------------------------- ЗАПУСК СЕРВЕРА ------------------------------------------------------
-const PORT = process.env.PORT || 5000; // Render автоматически назначает порт через переменную окружения
+const PORT = process.env.PORT || 5000;
+const HOST = process.env.HOST || '0.0.0.0';
 
-app.listen(PORT, "0.0.0.0", () => {
-  // '0.0.0.0' для корректной работы на облачном хостинге
-  console.log(`Сервер запущен на порту ${PORT}`);
+app.listen(PORT, HOST, () => {
+  console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode`);
+  console.log(`Listening on http://${HOST}:${PORT}`);
 });
