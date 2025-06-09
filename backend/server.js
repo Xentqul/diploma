@@ -20,36 +20,17 @@ pool.connect()
   .catch(err => console.error("Database connection error:", err));
 
 // ----------------------------- НАСТРОЙКА CORS -----------------------------------
-const allowedOrigins = [
-  'https://diploma-nu-nine.vercel.app',
-  'https://dressery-magazine.ru',
-  'http://localhost:3000'
-];
-
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (process.env.NODE_ENV === 'development') {
-      return callback(null, true);
-    }
-    
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.warn(`CORS blocked for origin: ${origin}`);
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  exposedHeaders: ['Authorization', 'Set-Cookie'],
-  maxAge: 86400
+  origin: process.env.CLIENT_URL || "http://localhost:3000",
 };
 
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
 // ----------------------------- MIDDLEWARES -----------------------------
+const app = express();
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -80,16 +61,13 @@ app.post("/api/register", async (req, res) => {
   const { firstName, lastName, email, phone, password } = req.body;
 
   try {
-    // Хеширование пароля
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Вставка данных в таблицу users
     const result = await pool.query(
       "INSERT INTO dressery_schema.users (first_name, last_name, email, phone_number, password_hash, role) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
       [firstName, lastName, email, phone, hashedPassword, "user"]
     );
 
-    // Ответ клиенту
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error(err);
@@ -115,11 +93,7 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(401).json({ error: "Неверный email или пароль" });
     }
 
-    const isValidPassword = await bcrypt.compare(
-      password,
-      user.rows[0].password_hash
-    );
-
+    const isValidPassword = await bcrypt.compare(password, user.rows[0].password_hash);
     if (!isValidPassword) {
       return res.status(401).json({ error: "Неверный email или пароль" });
     }
