@@ -17,7 +17,7 @@ export function AllContentCardVertical({ data = [] }) {
         return (
           <Link
             key={article.id}
-            to={`/article/${article.id}`}
+            to={article.link}
             className={styles.cardLink}
           >
             <article className={styles.card}>

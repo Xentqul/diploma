@@ -23,30 +23,30 @@ const corsOptions = {
     const allowedOrigins = [
       "https://dressery-magazine.ru",
       "https://diploma-nu-nine.vercel.app",
-      "http://localhost:3000"
+      "http://localhost:3000",
     ];
-    
+
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error("Not allowed by CORS"));
     }
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   exposedHeaders: ["Authorization"],
-  maxAge: 86400 // Кэшируем CORS-настройки на 24 часа
+  maxAge: 86400, // Кэшируем CORS-настройки на 24 часа
 };
 
 app.use(cors(corsOptions));
 
 // Явная обработка OPTIONS-запросов
-app.options('*', cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 // Настройка куки для кросс-доменных запросов
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
 
@@ -128,9 +128,8 @@ app.post("/api/auth/login", async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "lax",
-      domain: '.onrender.com',
+      secure: process.env.NODE_ENV !== "development", // false в dev
+      sameSite: "none",
       maxAge: 24 * 60 * 60 * 1000,
       path: "/",
     });
@@ -170,6 +169,7 @@ app.post("/api/auth/logout", (req, res) => {
 //---------------------------------------------------- ЗАПУСК СЕРВЕРА ------------------------------------------------------
 const PORT = process.env.PORT || 5000; // Render автоматически назначает порт через переменную окружения
 
-app.listen(PORT, '0.0.0.0', () => { // '0.0.0.0' для корректной работы на облачном хостинге
+app.listen(PORT, "0.0.0.0", () => {
+  // '0.0.0.0' для корректной работы на облачном хостинге
   console.log(`Сервер запущен на порту ${PORT}`);
 });
