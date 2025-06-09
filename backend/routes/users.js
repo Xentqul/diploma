@@ -76,7 +76,7 @@ router.get("/me", async (req, res) => {
 // Роут /api/users/upload-avatar — загрузка аватара
 router.post(
   "/upload-avatar",
-  authenticateToken, // ✅ Важно: middleware добавлен перед обработкой запроса
+  authenticateToken, // Важно: middleware добавлен перед обработкой запроса
   upload.single("avatar"),
   async (req, res) => {
     try {
