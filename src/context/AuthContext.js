@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   // Проверка авторизации при загрузке
   const checkAuth = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/auth/check", {
+      const res = await axios.get("https://dressery-magazine.ru", {
         withCredentials: true,
       });
       setIsAuthenticated(res.data.isAuthenticated);
