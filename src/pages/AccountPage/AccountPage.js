@@ -54,7 +54,7 @@ function AccountPage() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`${API_URL}/api/users/me`, {
+        const response = await axios.get(`https://diploma-od66.onrender.com/api/users/me`, {
           withCredentials: true,
         });
         const user = response.data.user;
@@ -80,7 +80,7 @@ function AccountPage() {
   const handleLogout = async () => {
     try {
       const response = await axios.post(
-        `${API_URL}/api/auth/logout`,
+        `https://diploma-od66.onrender.com/api/auth/logout`,
         {},
         {
           withCredentials: true,
@@ -100,7 +100,7 @@ function AccountPage() {
     if (window.confirm("Вы уверены, что хотите удалить аккаунт?")) {
       try {
         const response = await axios.delete(
-          `${API_URL}/api/users/me`,
+          `https://diploma-od66.onrender.com/api/users/me`,
           {
             withCredentials: true,
             headers: {
@@ -201,7 +201,7 @@ function AccountPage() {
         }
         try {
           const response = await axios.post(
-            `${API_URL}/api/users/update-profile`,
+            `https://diploma-od66.onrender.com/api/users/update-profile`,
             {
               first_name: formData.first_name,
               last_name: formData.last_name,
@@ -240,7 +240,7 @@ function AccountPage() {
     formData.append("avatar", file);
     try {
       const response = await axios.post(
-        `${API_URL}/api/users/upload-avatar`,
+        `https://diploma-od66.onrender.com/api/users/upload-avatar`,
         formData,
         {
           withCredentials: true,
@@ -283,7 +283,7 @@ function AccountPage() {
               />
               {userData?.avatar ? (
                 <img
-                  src={`${API_URL}${userData.avatar}`}
+                  src={`https://diploma-od66.onrender.com${userData.avatar}`}
                   alt={`${userData?.first_name} ${userData?.last_name}`}
                   className={styles.imgBlock}
                   onError={(e) => {
