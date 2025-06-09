@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   // Проверка авторизации при загрузке
   const checkAuth = async () => {
     try {
-      const res = await axios.get("https://dressery-magazine.ru", {
+      const res = await axios.get("https://diploma-od66.onrender.com/api/auth/check", {
         withCredentials: true,
       });
       setIsAuthenticated(res.data.isAuthenticated);
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/api/auth/logout",
+        "https://diploma-od66.onrender.com/api/auth/logout",
         {},
         {
           withCredentials: true,
