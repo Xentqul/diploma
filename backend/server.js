@@ -22,8 +22,8 @@ const app = express();
 const corsOptions = {
   origin: (origin, callback) => {
     const allowedOrigins = [
-      "https://dressery-magazine.ru", 
-      "https://diploma-nu-nine.vercel.app", 
+      "https://dressery-magazine.ru",
+      "https://diploma-nu-nine.vercel.app",
       "http://localhost:3000",
     ];
 
@@ -44,6 +44,14 @@ app.use(cors(corsOptions));
 
 // Явная обработка OPTIONS-запросов
 app.options("*", cors(corsOptions)); // ← автоматически применяет corsOptions
+
+app.use((req, res, next) => {
+  console.log("Request URL:", req.url);
+  console.log("Origin:", req.headers.origin);
+  next();
+});
+
+app.use(cors(corsOptions));
 
 // ----------------------------- ПАРСИНГ ТЕЛА ЗАПРОСОВ -----------------------------
 app.use(bodyParser.json());
