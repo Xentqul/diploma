@@ -92,7 +92,7 @@ function SignUpPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/register", {
+      const response = await axios.post("https://diploma-od66.onrender.com/api/register", {
         firstName: formData.firstName.trim(),
         lastName: formData.lastName.trim(),
         email: formData.email.trim(),

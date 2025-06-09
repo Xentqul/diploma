@@ -111,7 +111,7 @@ function ApplicationPage() {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/application",
+        "	https://diploma-od66.onrender.com/api/application",
         {
           fullName: formData.fullName,
           email: formData.email,

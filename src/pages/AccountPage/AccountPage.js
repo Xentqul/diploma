@@ -48,13 +48,13 @@ function AccountPage() {
     first_name: "",
     last_name: "",
     email: "",
-    phone_number: "", // Только цифры, например: "79261234567"
+    phone_number: "", // Только цифры
   });
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/users/me", {
+        const response = await axios.get(`${API_URL}/api/users/me`, {
           withCredentials: true,
         });
         const user = response.data.user;
@@ -80,7 +80,7 @@ function AccountPage() {
   const handleLogout = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/logout",
+        `${API_URL}/api/auth/logout`,
         {},
         {
           withCredentials: true,
@@ -100,7 +100,7 @@ function AccountPage() {
     if (window.confirm("Вы уверены, что хотите удалить аккаунт?")) {
       try {
         const response = await axios.delete(
-          "http://localhost:5000/api/users/me",
+          `${API_URL}/api/users/me`,
           {
             withCredentials: true,
             headers: {
@@ -201,7 +201,7 @@ function AccountPage() {
         }
         try {
           const response = await axios.post(
-            "http://localhost:5000/api/users/update-profile",
+            `${API_URL}/api/users/update-profile`,
             {
               first_name: formData.first_name,
               last_name: formData.last_name,
@@ -240,7 +240,7 @@ function AccountPage() {
     formData.append("avatar", file);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/upload-avatar",
+        `${API_URL}/api/users/upload-avatar`,
         formData,
         {
           withCredentials: true,
@@ -283,7 +283,7 @@ function AccountPage() {
               />
               {userData?.avatar ? (
                 <img
-                  src={`http://localhost:5000${userData.avatar}`}
+                  src={`${API_URL}${userData.avatar}`}
                   alt={`${userData?.first_name} ${userData?.last_name}`}
                   className={styles.imgBlock}
                   onError={(e) => {

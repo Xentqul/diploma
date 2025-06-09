@@ -29,7 +29,7 @@ function LogInPage() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "https://diploma-od66.onrender.com/api/auth/login",
         formData,
         { withCredentials: true }
       );
