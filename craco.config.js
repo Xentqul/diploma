@@ -1,4 +1,4 @@
-const path = require('path'); // Только ОДИН раз в начале файла!
+const path = require('path');
 
 module.exports = {
   webpack: {
