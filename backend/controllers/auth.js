@@ -93,34 +93,76 @@ module.exports = {
   },
 
   //---------------------------------------------------- ПРОВЕРКА АВТОРИЗАЦИИ ----------------------------------------------------
-  checkAuth: (req, res) => {
-    // Установите заголовки CORS перед обработкой
+checkAuth: async (req, res) => {
+  try {
+    // Установка CORS заголовков
     const origin = req.headers.origin;
+    const allowedOrigins = [
+      'https://diploma-nu-nine.vercel.app',
+      'http://localhost:3000'
+    ];
+    
     if (allowedOrigins.includes(origin)) {
-      res.header("Access-Control-Allow-Origin", origin);
-      res.header("Access-Control-Allow-Credentials", "true");
+      res.header('Access-Control-Allow-Origin', origin);
+      res.header('Access-Control-Allow-Credentials', 'true');
     }
 
+    // Получаем токен из кук
     const token = req.cookies.token;
-
+    
     if (!token) {
-      return res.json({ isAuthenticated: false });
+      return res.status(200).json({ 
+        isAuthenticated: false,
+        message: 'Токен отсутствует'
+      });
     }
 
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret_key");
-      res.json({
-        isAuthenticated: true,
-        user: {
-          userId: decoded.userId,
-          // добавьте другие необходимые поля пользователя
-        },
+    // Верификация токена
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret_key');
+    
+    // Дополнительно: проверяем существование пользователя в БД
+    const user = await pool.query(
+      'SELECT id, email, first_name, last_name, avatar FROM dressery_schema.users WHERE id = $1',
+      [decoded.userId]
+    );
+
+    if (!user.rows[0]) {
+      return res.status(200).json({
+        isAuthenticated: false,
+        message: 'Пользователь не найден'
       });
-    } catch (e) {
-      console.error("Ошибка проверки токена:", e);
-      res.json({ isAuthenticated: false });
     }
-  },
+
+    // Успешный ответ
+    res.status(200).json({
+      isAuthenticated: true,
+      user: {
+        userId: user.rows[0].id,
+        email: user.rows[0].email,
+        firstName: user.rows[0].first_name,
+        lastName: user.rows[0].last_name,
+        avatar: user.rows[0].avatar
+      }
+    });
+
+  } catch (e) {
+    console.error('Ошибка проверки авторизации:', e);
+    
+    // Очищаем невалидную куку
+    res.cookie('token', '', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'none',
+      expires: new Date(0),
+      path: '/'
+    });
+
+    res.status(200).json({
+      isAuthenticated: false,
+      message: e.name === 'JsonWebTokenError' ? 'Невалидный токен' : 'Ошибка сервера'
+    });
+  }
+},
 
   //---------------------------------------------------- МЕТОД ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
   logout: async (req, res) => {
