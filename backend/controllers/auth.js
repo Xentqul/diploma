@@ -93,85 +93,73 @@ module.exports = {
   },
 
   //---------------------------------------------------- ПРОВЕРКА АВТОРИЗАЦИИ ----------------------------------------------------
-checkAuth: async (req, res) => {
-  try {
-    // Установка CORS заголовков
-    const origin = req.headers.origin;
-    const allowedOrigins = [
-      'https://diploma-nu-nine.vercel.app',
-      'http://localhost:3000'
-    ];
-    
-    if (allowedOrigins.includes(origin)) {
-      res.header('Access-Control-Allow-Origin', origin);
-      res.header('Access-Control-Allow-Credentials', 'true');
-    }
-
-    // Получаем токен из кук
-    const token = req.cookies.token;
-    
-    if (!token) {
-      return res.status(200).json({ 
-        isAuthenticated: false,
-        message: 'Токен отсутствует'
-      });
-    }
-
-    // Верификация токена
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret_key');
-    
-    // Дополнительно: проверяем существование пользователя в БД
-    const user = await pool.query(
-      'SELECT id, email, first_name, last_name, avatar FROM dressery_schema.users WHERE id = $1',
-      [decoded.userId]
-    );
-
-    if (!user.rows[0]) {
-      return res.status(200).json({
-        isAuthenticated: false,
-        message: 'Пользователь не найден'
-      });
-    }
-
-    // Успешный ответ
-    res.status(200).json({
-      isAuthenticated: true,
-      user: {
-        userId: user.rows[0].id,
-        email: user.rows[0].email,
-        firstName: user.rows[0].first_name,
-        lastName: user.rows[0].last_name,
-        avatar: user.rows[0].avatar
+  checkAuth: async (req, res) => {
+    try {
+      // Получаем токен из кук
+      const token = req.cookies.token;
+      
+      if (!token) {
+        return res.status(200).json({ 
+          isAuthenticated: false,
+          message: 'Токен отсутствует'
+        });
       }
-    });
 
-  } catch (e) {
-    console.error('Ошибка проверки авторизации:', e);
-    
-    // Очищаем невалидную куку
-    res.cookie('token', '', {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'none',
-      expires: new Date(0),
-      path: '/'
-    });
+      // Верификация токена
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret_key');
+      
+      // Дополнительно: проверяем существование пользователя в БД
+      const user = await pool.query(
+        'SELECT id, email, first_name, last_name, avatar FROM dressery_schema.users WHERE id = $1',
+        [decoded.userId]
+      );
 
-    res.status(200).json({
-      isAuthenticated: false,
-      message: e.name === 'JsonWebTokenError' ? 'Невалидный токен' : 'Ошибка сервера'
-    });
-  }
-},
+      if (!user.rows[0]) {
+        return res.status(200).json({
+          isAuthenticated: false,
+          message: 'Пользователь не найден'
+        });
+      }
+
+      // Успешный ответ
+      res.status(200).json({
+        isAuthenticated: true,
+        user: {
+          userId: user.rows[0].id,
+          email: user.rows[0].email,
+          firstName: user.rows[0].first_name,
+          lastName: user.rows[0].last_name,
+          avatar: user.rows[0].avatar
+        }
+      });
+
+    } catch (e) {
+      console.error('Ошибка проверки авторизации:', e);
+      
+      // Очищаем невалидную куку
+      res.cookie('token', '', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'none',
+        expires: new Date(0),
+        path: '/'
+      });
+
+      res.status(200).json({
+        isAuthenticated: false,
+        message: e.name === 'JsonWebTokenError' ? 'Невалидный токен' : 'Ошибка сервера'
+      });
+    }
+  },
 
   //---------------------------------------------------- МЕТОД ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
   logout: async (req, res) => {
     try {
-      res.cookie("token", token, {
+      res.cookie("token", "", {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' в production
-        maxAge: 24 * 60 * 60 * 1000,
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        expires: new Date(0),
         path: "/",
       });
 
