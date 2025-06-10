@@ -20,7 +20,7 @@ module.exports = {
       if (err.code === "23505") {
         return res.status(400).send("Email или телефон уже заняты");
       } else {
-        console.error('Ошибка регистрации:', err);
+        console.error("Ошибка регистрации:", err);
         return res.status(500).send("Ошибка сервера");
       }
     }
@@ -38,39 +38,42 @@ module.exports = {
       );
 
       if (!user.rows[0]) {
-        return res.status(401).json({ 
-          success: false, 
-          message: "Неверные данные" 
+        return res.status(401).json({
+          success: false,
+          message: "Неверные данные",
         });
       }
 
       // Проверка пароля
-      const isValidPass = await bcrypt.compare(password, user.rows[0].password_hash);
+      const isValidPass = await bcrypt.compare(
+        password,
+        user.rows[0].password_hash
+      );
       if (!isValidPass) {
-        return res.status(401).json({ 
-          success: false, 
-          message: "Неверные данные" 
+        return res.status(401).json({
+          success: false,
+          message: "Неверные данные",
         });
       }
 
       // Генерация токена
       const token = jwt.sign(
         { userId: user.rows[0].id },
-        process.env.JWT_SECRET || 'secret_key',
+        process.env.JWT_SECRET || "secret_key",
         { expiresIn: "24h" }
       );
 
       // Установка куки
       res.cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // true в production (HTTPS)
-        sameSite: 'lax',
-        maxAge: 24 * 60 * 60 * 1000, // 24 часа
-        path: '/',
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' в production
+        maxAge: 24 * 60 * 60 * 1000,
+        path: "/",
       });
 
       // Ответ клиенту с токеном в теле
-      res.json({ 
+      res.json({
         success: true,
         user: {
           id: user.rows[0].id,
@@ -78,20 +81,26 @@ module.exports = {
           firstName: user.rows[0].first_name,
           lastName: user.rows[0].last_name,
           avatar: user.rows[0].avatar,
-        }
+        },
       });
-
     } catch (err) {
-      console.error('Ошибка входа:', err);
-      res.status(500).json({ 
-        success: false, 
-        message: "Ошибка сервера" 
+      console.error("Ошибка входа:", err);
+      res.status(500).json({
+        success: false,
+        message: "Ошибка сервера",
       });
     }
   },
 
   //---------------------------------------------------- ПРОВЕРКА АВТОРИЗАЦИИ ----------------------------------------------------
   checkAuth: (req, res) => {
+    // Установите заголовки CORS перед обработкой
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.header("Access-Control-Allow-Origin", origin);
+      res.header("Access-Control-Allow-Credentials", "true");
+    }
+
     const token = req.cookies.token;
 
     if (!token) {
@@ -99,10 +108,16 @@ module.exports = {
     }
 
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret_key');
-      res.json({ isAuthenticated: true, user: decoded });
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || "secret_key");
+      res.json({
+        isAuthenticated: true,
+        user: {
+          userId: decoded.userId,
+          // добавьте другие необходимые поля пользователя
+        },
+      });
     } catch (e) {
-      console.error('Ошибка проверки токена:', e);
+      console.error("Ошибка проверки токена:", e);
       res.json({ isAuthenticated: false });
     }
   },
@@ -110,18 +125,18 @@ module.exports = {
   //---------------------------------------------------- МЕТОД ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
   logout: async (req, res) => {
     try {
-      res.cookie("token", "", {
+      res.cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // true в production (HTTPS)
-        sameSite: 'lax',
-        maxAge: 0,
-        path: '/',
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' в production
+        maxAge: 24 * 60 * 60 * 1000,
+        path: "/",
       });
-  
+
       res.json({ success: true, message: "Вы успешно вышли из системы" });
     } catch (err) {
-      console.error('Ошибка выхода:', err);
+      console.error("Ошибка выхода:", err);
       res.status(500).json({ success: false, message: "Ошибка сервера" });
     }
-  }
+  },
 };

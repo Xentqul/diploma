@@ -92,29 +92,57 @@ function SignUpPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post("https://diploma-od66.onrender.com/api/register", {
-        firstName: formData.firstName.trim(),
-        lastName: formData.lastName.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.replace(/\D/g, ""),
-        password: formData.password,
-      });
+      const response = await axios.post(
+        "https://diploma-od66.onrender.com/api/register",
+        {
+          firstName: formData.firstName.trim(),
+          lastName: formData.lastName.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.replace(/\D/g, ""),
+          password: formData.password,
+        },
+        {
+          withCredentials: true, // Добавляем для поддержки кук
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      // Сохраняем токен и данные пользователя в localStorage (если сервер его возвращает)
-      if (response.data.success && response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
+      // После успешной регистрации автоматически авторизуем пользователя
+      // Делаем запрос на вход с полученными данными
+      const loginResponse = await axios.post(
+        "https://diploma-od66.onrender.com/api/auth/login",
+        {
+          email: formData.email.trim(),
+          password: formData.password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      // Сохраняем данные пользователя в localStorage (если нужно)
+      if (loginResponse.data.success && loginResponse.data.user) {
+        localStorage.setItem("user", JSON.stringify(loginResponse.data.user));
       }
 
       // Перенаправление на главную страницу
-      navigate("/"); // <-- Редирект на главную
-      window.location.reload(); // Опционально: обновляем, чтобы сразу обновились данные UI
+      navigate("/");
+      window.location.reload(); // Сохраняем вашу перезагрузку
     } catch (error) {
-      console.error(error);
-      if (error.response && error.response.status === 400) {
-        alert(error.response.data.message || "Ошибка при регистрации");
+      console.error("Registration error:", error);
+      if (error.response) {
+        if (error.response.status === 400) {
+          alert(error.response.data.message || "Email или телефон уже заняты");
+        } else {
+          alert(
+            "Ошибка сервера: " +
+              (error.response.data.message || "Попробуйте позже")
+          );
+        }
       } else {
-        alert("Ошибка при регистрации");
+        alert("Не удалось подключиться к серверу");
       }
     } finally {
       setIsSubmitting(false);
@@ -205,7 +233,8 @@ function SignUpPage() {
               name: "agreeTerms",
               checked: formData.agreeTerms,
               onChange: handleChange,
-              label: "Я согласен(-а) на обработку и хранение персональных данных",
+              label:
+                "Я согласен(-а) на обработку и хранение персональных данных",
             }}
           />
         </div>
