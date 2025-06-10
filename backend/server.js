@@ -15,35 +15,30 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
-// Настройки CORS
+// Конфигурация CORS
 const allowedOrigins = [
-  'https://diploma-nu-nine.vercel.app',
-  'https://dressery-magazine.ru',
+  'https://diploma-nu-nine.vercel.app', 
+  'https://dressery-magazine.ru', 
   'http://localhost:3000'
 ];
 
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin && process.env.NODE_ENV !== 'production') {
-      return callback(null, true);
-    }
-    
-    if (allowedOrigins.includes(origin)) {
-      callback(null, origin);
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin); // Разрешаем именно этот origin
     } else {
-      console.warn(`CORS blocked for origin: ${origin}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true,
+  credentials: true, // Важно!
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   exposedHeaders: ['Authorization']
 };
 
-// Применение middleware
+// Применяем middleware
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+app.options('*', cors(corsOptions)); // Для preflight-запросов
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
@@ -209,11 +204,12 @@ app.post("/api/auth/logout", (req, res) => {
 });
 
 //---------------------------------------------------- ЗАПУСК СЕРВЕРА ------------------------------------------------------
-// Запуск сервера
 const PORT = process.env.PORT || 5000;
-const HOST = process.env.HOST || '0.0.0.0';
+const HOST = process.env.HOST || "0.0.0.0";
 
 app.listen(PORT, HOST, () => {
-  console.log(`🚀 Server running in ${process.env.NODE_ENV || 'development'} mode`);
-  console.log(`🌐 Listening on http://${HOST}:${PORT}`);
+  console.log(
+    `Server running in ${process.env.NODE_ENV || "development"} mode`
+  );
+  console.log(`Listening on http://${HOST}:${PORT}`);
 });
