@@ -1,10 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcryptjs');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
 
 const app = express();
@@ -12,42 +12,34 @@ const app = express();
 // Конфигурация базы данных
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || 'your_default_connection_string',
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
-// Конфигурация CORS
+// Список разрешённых доменов
 const allowedOrigins = [
   'https://diploma-nu-nine.vercel.app', 
   'https://dressery-magazine.ru', 
-  'http://localhost:3000'
+  'http://localhost:3000',
 ];
 
+// Настройка CORS
 const corsOptions = {
-  origin: function (origin, callback) {
+  origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, origin); // Разрешаем именно этот origin
+      callback(null, origin); // Разрешаем конкретный origin
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error('CORS blocked: origin not allowed'));
     }
   },
-  credentials: true, // Важно!
+  credentials: true, // Важно для работы кук
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  exposedHeaders: ['Authorization']
+  exposedHeaders: ['Authorization'],
 };
 
 // Применяем middleware
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // Для preflight-запросов
-
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-  }
-  next();
-});
+app.options('*', cors(corsOptions)); // preflight для всех маршрутов
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -62,19 +54,19 @@ app.use((req, res, next) => {
 // Проверка подключения к БД
 pool.connect()
   .then(() => console.log('✅ Connected to PostgreSQL'))
-  .catch(err => console.error('❌ Database connection error:', err));
+  .catch((err) => console.error('❌ Database connection error:', err));
 
 // Роуты
 const routers = [
   { path: '/api/auth', router: require('./routes/auth') },
   { path: '/api/users', router: require('./routes/users') },
   { path: '/api/subscribes', router: require('./routes/subscribes') },
-  { path: '/api/applications', router: require('./routes/applications') }
+  { path: '/api/applications', router: require('./routes/applications') },
 ];
 
 routers.forEach(({ path, router }) => {
   app.use(path, router);
-  console.log(`🛣️  Route ${path} initialized`);
+  console.log(`🛣️ Route ${path} initialized`);
 });
 
 // Health check endpoint
@@ -82,24 +74,24 @@ app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'OK',
     db: pool ? 'connected' : 'disconnected',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 
 // Обработка ошибок
 app.use((err, req, res, next) => {
   console.error('🔥 Error:', err.stack);
-  
-  if (err.message === 'Not allowed by CORS') {
-    return res.status(403).json({ 
+
+  if (err.message === 'CORS blocked: origin not allowed') {
+    return res.status(403).json({
       error: 'CORS policy violation',
-      allowedOrigins: allowedOrigins
+      allowedOrigins,
     });
   }
-  
-  res.status(500).json({ 
+
+  res.status(500).json({
     error: 'Internal Server Error',
-    message: err.message 
+    message: err.message,
   });
 });
 //---------------------------------------------------- РОУТ ДЛЯ РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ --------------------------------------------------
@@ -205,11 +197,9 @@ app.post("/api/auth/logout", (req, res) => {
 
 //---------------------------------------------------- ЗАПУСК СЕРВЕРА ------------------------------------------------------
 const PORT = process.env.PORT || 5000;
-const HOST = process.env.HOST || "0.0.0.0";
+const HOST = process.env.HOST || '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
-  console.log(
-    `Server running in ${process.env.NODE_ENV || "development"} mode`
-  );
+  console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode`);
   console.log(`Listening on http://${HOST}:${PORT}`);
 });
