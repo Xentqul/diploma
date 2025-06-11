@@ -24,13 +24,14 @@ const allowedOrigins = [
 
 // Настройка CORS
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, origin); // Разрешаем конкретный origin
-    } else {
-      callback(new Error('CORS blocked: origin not allowed'));
-    }
-  },
+  //origin: (origin, callback) => {
+  //  if (!origin || allowedOrigins.includes(origin)) {
+  //    callback(null, origin); // Разрешаем конкретный origin
+  //  } else {
+  //    callback(new Error('CORS blocked: origin not allowed'));
+  //  }
+  //},
+  origin: 'https://diploma-nu-nine.vercel.app',
   credentials: true, // Важно для работы кук
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
