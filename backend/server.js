@@ -27,13 +27,13 @@ const corsOptions = {
   origin: allowedOrigins,
   credentials: true, // Важно для работы кук
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  exposedHeaders: ['Authorization'],
+  //allowedHeaders: ['Content-Type', 'Authorization'],
+  //exposedHeaders: ['Authorization'],
 };
 
 // Применяем middleware
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // preflight для всех маршрутов
+//app.options('*', cors(corsOptions)); // preflight для всех маршрутов
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
