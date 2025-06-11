@@ -15,6 +15,27 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
+app.use((req, res, next) => {
+    // Указываем конкретный домен (нельзя использовать "*" с credentials)
+    res.setHeader('Access-Control-Allow-Origin', 'https://diploma-nu-nine.vercel.app');
+    
+    // Разрешаем отправку кук и авторизационных заголовков
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    
+    // Разрешаем нужные методы (GET, POST, OPTIONS и т. д.)
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    
+    // Разрешаем нужные заголовки (например, Authorization)
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    
+    // Обработка предварительного запроса (OPTIONS)
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    
+    next();
+});
+
 // Список разрешённых доменов
 const allowedOrigins = [
   'https://diploma-nu-nine.vercel.app', 
