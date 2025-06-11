@@ -31,7 +31,7 @@ const corsOptions = {
 // Применяем middleware
 //app.use(cors(corsOptions));
 app.use(cors({
-    origin: 'https://diploma-nu-nine.vercel.app/', // Нельзя использовать "*"!
+    origin: 'https://diploma-nu-nine.vercel.app', // Нельзя использовать "*"!
     credentials: true, // Разрешаем куки и авторизацию
     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
