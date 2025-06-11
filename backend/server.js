@@ -58,6 +58,7 @@ const corsOptions = {
 };
 
 // Применяем middleware
+app.use(cors())
 //app.use(cors(corsOptions));
 //app.options('*', cors(corsOptions)); // preflight для всех маршрутов
 
