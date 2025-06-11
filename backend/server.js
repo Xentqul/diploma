@@ -59,7 +59,7 @@ const corsOptions = {
 
 // Применяем middleware
 //app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // preflight для всех маршрутов
+//app.options('*', cors(corsOptions)); // preflight для всех маршрутов
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
