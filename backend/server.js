@@ -22,34 +22,15 @@ const allowedOrigins = [
   'http://localhost:3000',
 ];
 
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  
-  // Разрешаем только указанные домены
-  if (allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin); // Важно: без *
-    res.header('Access-Control-Allow-Credentials', 'true');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  }
-
-  // Для preflight-запросов (OPTIONS)
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
-
 // Настройка CORS
 const corsOptions = {
-  //origin: (origin, callback) => {
-  //  if (!origin || allowedOrigins.includes(origin)) {
-  //    callback(null, origin); // Разрешаем конкретный origin
-  //  } else {
-  //    callback(new Error('CORS blocked: origin not allowed'));
-  //  }
-  //},
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin); // Разрешаем конкретный origin
+    } else {
+      callback(new Error('CORS blocked: origin not allowed'));
+    }
+  },
   origin: 'https://diploma-nu-nine.vercel.app',
   credentials: true, // Важно для работы кук
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -58,9 +39,8 @@ const corsOptions = {
 };
 
 // Применяем middleware
-app.use(cors())
-//app.use(cors(corsOptions));
-//app.options('*', cors(corsOptions)); // preflight для всех маршрутов
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // preflight для всех маршрутов
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
