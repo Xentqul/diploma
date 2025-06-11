@@ -33,6 +33,7 @@ const corsOptions = {
 
 // Применяем middleware
 app.use(cors(corsOptions));
+app.use(cors());
 //app.options('*', cors(corsOptions)); // preflight для всех маршрутов
 
 app.use(bodyParser.json());
