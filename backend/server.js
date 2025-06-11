@@ -15,28 +15,31 @@ const pool = new Pool({
   ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
 });
 
-
-
 // Список разрешённых доменов
+const allowedOrigins = [
+  'https://diploma-nu-nine.vercel.app', 
+  'https://dressery-magazine.ru', 
+  'http://localhost:3000',
+];
 
 // Настройка CORS
 const corsOptions = {
-  origin: allowedOrigins,
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin); // Разрешаем конкретный origin
+    } else {
+      callback(new Error('CORS blocked: origin not allowed'));
+    }
+  },
   credentials: true, // Важно для работы кук
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  //allowedHeaders: ['Content-Type', 'Authorization'],
-  //exposedHeaders: ['Authorization'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['Authorization'],
 };
 
 // Применяем middleware
-//app.use(cors(corsOptions));
-app.use(cors({
-    origin: 'https://diploma-nu-nine.vercel.app', // Нельзя использовать "*"!
-    credentials: true, // Разрешаем куки и авторизацию
-    methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
-//app.options('*', cors(corsOptions)); // preflight для всех маршрутов
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // preflight для всех маршрутов
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
