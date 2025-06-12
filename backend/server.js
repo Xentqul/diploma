@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
-
+// создание приложения экспресс
 const app = express();
 
 // Конфигурация базы данных
