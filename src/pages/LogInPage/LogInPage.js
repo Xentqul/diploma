@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styles from "./LogInPage.module.css";
 import BackButton from "@/shared/ui/BackButton/BackButton";
-import FormBlock from "@/shared/components/FormBlock/FormBlock";
+import FormBlock from "@/shared/components/FormBlock/FormFormBlock"; // Проверь путь
 import { useAuth } from "@/context/AuthContext";
 
 function LogInPage() {
@@ -29,18 +29,18 @@ function LogInPage() {
 
     try {
       const response = await axios.post(
-        "https://diploma-od66.onrender.com/api/auth/login",
+        "https://diploma-od66.onrender.com/api/auth/login", 
         formData,
         { withCredentials: true }
       );
 
       if (response.data.success) {
-        await checkAuth(); // обновляем авторизацию
-        navigate("/"); // редирект
-        window.location.reload();
+        await checkAuth(); // дожидаемся обновления состояния
+        navigate("/"); // редирект без перезагрузки
       }
     } catch (err) {
-      if (err.response && err.response.data.message) {
+      console.error("Ошибка входа:", err);
+      if (err.response?.data?.message) {
         setError(err.response.data.message);
       } else {
         setError("Ошибка входа. Попробуйте позже.");

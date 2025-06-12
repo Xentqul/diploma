@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { Pool } = require('pg');
-// создание приложения экспресс
+
 const app = express();
 
 // Конфигурация базы данных
@@ -26,20 +26,18 @@ const allowedOrigins = [
 const corsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, origin); // Разрешаем конкретный origin
+      callback(null, origin); // Разрешаем этот origin
     } else {
       callback(new Error('CORS blocked: origin not allowed'));
     }
   },
-  origin: 'https://diploma-nu-nine.vercel.app',
   credentials: true, // Важно для работы кук
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  exposedHeaders: ['Authorization'],
 };
 
 // Применяем middleware
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); // CORS middleware
 app.options('*', cors(corsOptions)); // preflight для всех маршрутов
 
 app.use(bodyParser.json());
@@ -79,22 +77,6 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Обработка ошибок
-app.use((err, req, res, next) => {
-  console.error('🔥 Error:', err.stack);
-
-  if (err.message === 'CORS blocked: origin not allowed') {
-    return res.status(403).json({
-      error: 'CORS policy violation',
-      allowedOrigins,
-    });
-  }
-
-  res.status(500).json({
-    error: 'Internal Server Error',
-    message: err.message,
-  });
-});
 //---------------------------------------------------- РОУТ ДЛЯ РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ --------------------------------------------------
 app.post("/api/register", async (req, res) => {
   const { firstName, lastName, email, phone, password } = req.body;
@@ -173,18 +155,11 @@ app.post("/api/auth/login", async (req, res) => {
 //---------------------------------------------------- РОУТ ДЛЯ ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
 app.post("/api/auth/logout", (req, res) => {
   try {
-    // Устанавливаем заголовки CORS перед обработкой
-    const origin = req.headers.origin;
-    if (allowedOrigins.includes(origin)) {
-      res.header("Access-Control-Allow-Origin", origin);
-      res.header("Access-Control-Allow-Credentials", "true");
-    }
-
     // Удаляем куку
     res.cookie("token", "", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // true в production
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // согласовано с настройками login
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       expires: new Date(0), // моментальное истечение
       path: "/",
     });
@@ -197,10 +172,28 @@ app.post("/api/auth/logout", (req, res) => {
 });
 
 //---------------------------------------------------- ЗАПУСК СЕРВЕРА ------------------------------------------------------
-const PORT = process.env.PORT || 10000; 
+const PORT = process.env.PORT || 10000;
 const HOST = process.env.HOST || '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
   console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode`);
   console.log(`Listening on http://${HOST}:${PORT}`);
+});
+
+//---------------------------------------------------- ОБРАБОТЧИК ОШИБОК ------------------------------------------------------
+// Обработка ошибок
+app.use((err, req, res, next) => {
+  console.error('🔥 Error:', err.stack);
+
+  if (err.message === 'CORS blocked: origin not allowed') {
+    return res.status(403).json({
+      error: 'CORS policy violation',
+      allowedOrigins,
+    });
+  }
+
+  res.status(500).json({
+    error: 'Internal Server Error',
+    message: err.message,
+  });
 });

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Импортируем для навигации
+import { useNavigate } from "react-router-dom";
 import styles from "./SignUpPage.module.css";
 import BackButton from "@/shared/ui/BackButton/BackButton";
 import FormBlock from "@/shared/components/FormBlock/FormBlock";
@@ -18,8 +18,7 @@ function SignUpPage() {
 
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const navigate = useNavigate(); // <-- Хук для навигации
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -85,15 +84,15 @@ function SignUpPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateForm()) {
-      return;
-    }
+    if (isSubmitting) return; // Защита от повторной отправки
+    if (!validateForm()) return;
 
     setIsSubmitting(true);
 
     try {
-      const response = await axios.post(
-        "https://diploma-od66.onrender.com/api/register",
+      // Регистрация
+      await axios.post(
+        "https://diploma-od66.onrender.com/api/register", 
         {
           firstName: formData.firstName.trim(),
           lastName: formData.lastName.trim(),
@@ -102,17 +101,16 @@ function SignUpPage() {
           password: formData.password,
         },
         {
-          withCredentials: true, // Добавляем для поддержки кук
+          withCredentials: true,
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
 
-      // После успешной регистрации автоматически авторизуем пользователя
-      // Делаем запрос на вход с полученными данными
+      // Вход автоматически
       const loginResponse = await axios.post(
-        "https://diploma-od66.onrender.com/api/auth/login",
+        "https://diploma-od66.onrender.com/api/auth/login", 
         {
           email: formData.email.trim(),
           password: formData.password,
@@ -122,14 +120,13 @@ function SignUpPage() {
         }
       );
 
-      // Сохраняем данные пользователя в localStorage (если нужно)
-      if (loginResponse.data.success && loginResponse.data.user) {
+      // Сохраняем данные пользователя (если нужны для UI)
+      if (loginResponse.data.user) {
         localStorage.setItem("user", JSON.stringify(loginResponse.data.user));
       }
 
-      // Перенаправление на главную страницу
-      navigate("/");
-      window.location.reload(); // Сохраняем вашу перезагрузку
+      // Перенаправление
+      navigate("/"); // ✅ Без перезагрузки
     } catch (error) {
       console.error("Registration error:", error);
       if (error.response) {
@@ -152,7 +149,7 @@ function SignUpPage() {
   return (
     <div className={styles.wrapper}>
       <img
-        src="assets/signup-pic/signup.webp"
+        src="/assets/signup-pic/signup.webp" // ✅ Исправленный путь
         alt="Зарегистрироваться"
         className={styles.sidePic}
       />

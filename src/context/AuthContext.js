@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   // Проверка авторизации при загрузке
   const checkAuth = async () => {
     try {
-      const res = await axios.get("https://diploma-od66.onrender.com/api/auth/check", {
+      const res = await axios.get("https://diploma-od66.onrender.com/api/auth/check",  {
         withCredentials: true,
       });
       setIsAuthenticated(res.data.isAuthenticated);
@@ -22,14 +22,55 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    checkAuth();
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const fetchAuthStatus = async () => {
+      try {
+        const res = await axios.get("https://diploma-od66.onrender.com/api/auth/check",  {
+          withCredentials: true,
+          signal,
+        });
+        setIsAuthenticated(res.data.isAuthenticated);
+      } catch (err) {
+        if (axios.isCancel(err)) {
+          console.log("Request canceled", err.message);
+        } else {
+          setIsAuthenticated(false);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAuthStatus();
+
+    return () => {
+      controller.abort(); // Отмена запроса при размонтировании
+    };
   }, []);
+
+  // Функция входа
+  const login = async (email, password) => {
+    try {
+      await axios.post(
+        "https://diploma-od66.onrender.com/api/auth/login", 
+        { email, password },
+        {
+          withCredentials: true,
+        }
+      );
+      setIsAuthenticated(true);
+    } catch (err) {
+      throw err;
+    }
+  };
 
   // Функция выхода
   const logout = async () => {
     try {
       await axios.post(
-        "https://diploma-od66.onrender.com/api/auth/logout",
+        "https://diploma-od66.onrender.com/api/auth/logout", 
         {},
         {
           withCredentials: true,
@@ -44,7 +85,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, isLoading, logout, checkAuth }}
+      value={{ isAuthenticated, isLoading, login, logout, checkAuth }}
     >
       {!isLoading && children}
     </AuthContext.Provider>
