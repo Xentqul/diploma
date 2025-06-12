@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import styles from "./LogInPage.module.css";
 import BackButton from "@/shared/ui/BackButton/BackButton";
-import FormBlock from "@/shared/components/FormBlock/FormFormBlock"; // Проверь путь
+import FormBlock from "@/shared/components/FormBlock/FormBlock";
 import { useAuth } from "@/context/AuthContext";
 
 function LogInPage() {
