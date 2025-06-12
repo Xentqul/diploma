@@ -1,25 +1,29 @@
-require('dotenv').config();
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const { Pool } = require('pg');
+require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const { Pool } = require("pg");
 
 const app = express();
 
 // Конфигурация базы данных
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL || 'your_default_connection_string',
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+  connectionString:
+    process.env.DATABASE_URL || "your_default_connection_string",
+  ssl:
+    process.env.NODE_ENV === "production"
+      ? { rejectUnauthorized: false }
+      : false,
 });
 
 // Список разрешённых доменов
 const allowedOrigins = [
-  'https://diploma-nu-nine.vercel.app', 
-  'https://dressery-magazine.ru', 
-  'http://localhost:3000',
+  "https://diploma-nu-nine.vercel.app",
+  "https://dressery-magazine.ru",
+  "http://localhost:3000",
 ];
 
 // Настройка CORS
@@ -28,17 +32,17 @@ const corsOptions = {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, origin); // Разрешаем этот origin
     } else {
-      callback(new Error('CORS blocked: origin not allowed'));
+      callback(new Error("CORS blocked: origin not allowed"));
     }
   },
   credentials: true, // Важно для работы кук
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 // Применяем middleware
 app.use(cors(corsOptions)); // CORS middleware
-app.options('*', cors(corsOptions)); // preflight для всех маршрутов
+app.options("*", cors(corsOptions)); // preflight для всех маршрутов
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,16 +55,17 @@ app.use((req, res, next) => {
 });
 
 // Проверка подключения к БД
-pool.connect()
-  .then(() => console.log('✅ Connected to PostgreSQL'))
-  .catch((err) => console.error('❌ Database connection error:', err));
+pool
+  .connect()
+  .then(() => console.log("✅ Connected to PostgreSQL"))
+  .catch((err) => console.error("❌ Database connection error:", err));
 
 // Роуты
 const routers = [
-  { path: '/api/auth', router: require('./routes/auth') },
-  { path: '/api/users', router: require('./routes/users') },
-  { path: '/api/subscribes', router: require('./routes/subscribes') },
-  { path: '/api/applications', router: require('./routes/applications') },
+  { path: "/api/auth", router: require("./routes/auth") },
+  { path: "/api/users", router: require("./routes/users") },
+  { path: "/api/subscribes", router: require("./routes/subscribes") },
+  { path: "/api/applications", router: require("./routes/applications") },
 ];
 
 routers.forEach(({ path, router }) => {
@@ -69,10 +74,10 @@ routers.forEach(({ path, router }) => {
 });
 
 // Health check endpoint
-app.get('/api/health', (req, res) => {
+app.get("/api/health", (req, res) => {
   res.status(200).json({
-    status: 'OK',
-    db: pool ? 'connected' : 'disconnected',
+    status: "OK",
+    db: pool ? "connected" : "disconnected",
     timestamp: new Date().toISOString(),
   });
 });
@@ -132,7 +137,7 @@ app.post("/api/auth/login", async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' в production
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000, // 24 часа
       path: "/",
     });
 
@@ -173,27 +178,21 @@ app.post("/api/auth/logout", (req, res) => {
 
 //---------------------------------------------------- ЗАПУСК СЕРВЕРА ------------------------------------------------------
 const PORT = process.env.PORT || 10000;
-const HOST = process.env.HOST || '0.0.0.0';
+const HOST = process.env.HOST || "0.0.0.0";
 
 app.listen(PORT, HOST, () => {
-  console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode`);
+  console.log(
+    `Server running in ${process.env.NODE_ENV || "development"} mode`
+  );
   console.log(`Listening on http://${HOST}:${PORT}`);
 });
 
 //---------------------------------------------------- ОБРАБОТЧИК ОШИБОК ------------------------------------------------------
 // Обработка ошибок
 app.use((err, req, res, next) => {
-  console.error('🔥 Error:', err.stack);
-
-  if (err.message === 'CORS blocked: origin not allowed') {
-    return res.status(403).json({
-      error: 'CORS policy violation',
-      allowedOrigins,
-    });
-  }
-
+  console.error("🔥 Global error:", err.stack);
   res.status(500).json({
-    error: 'Internal Server Error',
-    message: err.message,
+    success: false,
+    message: "Internal Server Error",
   });
 });
