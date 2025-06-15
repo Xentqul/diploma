@@ -54,9 +54,12 @@ function AccountPage() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`https://diploma-od66.onrender.com/api/users/me`, {
-          withCredentials: true,
-        });
+        const response = await axios.get(
+          `https://diploma-od66.onrender.com/api/users/me`,
+          {
+            withCredentials: true,
+          }
+        );
         const user = response.data.user;
         setUserData(user);
         setFormData({
@@ -236,22 +239,34 @@ function AccountPage() {
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const formData = new FormData();
-    formData.append("avatar", file);
+
     try {
+      // 1. Загружаем файл напрямую в Supabase Storage
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${userData.id}-${Date.now()}.${fileExt}`;
+      const filePath = `avatars/${fileName}`;
+
+      const { data, error } = await supabase.storage
+        .from("avatars") // Имя бакета
+        .upload(filePath, file);
+
+      if (error) throw error;
+
+      // 2. Получаем публичный URL
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("avatars").getPublicUrl(filePath);
+
+      // 3. Обновляем ссылку в вашей БД через бэкенд (если нужно)
       const response = await axios.post(
-        `https://diploma-od66.onrender.com/api/users/upload-avatar`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+        `https://diploma-od66.onrender.com/api/users/update-avatar`,
+        { avatarUrl: publicUrl },
+        { withCredentials: true }
       );
+
       setUserData((prev) => ({
         ...prev,
-        avatar: response.data.avatarUrl,
+        avatar: publicUrl,
       }));
       alert("Аватар успешно загружен!");
     } catch (error) {
