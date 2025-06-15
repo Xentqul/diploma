@@ -22,8 +22,9 @@ const pool = new Pool({
 // Список разрешённых доменов
 const allowedOrigins = [
   "https://diploma-nu-nine.vercel.app",
-  "https://dressery-magazine.ru",
+  "https://diploma-od66.onrender.com",
   "http://localhost:3000",
+  "http://localhost:5000",
 ];
 
 // Настройка CORS
