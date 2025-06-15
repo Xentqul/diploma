@@ -2,7 +2,6 @@
   "name": "dressery-frontend",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "dependencies": {
     "axios": "^1.9.0",
     "bootstrap": "^5.3.3",
@@ -24,5 +23,17 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
