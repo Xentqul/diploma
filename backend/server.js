@@ -128,11 +128,10 @@ app.post("/api/auth/logout", (req, res) => {
   res.json({ success: true, message: "Вы успешно вышли из системы" });
 });
 
-// Health check endpoint
-app.get("/api/health", (req, res) => {
+app.get('/health', (req, res) => {
   res.status(200).json({ 
-    status: "OK",
-    db: pool ? "connected" : "disconnected"
+    status: 'OK',
+    timestamp: new Date().toISOString()
   });
 });
 
