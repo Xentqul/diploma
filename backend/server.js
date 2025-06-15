@@ -1,112 +1,73 @@
-require("dotenv").config();
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const { Pool } = require("pg");
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const { Pool } = require('pg');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
 // Конфигурация базы данных
 const pool = new Pool({
-  connectionString:
-    process.env.DATABASE_URL || "your_default_connection_string",
-  ssl:
-    process.env.NODE_ENV === "production"
-      ? { rejectUnauthorized: false }
-      : false,
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 });
 
-// Список разрешённых доменов
-const allowedOrigins = [
-  "https://diploma-nu-nine.vercel.app",
-  "https://diploma-od66.onrender.com",
-  "http://localhost:3000",
-  "http://localhost:5000",
-];
-
-// Настройка CORS
+// CORS настройки
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, origin); // Разрешаем этот origin
-    } else {
-      callback(new Error("CORS blocked: origin not allowed"));
-    }
-  },
-  credentials: true, // Важно для работы кук
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  origin: [
+    'https://diploma-nu-nine.vercel.app',
+    'https://diploma-od66.onrender.com'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
 };
 
-// Применяем middleware
-app.use(cors(corsOptions)); // CORS middleware
-app.options("*", cors(corsOptions)); // preflight для всех маршрутов
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// Middleware
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Логирование запросов
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path} from ${req.ip}`);
+  console.log(`${req.method} ${req.path}`);
   next();
 });
 
 // Проверка подключения к БД
-pool
-  .connect()
-  .then(() => console.log("✅ Connected to PostgreSQL"))
-  .catch((err) => console.error("❌ Database connection error:", err));
+pool.connect()
+  .then(() => console.log('✅ PostgreSQL connected'))
+  .catch(err => console.error('❌ DB connection error:', err));
 
-// Роуты
-const routers = [
-  { path: "/api/auth", router: require("./routes/auth") },
-  { path: "/api/users", router: require("./routes/users") },
-  { path: "/api/subscribes", router: require("./routes/subscribes") },
-  { path: "/api/applications", router: require("./routes/applications") },
-];
+// Основные API роуты
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/subscribes', require('./routes/subscribes'));
+app.use('/api/applications', require('./routes/applications'));
 
-routers.forEach(({ path, router }) => {
-  app.use(path, router);
-  console.log(`🛣️ Route ${path} initialized`);
-});
-
-// Health check endpoint
-app.get("/api/health", (req, res) => {
-  res.status(200).json({
-    status: "OK",
-    db: pool ? "connected" : "disconnected",
-    timestamp: new Date().toISOString(),
-  });
-});
-
-//---------------------------------------------------- РОУТ ДЛЯ РЕГИСТРАЦИИ ПОЛЬЗОВАТЕЛЯ --------------------------------------------------
+// Регистрация пользователя
 app.post("/api/register", async (req, res) => {
   const { firstName, lastName, email, phone, password } = req.body;
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-
     const result = await pool.query(
       "INSERT INTO dressery_schema.users (first_name, last_name, email, phone_number, password_hash, role) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
       [firstName, lastName, email, phone, hashedPassword, "user"]
     );
-
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error(err);
-    if (err.code === "23505") {
-      res.status(400).send("Электронная почта или номер телефона уже заняты.");
-    } else {
-      res.status(500).send("Ошибка сервера");
-    }
+    res.status(err.code === "23505" ? 400 : 500)
+       .send(err.code === "23505" 
+         ? "Электронная почта или номер телефона уже заняты." 
+         : "Ошибка сервера");
   }
 });
 
-//-------------------------------------------------------- РОУТ ДЛЯ ВХОДА ПОЛЬЗОВАТЕЛЯ -----------------------------------------------------
+// Аутентификация пользователя
 app.post("/api/auth/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -120,10 +81,7 @@ app.post("/api/auth/login", async (req, res) => {
       return res.status(401).json({ error: "Неверный email или пароль" });
     }
 
-    const isValidPassword = await bcrypt.compare(
-      password,
-      user.rows[0].password_hash
-    );
+    const isValidPassword = await bcrypt.compare(password, user.rows[0].password_hash);
     if (!isValidPassword) {
       return res.status(401).json({ error: "Неверный email или пароль" });
     }
@@ -137,8 +95,8 @@ app.post("/api/auth/login", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // 'none' в production
-      maxAge: 24 * 60 * 60 * 1000, // 24 часа
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 86400000, // 24 часа
       path: "/",
     });
 
@@ -158,42 +116,40 @@ app.post("/api/auth/login", async (req, res) => {
   }
 });
 
-//---------------------------------------------------- РОУТ ДЛЯ ВЫХОДА ИЗ АККАУНТА ------------------------------------------------------
+// Выход из системы
 app.post("/api/auth/logout", (req, res) => {
-  try {
-    // Удаляем куку
-    res.cookie("token", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      expires: new Date(0), // моментальное истечение
-      path: "/",
-    });
-
-    res.json({ success: true, message: "Вы успешно вышли из системы" });
-  } catch (err) {
-    console.error("Ошибка выхода:", err);
-    res.status(500).json({ success: false, message: "Ошибка сервера" });
-  }
+  res.cookie("token", "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    expires: new Date(0),
+    path: "/",
+  });
+  res.json({ success: true, message: "Вы успешно вышли из системы" });
 });
 
-//---------------------------------------------------- ЗАПУСК СЕРВЕРА ------------------------------------------------------
+// Health check endpoint
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ 
+    status: "OK",
+    db: pool ? "connected" : "disconnected"
+  });
+});
+
+// Обработка ошибок
+app.use((err, req, res, next) => {
+  console.error("🔥 Error:", err.stack);
+  res.status(500).json({ 
+    success: false,
+    message: "Internal Server Error" 
+  });
+});
+
+// Запуск сервера
 const PORT = process.env.PORT || 10000;
 const HOST = process.env.HOST || "0.0.0.0";
 
 app.listen(PORT, HOST, () => {
-  console.log(
-    `Server running in ${process.env.NODE_ENV || "development"} mode`
-  );
+  console.log(`Server running in ${process.env.NODE_ENV || "development"} mode`);
   console.log(`Listening on http://${HOST}:${PORT}`);
-});
-
-//---------------------------------------------------- ОБРАБОТЧИК ОШИБОК ------------------------------------------------------
-// Обработка ошибок
-app.use((err, req, res, next) => {
-  console.error("🔥 Global error:", err.stack);
-  res.status(500).json({
-    success: false,
-    message: "Internal Server Error",
-  });
 });
