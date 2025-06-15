@@ -22,6 +22,7 @@ const corsOptions = {
   origin: [
     "https://diploma-nu-nine.vercel.app",
     "https://diploma-od66.onrender.com",
+    "https://dressery-magazine.ru"
   ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
