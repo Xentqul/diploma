@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db");
-const { supabase } = require('../config/supabase');
+const supabase = require('../config/supabase');
 
 // Middleware для проверки токена
 const authenticateToken = async (req, res, next) => {
