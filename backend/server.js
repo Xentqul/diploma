@@ -13,7 +13,7 @@ const app = express();
 // Конфигурация Supabase
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
+  process.env.SUPABASE_KEY
 );
 
 // Конфигурация базы данных PostgreSQL

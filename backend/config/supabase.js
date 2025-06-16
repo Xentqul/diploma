@@ -1,10 +1,11 @@
 const { createClient } = require('@supabase/supabase-js');
 
+// Логируем переменные для проверки
+console.log('SUPABASE_URL:', process.env.SUPABASE_URL);
+console.log('SUPABASE_KEY:', process.env.SUPABASE_KEY);
+
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
-
-console.log('SUPABASE_URL:', supabaseUrl); // Для проверки
-console.log('SUPABASE_KEY:', supabaseKey); // Для проверки
 
 if (!supabaseUrl || !supabaseKey) {
   throw new Error('Supabase credentials are missing in environment variables');
