@@ -3,6 +3,8 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db");
 const supabase = require('../config/supabase');
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() }); // Работа с файлами в памяти
 
 // Middleware для проверки токена
 const authenticateToken = async (req, res, next) => {
@@ -83,6 +85,50 @@ router.post("/update-profile", authenticateToken, async (req, res) => {
   } catch (err) {
     console.error("Ошибка при обновлении профиля:", err);
     res.status(500).json({ error: "Не удалось обновить данные" });
+  }
+});
+
+// Роут /api/users/upload-avatar — загрузка аватара
+router.post("/upload-avatar", authenticateToken, upload.single("avatar"), async (req, res) => {
+  const file = req.file;
+
+  if (!file) {
+    return res.status(400).json({ error: "Файл не загружен" });
+  }
+
+  try {
+    const userId = req.userId;
+    const fileExt = file.originalname.split(".").pop();
+    const fileName = `${userId}-${Date.now()}.${fileExt}`;
+    const filePath = `avatars/${fileName}`;
+
+    // Загружаем файл в Supabase Storage
+    const { error } = await supabase.storage
+      .from("avatars")
+      .upload(filePath, file.buffer);
+
+    if (error) {
+      console.error("Ошибка загрузки файла в Supabase:", error);
+      return res.status(500).json({ error: "Не удалось загрузить аватар" });
+    }
+
+    // Получаем публичный URL
+    const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
+
+    // Обновляем поле avatar в базе данных
+    const result = await pool.query(
+      "UPDATE dressery_schema.users SET avatar = $1 WHERE id = $2 RETURNING avatar",
+      [data.publicUrl, userId]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Пользователь не найден" });
+    }
+
+    res.json({ avatarUrl: data.publicUrl });
+  } catch (err) {
+    console.error("Ошибка при обработке загрузки аватара:", err);
+    res.status(500).json({ error: "Не удалось загрузить аватар" });
   }
 });
 
