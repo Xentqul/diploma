@@ -20,7 +20,6 @@ const getLatestArticles = (count = 2) => {
 const getFavoriteArticles = (count = 2) => {
   const favoriteIds = JSON.parse(localStorage.getItem("favorites")) || [];
   if (!favoriteIds.length) return [];
-
   // Фильтруем и сортируем по дате
   const favorites = articles
     .filter(
@@ -29,7 +28,6 @@ const getFavoriteArticles = (count = 2) => {
     )
     .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
     .slice(0, count);
-
   return favorites;
 };
 
@@ -55,7 +53,7 @@ function AccountPage() {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `https://diploma-od66.onrender.com/api/users/me`,
+          `https://diploma-od66.onrender.com/api/users/me`, 
           {
             withCredentials: true,
           }
@@ -83,7 +81,7 @@ function AccountPage() {
   const handleLogout = async () => {
     try {
       const response = await axios.post(
-        `https://diploma-od66.onrender.com/api/auth/logout`,
+        `https://diploma-od66.onrender.com/api/auth/logout`, 
         {},
         {
           withCredentials: true,
@@ -103,7 +101,7 @@ function AccountPage() {
     if (window.confirm("Вы уверены, что хотите удалить аккаунт?")) {
       try {
         const response = await axios.delete(
-          `https://diploma-od66.onrender.com/api/users/me`,
+          `https://diploma-od66.onrender.com/api/users/me`, 
           {
             withCredentials: true,
             headers: {
@@ -204,7 +202,7 @@ function AccountPage() {
         }
         try {
           const response = await axios.post(
-            `https://diploma-od66.onrender.com/api/users/update-profile`,
+            `https://diploma-od66.onrender.com/api/users/update-profile`, 
             {
               first_name: formData.first_name,
               last_name: formData.last_name,
@@ -239,31 +237,29 @@ function AccountPage() {
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
-    const formData = new FormData();
-    formData.append("avatar", file); // "avatar" — это имя поля на бэкенде
-
     try {
-      // Отправляем файл на свой бэкенд
+      // 1. Загружаем файл напрямую в Supabase Storage
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${userData.id}-${Date.now()}.${fileExt}`;
+      const filePath = `avatars/${fileName}`;
+      const { data, error } = await supabase.storage
+        .from("avatars") // Имя бакета
+        .upload(filePath, file);
+      if (error) throw error;
+      // 2. Получаем публичный URL
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("avatars").getPublicUrl(filePath);
+      // 3. Обновляем ссылку в вашей БД через бэкенд (если нужно)
       const response = await axios.post(
-        "https://diploma-od66.onrender.com/api/users/upload-avatar",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        }
+        `https://diploma-od66.onrender.com/api/users/update-avatar`, 
+        { avatarUrl: publicUrl },
+        { withCredentials: true }
       );
-
-      const { avatarUrl } = response.data;
-
-      // Обновляем локально
       setUserData((prev) => ({
         ...prev,
-        avatar: avatarUrl,
+        avatar: publicUrl,
       }));
-
       alert("Аватар успешно загружен!");
     } catch (error) {
       console.error("Ошибка загрузки аватара:", error);
@@ -281,7 +277,6 @@ function AccountPage() {
             "/news",
             getLatestArticles()
           )}
-
           {/* Блок пользователя */}
           <div className={styles.userBlock}>
             {/* Аватар */}
@@ -294,18 +289,18 @@ function AccountPage() {
               />
               {userData?.avatar ? (
                 <img
-                  src={userData.avatar}
+                  src={userData.avatar} // Исправлено: теперь просто userData.avatar
                   alt={`${userData?.first_name} ${userData?.last_name}`}
                   className={styles.imgBlock}
                   onError={(e) => {
-                    e.target.src = ""; // Не падаем, если ошибка
+                    e.target.src = "/default-avatar.png"; // Не падаем, если ошибка
+                    e.target.onerror = null;
                   }}
                 />
               ) : (
                 <div className={styles.fallbackAvatar}>?</div>
               )}
             </label>
-
             {/* Имя и фамилия */}
             <div className={styles.editableRow}>
               <p className={styles.name}>
@@ -334,7 +329,6 @@ function AccountPage() {
                 </span>
               )}
             </div>
-
             {/* Эл. почта */}
             <div className={styles.editableRow}>
               <LabelAndInfo
@@ -359,7 +353,6 @@ function AccountPage() {
                 </span>
               )}
             </div>
-
             {/* Номер телефона */}
             <div className={styles.editableRow}>
               <LabelAndInfo
@@ -387,7 +380,6 @@ function AccountPage() {
                 </span>
               )}
             </div>
-
             {/* Кнопка сохранить */}
             {isEditing && (
               <div className={styles.buttonGroup}>
@@ -400,7 +392,6 @@ function AccountPage() {
                 </LinkButton>
               </div>
             )}
-
             {/* Кнопки аккаунта */}
             <div className={styles.buttonGroup}>
               <LinkButton size="small" onClick={handleLogout}>
@@ -411,7 +402,6 @@ function AccountPage() {
               </LinkButton>
             </div>
           </div>
-
           {/* Избранное */}
           {renderArticlesSection(
             "Избранное",
