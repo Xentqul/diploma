@@ -294,7 +294,7 @@ function AccountPage() {
               />
               {userData?.avatar ? (
                 <img
-                  src={`https://diploma-od66.onrender.com${userData.avatar}`}
+                  src={userData.avatar}
                   alt={`${userData?.first_name} ${userData?.last_name}`}
                   className={styles.imgBlock}
                   onError={(e) => {
