@@ -240,34 +240,30 @@ function AccountPage() {
     const file = e.target.files[0];
     if (!file) return;
 
+    const formData = new FormData();
+    formData.append("avatar", file); // "avatar" — это имя поля на бэкенде
+
     try {
-      // 1. Загружаем файл напрямую в Supabase Storage
-      const fileExt = file.name.split(".").pop();
-      const fileName = `${userData.id}-${Date.now()}.${fileExt}`;
-      const filePath = `avatars/${fileName}`;
-
-      const { data, error } = await supabase.storage
-        .from("avatars") // Имя бакета
-        .upload(filePath, file);
-
-      if (error) throw error;
-
-      // 2. Получаем публичный URL
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from("avatars").getPublicUrl(filePath);
-
-      // 3. Обновляем ссылку в вашей БД через бэкенд (если нужно)
+      // Отправляем файл на свой бэкенд
       const response = await axios.post(
-        `https://diploma-od66.onrender.com/api/users/update-avatar`,
-        { avatarUrl: publicUrl },
-        { withCredentials: true }
+        "https://diploma-od66.onrender.com/api/users/upload-avatar",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
       );
 
+      const { avatarUrl } = response.data;
+
+      // Обновляем локально
       setUserData((prev) => ({
         ...prev,
-        avatar: publicUrl,
+        avatar: avatarUrl,
       }));
+
       alert("Аватар успешно загружен!");
     } catch (error) {
       console.error("Ошибка загрузки аватара:", error);
