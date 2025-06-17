@@ -53,7 +53,7 @@ function AccountPage() {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `https://diploma-od66.onrender.com/api/users/me`, 
+          `https://diploma-od66.onrender.com/api/users/me`,
           {
             withCredentials: true,
           }
@@ -81,7 +81,7 @@ function AccountPage() {
   const handleLogout = async () => {
     try {
       const response = await axios.post(
-        `https://diploma-od66.onrender.com/api/auth/logout`, 
+        `https://diploma-od66.onrender.com/api/auth/logout`,
         {},
         {
           withCredentials: true,
@@ -101,7 +101,7 @@ function AccountPage() {
     if (window.confirm("Вы уверены, что хотите удалить аккаунт?")) {
       try {
         const response = await axios.delete(
-          `https://diploma-od66.onrender.com/api/users/me`, 
+          `https://diploma-od66.onrender.com/api/users/me`,
           {
             withCredentials: true,
             headers: {
@@ -202,7 +202,7 @@ function AccountPage() {
         }
         try {
           const response = await axios.post(
-            `https://diploma-od66.onrender.com/api/users/update-profile`, 
+            `https://diploma-od66.onrender.com/api/users/update-profile`,
             {
               first_name: formData.first_name,
               last_name: formData.last_name,
@@ -234,46 +234,44 @@ function AccountPage() {
     }
   };
 
-const handleAvatarChange = async (e) => {
-  const file = e.target.files[0];
-  if (!file || !userData?.id) return;
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file || !userData?.id) return;
 
-  try {
-    // 1. Подготовка файла
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${userData.id}-${Date.now()}.${fileExt}`;
-    const filePath = `public/${fileName}`; // 'public/' для автоматического публичного доступа
+    try {
+      // 1. Генерируем уникальное имя файла
+      const fileExt = file.name.split(".").pop();
+      const fileName = `user-${userData.id}-${Date.now()}.${fileExt}`;
+      const filePath = `public/${fileName}`; // Папка public для автоматического доступа
 
-    // 2. Загрузка в Supabase
-    const { error: uploadError } = await supabase.storage
-      .from('avatars')
-      .upload(filePath, file, {
-        cacheControl: '3600',
-        upsert: true,
-        contentType: file.type
-      });
+      // 2. Загружаем в Supabase Storage
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(filePath, file, {
+          contentType: file.type,
+          upsert: true,
+        });
 
-    if (uploadError) throw uploadError;
+      if (uploadError) throw uploadError;
 
-    // 3. Формирование правильного URL
-    const avatarUrl = `https://${process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID}.supabase.co/storage/v1/object/public/avatars/${filePath}`;
+      // 3. Получаем КОРРЕКТНЫЙ URL напрямую
+      const avatarUrl = `https://rkasdtpiqqtczeazhruc.supabase.co/storage/v1/object/public/avatars/${filePath}`;
 
-    // 4. Обновление в БД
-    const { error: dbError } = await supabase
-      .from('users')
-      .update({ avatar_url: avatarUrl })
-      .eq('id', userData.id);
+      // 4. Обновляем в базе данных
+      const { error: updateError } = await supabase
+        .from("users")
+        .update({ avatar_url: avatarUrl })
+        .eq("id", userData.id);
 
-    if (dbError) throw dbError;
+      if (updateError) throw updateError;
 
-    // 5. Обновление состояния
-    setUserData(prev => ({ ...prev, avatar: avatarUrl }));
-  } catch (error) {
-    console.error('Ошибка загрузки:', error);
-    alert('Ошибка загрузки аватара');
-  }
-};
-
+      // 5. Обновляем состояние
+      setUserData((prev) => ({ ...prev, avatar: avatarUrl }));
+    } catch (error) {
+      console.error("Avatar upload failed:", error);
+      alert("Ошибка загрузки аватара");
+    }
+  };
 
   return (
     <div className={styles.accountWrapper}>
@@ -297,11 +295,11 @@ const handleAvatarChange = async (e) => {
               />
               {userData?.avatar ? (
                 <img
-                  src={userData.avatar} // Исправлено: теперь просто userData.avatar
+                  src={userData?.avatar || "/default-avatar.png"}
                   alt={`${userData?.first_name} ${userData?.last_name}`}
                   className={styles.imgBlock}
                   onError={(e) => {
-                    e.target.src = "/default-avatar.png"; // Не падаем, если ошибка
+                    e.target.src = "/default-avatar.png";
                     e.target.onerror = null;
                   }}
                 />
