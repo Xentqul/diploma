@@ -234,38 +234,46 @@ function AccountPage() {
     }
   };
 
-  const handleAvatarChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    try {
-      // 1. Загружаем файл напрямую в Supabase Storage
-      const fileExt = file.name.split(".").pop();
-      const fileName = `${userData.id}-${Date.now()}.${fileExt}`;
-      const filePath = `avatars/${fileName}`;
-      const { data, error } = await supabase.storage
-        .from("avatars") // Имя бакета
-        .upload(filePath, file);
-      if (error) throw error;
-      // 2. Получаем публичный URL
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from("avatars").getPublicUrl(filePath);
-      // 3. Обновляем ссылку в вашей БД через бэкенд (если нужно)
-      const response = await axios.post(
-        `https://diploma-od66.onrender.com/api/users/update-avatar`, 
-        { avatarUrl: publicUrl },
-        { withCredentials: true }
-      );
-      setUserData((prev) => ({
-        ...prev,
-        avatar: publicUrl,
-      }));
-      alert("Аватар успешно загружен!");
-    } catch (error) {
-      console.error("Ошибка загрузки аватара:", error);
-      alert("Не удалось загрузить аватар");
-    }
-  };
+const handleAvatarChange = async (e) => {
+  const file = e.target.files[0];
+  if (!file || !userData?.id) return;
+
+  try {
+    // 1. Подготовка данных
+    const fileExt = file.name.split('.').pop();
+    const fileName = `user-${userData.id}-${Date.now()}.${fileExt}`;
+    const filePath = `public/${fileName}`; // 'public/' для автоматического публичного доступа
+
+    // 2. Загрузка в Supabase
+    const { error: uploadError } = await supabase.storage
+      .from('avatars')
+      .upload(filePath, file, {
+        cacheControl: '3600',
+        upsert: true
+      });
+
+    if (uploadError) throw uploadError;
+
+    // 3. Получение URL (используем прямой URL без подписи)
+    const avatarUrl = `https://${process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID}.supabase.co/storage/v1/object/public/avatars/${filePath}`;
+
+    // 4. Обновление в БД
+    const { error: dbError } = await supabase
+      .from('users')
+      .update({ avatar_url: avatarUrl })
+      .eq('id', userData.id);
+
+    if (dbError) throw dbError;
+
+    // 5. Обновление состояния
+    setUserData(prev => ({ ...prev, avatar: avatarUrl }));
+    alert('Аватар обновлён!');
+  } catch (error) {
+    console.error('Ошибка загрузки:', error);
+    alert(`Ошибка: ${error.message}`);
+  }
+};
+
 
   return (
     <div className={styles.accountWrapper}>
