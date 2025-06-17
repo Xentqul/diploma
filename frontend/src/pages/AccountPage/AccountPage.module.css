@@ -82,7 +82,7 @@
 }
 
 .imgBlock {
-    display: block;
+    display: none;
     width: 100px;
     height: 100px;
     border-radius: 50%;
@@ -90,7 +90,6 @@
     border: 2px solid #ccc;
     transition: border-color 0.3s ease;
 }
-
 .imgBlock:hover {
     border-color: #888;
 }
