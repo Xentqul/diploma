@@ -51,7 +51,7 @@
 }
 
 .dbValue {
-  color: var(--bs-black);
+    color: var(--bs-black);
 }
 
 .buttonGroup> :first-child {
@@ -77,8 +77,7 @@
 }
 
 .avatarUpload {
-  position: relative;
-  z-index: 1; /* Убедитесь, что не перекрыт другими элементами */
+    display: none;
 }
 
 .imgBlock {
@@ -90,6 +89,7 @@
     border: 2px solid #ccc;
     transition: border-color 0.3s ease;
 }
+
 .imgBlock:hover {
     border-color: #888;
 }
