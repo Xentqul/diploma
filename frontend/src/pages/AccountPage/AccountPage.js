@@ -235,39 +235,48 @@ function AccountPage() {
   };
 
   const handleAvatarChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  const file = e.target.files[0];
+  if (!file) return;
 
-    // Генерируем уникальное имя файла (например, userID + timestamp)
-    const fileName = `user_${userData.id}_${Date.now()}.jpg`;
+  try {
+    // 1. Генерируем уникальное имя файла
+    const fileName = `avatar_${userData.id}_${Date.now()}.jpg`;
 
-    // Загружаем файл в папку 'avatars' (не создавая вложенных папок!)
-    const { data, error } = await supabase.storage
-      .from("avatars") // Указываем только имя bucket, без пути
-      .upload(fileName, file);
+    // 2. Загружаем файл в Supabase Storage
+    const { error: uploadError } = await supabase.storage
+      .from('avatars')
+      .upload(fileName, file, {
+        cacheControl: '3600', // Опционально: кэширование на 1 час
+        upsert: true // Перезаписываем файл, если он уже существует
+      });
 
-    if (error) {
-      console.error("Ошибка загрузки:", error);
-      return;
-    }
+    if (uploadError) throw uploadError;
 
-    // Получаем публичную ссылку (она будет вида: `https://.../storage/v1/object/public/avatars/filename.jpg`)
-    const {
-      data: { publicUrl },
-    } = supabase.storage.from("avatars").getPublicUrl(fileName);
+    // 3. Получаем публичный URL
+    const { data: { publicUrl } } = supabase.storage
+      .from('avatars')
+      .getPublicUrl(fileName);
 
-    // Обновляем аватар в таблице пользователей
-    const { error: dbError } = await supabase
-      .from("users")
+    // 4. Обновляем запись в таблице users
+    const { error: updateError } = await supabase
+      .from('users')
       .update({ avatar: publicUrl })
-      .eq("id", userData.id);
+      .eq('id', userData.id);
 
-    if (dbError) {
-      console.error("Ошибка сохранения в БД:", dbError);
-    } else {
-      setUserData({ ...userData, avatar: publicUrl }); // Обновляем состояние
-    }
-  };
+    if (updateError) throw updateError;
+
+    // 5. Обновляем состояние
+    setUserData(prev => ({ ...prev, avatar: publicUrl }));
+
+    // 6. Опционально: обновляем данные в контексте/сторе
+    // updateUserInContext({ avatar: publicUrl });
+
+  } catch (error) {
+    console.error('Ошибка при обновлении аватара:', error);
+    // Можно добавить уведомление для пользователя
+    alert('Не удалось обновить аватар. Пожалуйста, попробуйте ещё раз.');
+  }
+};
 
   return (
     <div className={styles.accountWrapper}>
@@ -292,7 +301,7 @@ function AccountPage() {
               {userData?.avatar ? (
                 <img
                   src={userData?.avatar || "/default-avatar.png"}
-                  alt={`${userData?.first_name} ${userData?.last_name}`}
+                  alt="Аватар"
                   className={styles.imgBlock}
                   onError={(e) => {
                     e.target.src = "/default-avatar.png";
