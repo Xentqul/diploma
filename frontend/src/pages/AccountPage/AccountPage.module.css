@@ -76,7 +76,13 @@
     font-weight: 600;
 }
 
+.avatarUpload {
+  position: relative;
+  z-index: 1; /* Убедитесь, что не перекрыт другими элементами */
+}
+
 .imgBlock {
+    display: block;
     width: 100px;
     height: 100px;
     border-radius: 50%;
