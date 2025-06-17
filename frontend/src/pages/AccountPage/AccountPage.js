@@ -291,7 +291,7 @@ function AccountPage() {
           {/* Блок пользователя */}
           <div className={styles.userBlock}>
             {/* Аватар */}
-            {/* <label className={styles.avatarUpload}>
+            <label className={styles.avatarUpload}>
               <input
                 type="file"
                 accept="image/*"
@@ -311,7 +311,7 @@ function AccountPage() {
               ) : (
                 <div className={styles.fallbackAvatar}>?</div>
               )}
-            </label> */}
+            </label>
             {/* Имя и фамилия */}
             <div className={styles.editableRow}>
               <p className={styles.name}>
