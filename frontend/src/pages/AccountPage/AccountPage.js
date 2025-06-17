@@ -236,40 +236,36 @@ function AccountPage() {
 
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
-    if (!file || !userData?.id) return;
+    if (!file) return;
 
-    try {
-      // 1. Генерируем уникальное имя файла
-      const fileExt = file.name.split(".").pop();
-      const fileName = `user-${userData.id}-${Date.now()}.${fileExt}`;
-      const filePath = `public/${fileName}`; // Папка public для автоматического доступа
+    // Генерируем уникальное имя файла (например, userID + timestamp)
+    const fileName = `user_${userData.id}_${Date.now()}.jpg`;
 
-      // 2. Загружаем в Supabase Storage
-      const { error: uploadError } = await supabase.storage
-        .from("avatars")
-        .upload(filePath, file, {
-          contentType: file.type,
-          upsert: true,
-        });
+    // Загружаем файл в папку 'avatars' (не создавая вложенных папок!)
+    const { data, error } = await supabase.storage
+      .from("avatars") // Указываем только имя bucket, без пути
+      .upload(fileName, file);
 
-      if (uploadError) throw uploadError;
+    if (error) {
+      console.error("Ошибка загрузки:", error);
+      return;
+    }
 
-      // 3. Получаем КОРРЕКТНЫЙ URL напрямую
-      const avatarUrl = `https://rkasdtpiqqtczeazhruc.supabase.co/storage/v1/object/public/avatars/${filePath}`;
+    // Получаем публичную ссылку (она будет вида: `https://.../storage/v1/object/public/avatars/filename.jpg`)
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("avatars").getPublicUrl(fileName);
 
-      // 4. Обновляем в базе данных
-      const { error: updateError } = await supabase
-        .from("users")
-        .update({ avatar_url: avatarUrl })
-        .eq("id", userData.id);
+    // Обновляем аватар в таблице пользователей
+    const { error: dbError } = await supabase
+      .from("users")
+      .update({ avatar: publicUrl })
+      .eq("id", userData.id);
 
-      if (updateError) throw updateError;
-
-      // 5. Обновляем состояние
-      setUserData((prev) => ({ ...prev, avatar: avatarUrl }));
-    } catch (error) {
-      console.error("Avatar upload failed:", error);
-      alert("Ошибка загрузки аватара");
+    if (dbError) {
+      console.error("Ошибка сохранения в БД:", dbError);
+    } else {
+      setUserData({ ...userData, avatar: publicUrl }); // Обновляем состояние
     }
   };
 
