@@ -33,7 +33,7 @@ function MailingBlock() {
     // 3. Отправка на сервер
     try {
       await axios.post(
-        "http://localhost:5000/api/subscribe",
+        "https://diploma-od66.onrender.com/api/subscribe",
         { email },
         {
           withCredentials: true,
