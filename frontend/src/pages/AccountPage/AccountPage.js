@@ -239,9 +239,9 @@ const handleAvatarChange = async (e) => {
   if (!file || !userData?.id) return;
 
   try {
-    // 1. Подготовка данных
+    // 1. Подготовка файла
     const fileExt = file.name.split('.').pop();
-    const fileName = `user-${userData.id}-${Date.now()}.${fileExt}`;
+    const fileName = `${userData.id}-${Date.now()}.${fileExt}`;
     const filePath = `public/${fileName}`; // 'public/' для автоматического публичного доступа
 
     // 2. Загрузка в Supabase
@@ -249,12 +249,13 @@ const handleAvatarChange = async (e) => {
       .from('avatars')
       .upload(filePath, file, {
         cacheControl: '3600',
-        upsert: true
+        upsert: true,
+        contentType: file.type
       });
 
     if (uploadError) throw uploadError;
 
-    // 3. Получение URL (используем прямой URL без подписи)
+    // 3. Формирование правильного URL
     const avatarUrl = `https://${process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID}.supabase.co/storage/v1/object/public/avatars/${filePath}`;
 
     // 4. Обновление в БД
@@ -267,10 +268,9 @@ const handleAvatarChange = async (e) => {
 
     // 5. Обновление состояния
     setUserData(prev => ({ ...prev, avatar: avatarUrl }));
-    alert('Аватар обновлён!');
   } catch (error) {
     console.error('Ошибка загрузки:', error);
-    alert(`Ошибка: ${error.message}`);
+    alert('Ошибка загрузки аватара');
   }
 };
 
